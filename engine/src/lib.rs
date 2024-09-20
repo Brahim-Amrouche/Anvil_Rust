@@ -1,20 +1,95 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+#![allow(non_snake_case)]
+#![allow(non_camel_case_types)]
+#![allow(non_upper_case_globals)]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub mod vulkan_mod {
+    use paste::paste;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+    pub mod vulkan_bindings {
+        include!("../bindings/binding.rs");
     }
-}
 
-pub mod entrypoint {
-    pub fn start(){
-        println!("hello from engine")
+    static mut VULKAN_LIBRARY:Option<libloading::Library>= None;
+
+    macro_rules! EXPORTED_VULKAN_FUNCTION {
+        ($name: ident) => {
+           paste! {
+            #[allow(non_upper_case_globals)]
+            static mut $name :  vulkan_bindings::[<PFN_$name>] = None;
+           }
+        };
+    }
+
+    include!("./imported_functions.rs");
+    
+    #[derive(Debug)]
+    enum VulkanInitError {
+        UNLOADABLE_LIBRARY,
+        EXPORTED_VK_FUNCTION_ERROR(String),
+    }
+
+    impl std::fmt::Display for VulkanInitError {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match self {
+                VulkanInitError::UNLOADABLE_LIBRARY => write!(f, "Couldn't load vulkan library"),
+                VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) => write!(f, "{}" ,msg),
+            }
+        }
+    }
+
+    impl std::error::Error for VulkanInitError {}
+
+    pub type VulkanInitResult = Result<(), Box<dyn std::error::Error>>;
+
+   
+    // macro_rules! EXPORTED_VULKAN_FUNCTION {
+    //     ($function: ident ) => {
+    //         if let Some(ref lib) = VULKAN_LIBRARY {
+    //             $function = lib.get(stringify!($function).as_bytes())
+    //             .ok()
+    //             .map(|symbol| *symbol);
+    //             match $function {
+    //                 Some(_) => (),
+    //                 None => {
+    //                     let err = VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(format!("Couldn't load exported vulkan function: {}", stringify!($function)));
+    //                     return Err(Box::new(err))
+    //                 }
+    //             };
+    //         }
+    //         else {
+    //             return Err(Box::new(VulkanInitError::UNLOADABLE_LIBRARY));
+    //         }
+    //     };
+    // }
+
+    pub fn load_vulkan_lib() -> VulkanInitResult
+    {
+        unsafe {
+            VULKAN_LIBRARY = Some(libloading::Library::new("libvulkan.so.1")?);
+            macro_rules! EXPORTED_VULKAN_FUNCTION {
+                ($function:ident) => {
+                    if let Some(ref lib) = VULKAN_LIBRARY {
+                        $function = lib.get(stringify!($function).as_bytes())
+                            .ok()
+                            .map(|symbol| *symbol);
+    
+                        match $function {
+                            Some(_) => (),
+                            None => {
+                                let err = VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(
+                                    format!("Couldn't load exported Vulkan function: {}", stringify!($function)),
+                                );
+                                return Err(Box::new(err));
+                            }
+                        };
+                    } else {
+                        return Err(Box::new(VulkanInitError::UNLOADABLE_LIBRARY));
+                    }
+                };
+            }
+
+            include!("imported_functions.rs");
+            Ok(())
+        }
     }
 }
