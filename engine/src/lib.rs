@@ -28,6 +28,7 @@ pub mod vulkan_mod {
         EXPORTED_VK_FUNCTION_ERROR(String),
         GLOBAL_VK_FUNCTION_ERROR(String),
         UNLOADABLE_EXTENSIONS,
+        UNAVAILABLE_EXTENSION(String),
     }
 
     impl std::fmt::Display for VulkanInitError {
@@ -35,6 +36,7 @@ pub mod vulkan_mod {
             match self {
                 VulkanInitError::UNLOADABLE_LIBRARY => write!(f, "Couldn't load vulkan library"),
                 VulkanInitError::UNLOADABLE_EXTENSIONS => write!(f, "Couldn't load vulkan available extensions"),
+                VulkanInitError::UNAVAILABLE_EXTENSION(exts) => write!(f, "Can't initiate this unavailable extensions: {}", exts),
                 VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
                 | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg) => write!(f, "{}" ,msg),
             }
@@ -108,7 +110,7 @@ pub mod vulkan_mod {
         unsafe {
             let mut extensions_count:u32 = 0;
             let result = vkEnumerateInstanceExtensionProperties.unwrap()(std::ptr::null(), &mut extensions_count, std::ptr::null_mut());
-            if result == vulkan_bindings::VkResult_VK_SUCCESS || extensions_count == 0
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || extensions_count == 0
             {
                return Err(VulkanInitError::UNLOADABLE_EXTENSIONS);
             }
@@ -120,7 +122,7 @@ pub mod vulkan_mod {
                 }
             );
             let result = vkEnumerateInstanceExtensionProperties.unwrap()(std::ptr::null(), &mut extensions_count, AVAILABLE_EXTENSIONS.as_mut_ptr());
-            if result == vulkan_bindings::VkResult_VK_SUCCESS ||  extensions_count == 0
+            if result != vulkan_bindings::VkResult_VK_SUCCESS ||  extensions_count == 0
             {
                 return Err(VulkanInitError::UNLOADABLE_EXTENSIONS);
             }
@@ -128,4 +130,42 @@ pub mod vulkan_mod {
         }
     }
 
+
+    pub fn list_available_extensions()
+    {
+        unsafe {
+            let extensions = std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
+            let extensions = &*extensions;
+            for extension in  extensions{
+                let x:[u8;256] = std::mem::transmute::<[i8;256], [u8;256]>(extension.extensionName);
+                println!("{}", String::from_utf8(x.to_vec()).unwrap());
+            }
+        }
+    }
+
+    pub fn check_desired_extensions(ref desired_extensions:Vec<&str>)-> Result<(), VulkanInitError>
+    {
+        unsafe {
+            let extensions = std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
+            let extensions = &*extensions;
+            let mut found;
+            for desired in desired_extensions {
+                found = false;
+                for extension in extensions {
+                    let extension = std::mem::transmute::<[i8;256], [u8;256]>(extension.extensionName);
+                    let extension = String::from_utf8(extension.to_vec()).unwrap().trim_end_matches('\0').to_string();
+                    if extension == *desired
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if found == false
+                {
+                    return Err(VulkanInitError::UNAVAILABLE_EXTENSION(desired.to_string()));
+                }
+            }
+        }
+        Ok(())
+    }
 }
