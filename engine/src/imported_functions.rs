@@ -1,6 +1,10 @@
 
+//Exported
 EXPORTED_VULKAN_FUNCTION!(vkGetInstanceProcAddr);
 
-macro_rules! EXPORTED_VULKAN_FUNCTION { () => {} }
+//Global Vulkan Functions
+EXPORTED_VULKAN_FUNCTION!(vkEnumerateInstanceExtensionProperties);
+EXPORTED_VULKAN_FUNCTION!(vkEnumerateInstanceLayerProperties);
+EXPORTED_VULKAN_FUNCTION!(vkCreateInstance);
 
 
