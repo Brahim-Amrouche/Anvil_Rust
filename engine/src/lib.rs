@@ -1,15 +1,17 @@
 #![allow(non_snake_case)]
 #![allow(non_camel_case_types)]
 #![allow(non_upper_case_globals)]
+mod vulkan_bindings;
 
 pub mod vulkan_mod {
     use paste::paste;
+    use std::ffi::CString;
 
-    pub mod vulkan_bindings {
-        include!("../bindings/binding.rs");
-    }
+    use crate::vulkan_bindings;
 
     static mut VULKAN_LIBRARY:Option<libloading::Library>= None;
+    static mut AVAILABLE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
+    static mut VULKAN_INSTANCE: vulkan_bindings::VkInstance = std::ptr::null_mut();
 
     macro_rules! EXPORTED_VULKAN_FUNCTION {
         ($name: ident) => {
@@ -17,6 +19,15 @@ pub mod vulkan_mod {
             #[allow(non_upper_case_globals)]
             static mut $name :  vulkan_bindings::[<PFN_$name>] = None;
            }
+        };
+    }
+
+    macro_rules! VK_MAKE_API_VERSION {
+        ($variant:expr, $major:expr, $minor:expr, $patch:expr) => {
+            ((($variant as u32) << 29) |
+             (($major as u32) << 22) |
+             (($minor as u32) << 12) |
+             ($patch as u32))
         };
     }
 
@@ -29,6 +40,7 @@ pub mod vulkan_mod {
         GLOBAL_VK_FUNCTION_ERROR(String),
         UNLOADABLE_EXTENSIONS,
         UNAVAILABLE_EXTENSION(String),
+        FAILED_INSTANTIATING_VULKAN,
     }
 
     impl std::fmt::Display for VulkanInitError {
@@ -37,6 +49,7 @@ pub mod vulkan_mod {
                 VulkanInitError::UNLOADABLE_LIBRARY => write!(f, "Couldn't load vulkan library"),
                 VulkanInitError::UNLOADABLE_EXTENSIONS => write!(f, "Couldn't load vulkan available extensions"),
                 VulkanInitError::UNAVAILABLE_EXTENSION(exts) => write!(f, "Can't initiate this unavailable extensions: {}", exts),
+                VulkanInitError::FAILED_INSTANTIATING_VULKAN => write!(f, "An Error Occured During Vulkan Instantiation"),
                 VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
                 | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg) => write!(f, "{}" ,msg),
             }
@@ -75,7 +88,7 @@ pub mod vulkan_mod {
                 };
             }
 
-            use std::ffi::CString;
+
             macro_rules! LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION {
                 ($function: ident) => {
                     paste! {
@@ -102,9 +115,6 @@ pub mod vulkan_mod {
         }
     }
 
-
-    static mut AVAILABLE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
-
     pub fn get_vulkan_available_extensions() -> Result<(), VulkanInitError>
     {
         unsafe {
@@ -130,7 +140,6 @@ pub mod vulkan_mod {
         }
     }
 
-
     pub fn list_available_extensions()
     {
         unsafe {
@@ -143,7 +152,7 @@ pub mod vulkan_mod {
         }
     }
 
-    pub fn check_desired_extensions(ref desired_extensions:Vec<&str>)-> Result<(), VulkanInitError>
+    pub fn check_desired_extensions(desired_extensions: &Vec<&str>)-> Result<(), VulkanInitError>
     {
         unsafe {
             let extensions = std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
@@ -168,4 +177,47 @@ pub mod vulkan_mod {
         }
         Ok(())
     }
+
+    pub fn instantiate_vulkan(desired_extensions: &Vec<&str>) -> Result<(), VulkanInitError>
+    {
+        let app_name = CString::new("anvil").unwrap();     
+        let app_info  = vulkan_bindings::VkApplicationInfo {
+              sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_APPLICATION_INFO,
+              pNext : std::ptr::null(),
+              pApplicationName : app_name.as_ptr(),
+              applicationVersion : VK_MAKE_API_VERSION!(0, 1 , 0, 0),
+              pEngineName : app_name.as_ptr(),
+              engineVersion : VK_MAKE_API_VERSION!(0, 1 , 0, 0),
+              apiVersion: VK_MAKE_API_VERSION!(0, 1 , 0, 0)
+        };
+
+        let desired_extensions_cstr: Vec<CString> = desired_extensions.iter()
+        .map(|&s| CString::new(s).unwrap())
+        .collect();
+
+        let desired_extensions_ptrs : Vec<* const i8> = desired_extensions_cstr.iter()
+        .map(|s| s.as_ptr())
+        .collect();
+        let instance_creation_info = vulkan_bindings::VkInstanceCreateInfo {
+            sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+            pNext : std::ptr::null(),
+            flags: 0,
+            pApplicationInfo : &app_info,
+            enabledLayerCount: 0,
+            ppEnabledLayerNames: std::ptr::null(),
+            enabledExtensionCount: desired_extensions.len() as u32,
+            ppEnabledExtensionNames : if desired_extensions.len() > 0 { desired_extensions_ptrs.as_ptr() } else { std::ptr::null() }
+        };
+
+        unsafe {
+            let vulkan_instance = std::ptr::addr_of_mut!(VULKAN_INSTANCE);
+            let  result = vkCreateInstance.unwrap()(&instance_creation_info, std::ptr::null(), vulkan_instance);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || vulkan_instance == std::ptr::null_mut() 
+            {
+                return  Err(VulkanInitError::FAILED_INSTANTIATING_VULKAN);
+            }
+        }
+        return  Ok(());
+    }
+
 }
