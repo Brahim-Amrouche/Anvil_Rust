@@ -5,9 +5,11 @@ use std::ffi::CString;
 use crate::vulkan_bindings;
 
 static mut VULKAN_LIBRARY:Option<libloading::Library>= None;
-pub static mut AVAILABLE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
-pub static mut ENABLED_EXTENSIONS : Vec<&str> = Vec::new();
+static mut AVAILABLE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
+static mut ENABLED_EXTENSIONS : Vec<&str> = Vec::new();
 static mut VULKAN_INSTANCE: vulkan_bindings::VkInstance = std::ptr::null_mut();
+static mut AVAILABLE_PHYSICAL_DEVICES: Vec<vulkan_bindings::VkPhysicalDevice> = Vec::new();
+static mut PHYSICAL_DEVICE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
 
 macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {
@@ -51,7 +53,9 @@ pub enum VulkanInitError {
     UNAVAILABLE_EXTENSION(String),
     FAILED_INSTANTIATING_VULKAN,
     INSTANCE_VK_FUNCTION_ERROR(String),
-    INSTANCE_VK_EXT_FUNCTION_ERROR(String)
+    INSTANCE_VK_EXT_FUNCTION_ERROR(String),
+    UNAVAILABLE_VULKAN_PHYSICAL_DEVICES,
+    UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS,
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -61,6 +65,8 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::UNLOADABLE_EXTENSIONS => write!(f, "Couldn't load vulkan available extensions"),
             VulkanInitError::UNAVAILABLE_EXTENSION(exts) => write!(f, "Can't initiate this unavailable extensions: {}", exts),
             VulkanInitError::FAILED_INSTANTIATING_VULKAN => write!(f, "An Error Occured During Vulkan Instantiation"),
+            VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES => write!(f, "Couldn't load any vulkan capable physical device"),
+            VulkanInitError::UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS => write!(f, "Couldn't load any physical device extension"),
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
@@ -156,8 +162,7 @@ pub fn get_vulkan_available_extensions() -> Result<(), VulkanInitError>
 pub fn list_available_extensions()
 {
     unsafe {
-        let extensions = std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
-        let extensions = &*extensions;
+        let ref extensions = *std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
         for extension in  extensions{
             let x:[u8;256] = std::mem::transmute::<[i8;256], [u8;256]>(extension.extensionName);
             println!("{}", String::from_utf8(x.to_vec()).unwrap());
@@ -245,8 +250,8 @@ pub fn load_vulkan_instance_functions() -> Result<(), VulkanInitError>
                     let proc_addr = vkGetInstanceProcAddr.unwrap();
                     let func_name = CString::new(stringify!($function)).unwrap();
                     let func = proc_addr(VULKAN_INSTANCE, func_name.as_ptr());
-                    let func = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>]>(func);
-                    match func {
+                    $function = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>]>(func);
+                    match $function {
                         Some(_) => (),
                         None => {
                             let err = VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(format!("Couldn't load instance level vulkan function: {}", stringify!($func) ) );
@@ -269,8 +274,8 @@ pub fn load_vulkan_instance_functions() -> Result<(), VulkanInitError>
                         if func_extension_name == *extension
                         {
                             let func = proc_addr(VULKAN_INSTANCE, cstr_func_name.as_ptr());
-                            let func = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>]>(func);
-                            match func {
+                            $function = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>]>(func);
+                            match $function {
                                 Some(_) => (),
                                 None => {
                                     let err = VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(
@@ -290,6 +295,62 @@ pub fn load_vulkan_instance_functions() -> Result<(), VulkanInitError>
     Ok(())
 }
 
+
+
+pub fn get_vulkan_available_physical_devices() -> Result<(), VulkanInitError>
+{
+    unsafe {
+        let fn_vkEnumeratePhysicalDevices = vkEnumeratePhysicalDevices.unwrap();
+        let mut devices_count = 0;
+        let result = fn_vkEnumeratePhysicalDevices(VULKAN_INSTANCE, &mut devices_count, std::ptr::null_mut());
+        if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
+        {
+            return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
+        }
+        AVAILABLE_PHYSICAL_DEVICES.resize(devices_count as usize, std::ptr::null_mut());
+        let result = fn_vkEnumeratePhysicalDevices(VULKAN_INSTANCE, &mut devices_count, AVAILABLE_PHYSICAL_DEVICES.as_mut_ptr());
+        if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
+        {
+            return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
+        }
+    }
+    Ok(())
+}
+
+pub fn get_available_physical_device_extensions() -> Result<(), VulkanInitError>
+{
+    unsafe {
+        let ref available_physical_devices = *std::ptr::addr_of!(AVAILABLE_PHYSICAL_DEVICES);
+        let fn_vkEnumerateDeviceExtensionProperties = vkEnumerateDeviceExtensionProperties.unwrap();
+        let physical_device = available_physical_devices[0];
+        let mut extension_count = 0;
+        let result = fn_vkEnumerateDeviceExtensionProperties(physical_device, std::ptr::null(), &mut extension_count, std::ptr::null_mut());
+        if result != vulkan_bindings::VkResult_VK_SUCCESS || extension_count == 0
+        {
+            return  Err(VulkanInitError::UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS);
+        }
+        PHYSICAL_DEVICE_EXTENSIONS.resize(extension_count as usize, vulkan_bindings::VkExtensionProperties { extensionName: [0;256], specVersion: 0 });
+        let result = fn_vkEnumerateDeviceExtensionProperties(physical_device, std::ptr::null(), &mut extension_count, PHYSICAL_DEVICE_EXTENSIONS.as_mut_ptr());
+        if result != vulkan_bindings::VkResult_VK_SUCCESS || extension_count == 0
+        {
+            return  Err(VulkanInitError::UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS);
+        }
+    }
+    Ok(())
+}
+
+
+pub fn list_available_physical_device_extensions()
+{
+    unsafe {
+        let ref extensions = *std::ptr::addr_of!(PHYSICAL_DEVICE_EXTENSIONS);
+        for extension in  extensions{
+            let x:[u8;256] = std::mem::transmute::<[i8;256], [u8;256]>(extension.extensionName);
+            println!("{}", String::from_utf8(x.to_vec()).unwrap());
+        }
+    }
+}
+
 macro_rules! INIT_OPERATION_UNWRAP_RESULT {
     ($func_res: expr) => {
         match $func_res {
@@ -305,9 +366,10 @@ macro_rules! INIT_OPERATION_UNWRAP_RESULT {
 pub fn initialize_vulkan(){
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_lib() ); 
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_extensions() );
-    // vulkan_mod::list_available_extensions();
     INIT_OPERATION_UNWRAP_RESULT!( self::check_desired_extensions() );
     INIT_OPERATION_UNWRAP_RESULT!( self::instantiate_vulkan()) ;
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_instance_functions());
+    INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_physical_devices());
+    INIT_OPERATION_UNWRAP_RESULT!( self::get_available_physical_device_extensions());
     println!("Done Loading");
 }

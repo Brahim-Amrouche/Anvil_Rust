@@ -9,6 +9,7 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateInstance);
 
 // Instance Level Vulkan Functions
 EXPORTED_VULKAN_FUNCTION!(vkEnumeratePhysicalDevices);
+EXPORTED_VULKAN_FUNCTION!(vkEnumerateDeviceExtensionProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceFeatures);
 EXPORTED_VULKAN_FUNCTION!(vkCreateDevice);

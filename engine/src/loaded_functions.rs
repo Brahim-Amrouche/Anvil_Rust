@@ -7,6 +7,7 @@
     LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION!(vkCreateInstance);
     
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkEnumeratePhysicalDevices);
+    LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkEnumerateDeviceExtensionProperties);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceProperties);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceFeatures);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkCreateDevice);
