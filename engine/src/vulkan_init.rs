@@ -10,6 +10,8 @@ static mut ENABLED_EXTENSIONS : Vec<&str> = Vec::new();
 static mut VULKAN_INSTANCE: vulkan_bindings::VkInstance = std::ptr::null_mut();
 static mut AVAILABLE_PHYSICAL_DEVICES: Vec<vulkan_bindings::VkPhysicalDevice> = Vec::new();
 static mut PHYSICAL_DEVICE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
+static mut PHYSICAL_DEVICE_FEATURES: Option<vulkan_bindings::VkPhysicalDeviceFeatures> = None;
+static mut PHYSICAL_DEVICE_PROPERTIES : Option<vulkan_bindings::VkPhysicalDeviceProperties> = None;
 
 macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {
@@ -339,7 +341,6 @@ pub fn get_available_physical_device_extensions() -> Result<(), VulkanInitError>
     Ok(())
 }
 
-
 pub fn list_available_physical_device_extensions()
 {
     unsafe {
@@ -348,6 +349,26 @@ pub fn list_available_physical_device_extensions()
             let x:[u8;256] = std::mem::transmute::<[i8;256], [u8;256]>(extension.extensionName);
             println!("{}", String::from_utf8(x.to_vec()).unwrap());
         }
+    }
+}
+
+pub fn get_physical_device_features()
+{
+    unsafe {
+        let mut ph_device_features: vulkan_bindings::VkPhysicalDeviceFeatures = std::mem::zeroed();
+        let fn_vkGetPhysicalDeviceFeatures = vkGetPhysicalDeviceFeatures.unwrap();
+        fn_vkGetPhysicalDeviceFeatures(AVAILABLE_PHYSICAL_DEVICES[0], &mut ph_device_features);
+        PHYSICAL_DEVICE_FEATURES  = Some(ph_device_features);
+    }
+}
+
+pub fn get_physical_device_properties()
+{
+    unsafe{
+        let mut ph_device_properties: vulkan_bindings::VkPhysicalDeviceProperties = std::mem::zeroed();
+        let fn_vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties.unwrap();
+        fn_vkGetPhysicalDeviceProperties(AVAILABLE_PHYSICAL_DEVICES[0], &mut ph_device_properties);
+        PHYSICAL_DEVICE_PROPERTIES = Some(ph_device_properties);
     }
 }
 
@@ -371,5 +392,7 @@ pub fn initialize_vulkan(){
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_instance_functions());
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_physical_devices());
     INIT_OPERATION_UNWRAP_RESULT!( self::get_available_physical_device_extensions());
+    get_physical_device_features();
+    get_physical_device_properties();
     println!("Done Loading");
 }
