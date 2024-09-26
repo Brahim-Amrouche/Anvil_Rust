@@ -1,8 +1,11 @@
-
 use paste::paste;
 use std::ffi::CString;
-
 use crate::vulkan_bindings;
+
+struct QueueInfo {
+    familyIndex : usize,
+    priorities : Vec<f32>
+}
 
 static mut VULKAN_LIBRARY:Option<libloading::Library>= None;
 static mut AVAILABLE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
@@ -10,8 +13,13 @@ static mut ENABLED_EXTENSIONS : Vec<&str> = Vec::new();
 static mut VULKAN_INSTANCE: vulkan_bindings::VkInstance = std::ptr::null_mut();
 static mut AVAILABLE_PHYSICAL_DEVICES: Vec<vulkan_bindings::VkPhysicalDevice> = Vec::new();
 static mut PHYSICAL_DEVICE_EXTENSIONS: Vec<vulkan_bindings::VkExtensionProperties> = Vec::new();
+static mut ENABLED_PHYSICAL_DEVICE_EXTENSIONS : Vec<&str> = Vec::new();
 static mut PHYSICAL_DEVICE_FEATURES: Option<vulkan_bindings::VkPhysicalDeviceFeatures> = None;
 static mut PHYSICAL_DEVICE_PROPERTIES : Option<vulkan_bindings::VkPhysicalDeviceProperties> = None;
+static mut AVAILABLE_FAMILY_QUEUES: Vec<vulkan_bindings::VkQueueFamilyProperties> = Vec::new();
+static mut DESIRED_FAMILY_QUEUES: Vec<QueueInfo> = Vec::new();
+static mut QUEUE_CREATE_INFO : Vec<vulkan_bindings::VkDeviceQueueCreateInfo> = Vec::new();
+static mut LOGICAL_DEVICE : vulkan_bindings::VkDevice = std::ptr::null_mut();
 
 macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {
@@ -58,6 +66,10 @@ pub enum VulkanInitError {
     INSTANCE_VK_EXT_FUNCTION_ERROR(String),
     UNAVAILABLE_VULKAN_PHYSICAL_DEVICES,
     UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS,
+    FAILED_TO_LIST_FAMILY_QUEUES,
+    NO_VALID_DESIRED_FAMILY_QUEUE,
+    UNAVAILABLE_DESIRED_PHYSICAL_DEVICE_EXTENSION(String),
+    FAILED_INSTANTIATING_LOGICAL_DEVICE,
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -69,6 +81,10 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::FAILED_INSTANTIATING_VULKAN => write!(f, "An Error Occured During Vulkan Instantiation"),
             VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES => write!(f, "Couldn't load any vulkan capable physical device"),
             VulkanInitError::UNAVAILABLE_PHYSICAL_DEVICE_EXTENSIONS => write!(f, "Couldn't load any physical device extension"),
+            VulkanInitError::FAILED_TO_LIST_FAMILY_QUEUES => write!(f, "Couldn't list any family queues on physical device"),
+            VulkanInitError::NO_VALID_DESIRED_FAMILY_QUEUE => write!(f, "Couldn't find valid desired family queue"),
+            VulkanInitError::UNAVAILABLE_DESIRED_PHYSICAL_DEVICE_EXTENSION(ext) => write!(f, "Couldn't find this physical device extension: {}", ext),
+            VulkanInitError::FAILED_INSTANTIATING_LOGICAL_DEVICE => write!(f, "Couldn't initiate Logical Device"),
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
@@ -108,7 +124,6 @@ pub fn load_vulkan_lib() -> VulkanInitResult
                 }
             };
         }
-
 
         macro_rules! LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION {
             ($function: ident) => {
@@ -175,8 +190,7 @@ pub fn list_available_extensions()
 pub fn check_desired_extensions()-> Result<(), VulkanInitError>
 {
     unsafe {
-        let extensions = std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
-        let extensions = &*extensions;
+        let ref extensions = *std::ptr::addr_of!(AVAILABLE_EXTENSIONS);
         let ref desired_extensions = *std::ptr::addr_of!(ENABLED_EXTENSIONS);
         let mut found;
         for desired in desired_extensions{
@@ -319,12 +333,10 @@ pub fn get_vulkan_available_physical_devices() -> Result<(), VulkanInitError>
     Ok(())
 }
 
-pub fn get_available_physical_device_extensions() -> Result<(), VulkanInitError>
+pub fn get_available_physical_device_extensions(physical_device: vulkan_bindings::VkPhysicalDevice) -> Result<(), VulkanInitError>
 {
     unsafe {
-        let ref available_physical_devices = *std::ptr::addr_of!(AVAILABLE_PHYSICAL_DEVICES);
         let fn_vkEnumerateDeviceExtensionProperties = vkEnumerateDeviceExtensionProperties.unwrap();
-        let physical_device = available_physical_devices[0];
         let mut extension_count = 0;
         let result = fn_vkEnumerateDeviceExtensionProperties(physical_device, std::ptr::null(), &mut extension_count, std::ptr::null_mut());
         if result != vulkan_bindings::VkResult_VK_SUCCESS || extension_count == 0
@@ -352,24 +364,65 @@ pub fn list_available_physical_device_extensions()
     }
 }
 
-pub fn get_physical_device_features()
+pub fn get_physical_device_features(physical_device: vulkan_bindings::VkPhysicalDevice)
 {
     unsafe {
         let mut ph_device_features: vulkan_bindings::VkPhysicalDeviceFeatures = std::mem::zeroed();
         let fn_vkGetPhysicalDeviceFeatures = vkGetPhysicalDeviceFeatures.unwrap();
-        fn_vkGetPhysicalDeviceFeatures(AVAILABLE_PHYSICAL_DEVICES[0], &mut ph_device_features);
+        fn_vkGetPhysicalDeviceFeatures(physical_device, &mut ph_device_features);
         PHYSICAL_DEVICE_FEATURES  = Some(ph_device_features);
     }
 }
 
-pub fn get_physical_device_properties()
+pub fn get_physical_device_properties(physical_device: vulkan_bindings::VkPhysicalDevice)
 {
     unsafe{
         let mut ph_device_properties: vulkan_bindings::VkPhysicalDeviceProperties = std::mem::zeroed();
         let fn_vkGetPhysicalDeviceProperties = vkGetPhysicalDeviceProperties.unwrap();
-        fn_vkGetPhysicalDeviceProperties(AVAILABLE_PHYSICAL_DEVICES[0], &mut ph_device_properties);
+        fn_vkGetPhysicalDeviceProperties(physical_device, &mut ph_device_properties);
         PHYSICAL_DEVICE_PROPERTIES = Some(ph_device_properties);
     }
+}
+
+pub fn check_available_family_queues(physical_device: vulkan_bindings::VkPhysicalDevice) -> Result<(), VulkanInitError>
+{
+    unsafe{
+        let fn_vkGetPhysicalDeviceQueueFamilyProperties = vkGetPhysicalDeviceQueueFamilyProperties.unwrap();
+        let mut family_queues_count = 0;
+
+        fn_vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &mut family_queues_count, std::ptr::null_mut());
+        if family_queues_count == 0
+        {
+            return Err(VulkanInitError::FAILED_TO_LIST_FAMILY_QUEUES);
+        }
+        let default_fam_queue: vulkan_bindings::VkQueueFamilyProperties = std::mem::zeroed();
+        AVAILABLE_FAMILY_QUEUES.resize(family_queues_count as usize, default_fam_queue);
+        fn_vkGetPhysicalDeviceQueueFamilyProperties(physical_device, &mut family_queues_count, AVAILABLE_FAMILY_QUEUES.as_mut_ptr());
+        if family_queues_count == 0
+        {
+            return Err(VulkanInitError::FAILED_TO_LIST_FAMILY_QUEUES);
+        }
+    }
+    Ok(())
+}
+
+pub fn get_desired_family_queues(desired_capabilities: &[vulkan_bindings::VkQueueFlags]) -> Result<(), VulkanInitError>
+{
+    unsafe {
+        let available_fam_queues = std::ptr::addr_of_mut!(AVAILABLE_FAMILY_QUEUES);
+        'outer: for desire_capability in desired_capabilities {
+            for (idx,  queue )in (*available_fam_queues).iter().enumerate() {
+                if queue.queueCount > 0 && queue.queueFlags & desire_capability != 0
+                {
+                    DESIRED_FAMILY_QUEUES.push(QueueInfo { familyIndex: idx, priorities: vec![0.5f32; queue.queueCount as usize]});
+                    (*available_fam_queues).remove(idx);
+                    continue 'outer;
+                }
+            }
+            return Err(VulkanInitError::NO_VALID_DESIRED_FAMILY_QUEUE);
+        }
+    }
+    Ok(())
 }
 
 macro_rules! INIT_OPERATION_UNWRAP_RESULT {
@@ -384,6 +437,95 @@ macro_rules! INIT_OPERATION_UNWRAP_RESULT {
     };
 }
 
+pub fn validate_desired_physical_device_extensions() -> Result<(), VulkanInitError>
+{
+    unsafe {
+        let ref available_extensions = *std::ptr::addr_of!(PHYSICAL_DEVICE_EXTENSIONS);
+        let ref desired_extensions = *std::ptr::addr_of!(ENABLED_PHYSICAL_DEVICE_EXTENSIONS);
+        let mut found;
+        for desired in desired_extensions{
+            found = false;
+            for available in available_extensions{
+                let available = std::mem::transmute::<[i8;256], [u8;256]>(available.extensionName);
+                let available = String::from_utf8(available.to_vec()).unwrap().trim_end_matches('\0').to_string();
+                if *desired == available
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if found == false
+            {
+                return Err(VulkanInitError::UNAVAILABLE_DESIRED_PHYSICAL_DEVICE_EXTENSION(desired.to_string()));
+            }
+        }
+    }
+    Ok(())
+}
+
+pub fn init_device_queue_info()
+{
+    unsafe {
+        let ref desired_fam_queues = *std::ptr::addr_of!(DESIRED_FAMILY_QUEUES);
+        for queue in desired_fam_queues {
+            QUEUE_CREATE_INFO.push(vulkan_bindings::VkDeviceQueueCreateInfo { 
+                    sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO, 
+                    pNext: std::ptr::null(), 
+                    flags: 0, 
+                    queueFamilyIndex: queue.familyIndex as u32, 
+                    queueCount: queue.priorities.len() as u32, 
+                    pQueuePriorities: queue.priorities.as_ptr()
+                }
+            );
+        }
+    }
+}
+
+pub fn create_logical_device(physical_device: vulkan_bindings::VkPhysicalDevice) -> Result<(), VulkanInitError>
+{
+    unsafe {
+        let enabled_ph_device_exts_cstr: Vec<CString> = ENABLED_PHYSICAL_DEVICE_EXTENSIONS.iter()
+        .map(|s| CString::new(*s).unwrap())
+        .collect();
+        let enabled_ph_device_exts_ptrs: Vec<* const i8> = enabled_ph_device_exts_cstr.iter()
+        .map(|cs| cs.as_ptr())
+        .collect();
+        let device_create_info = vulkan_bindings::VkDeviceCreateInfo{
+            sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+            pNext: std::ptr::null(),
+            flags: 0,
+            queueCreateInfoCount: QUEUE_CREATE_INFO.len() as u32,
+            pQueueCreateInfos: if QUEUE_CREATE_INFO.len() > 0  {  QUEUE_CREATE_INFO.as_ptr() } else { std::ptr::null() },
+            enabledLayerCount: 0,
+            ppEnabledLayerNames: std::ptr::null(),
+            enabledExtensionCount: enabled_ph_device_exts_ptrs.len() as u32,
+            ppEnabledExtensionNames: if enabled_ph_device_exts_ptrs.len() > 0 { enabled_ph_device_exts_ptrs.as_ptr() } else { std::ptr::null() },
+            pEnabledFeatures : std::ptr::null()
+        };
+        let fn_vkCreateDevice = vkCreateDevice.unwrap();
+        let result = fn_vkCreateDevice(physical_device, &device_create_info, std::ptr::null(), std::ptr::addr_of_mut!(LOGICAL_DEVICE));
+        if result != vulkan_bindings::VkResult_VK_SUCCESS || LOGICAL_DEVICE == std::ptr::null_mut()
+        {
+            return Err(VulkanInitError::FAILED_INSTANTIATING_LOGICAL_DEVICE);
+        }
+    }
+    Ok(())
+}
+
+pub fn init_logical_device(physical_device: vulkan_bindings::VkPhysicalDevice) -> Result<(), VulkanInitError>
+{   
+    self::get_available_physical_device_extensions(physical_device)?;
+    // self::list_available_physical_device_extensions();
+    self::get_physical_device_features(physical_device);
+    self::get_physical_device_properties(physical_device);
+    self::check_available_family_queues(physical_device)?;
+    self::get_desired_family_queues(&[vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT])?;
+    self::validate_desired_physical_device_extensions()?;
+    self::init_device_queue_info();
+    self::create_logical_device(physical_device)?;
+    Ok(())   
+}
+
 pub fn initialize_vulkan(){
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_lib() ); 
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_extensions() );
@@ -391,8 +533,10 @@ pub fn initialize_vulkan(){
     INIT_OPERATION_UNWRAP_RESULT!( self::instantiate_vulkan()) ;
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_instance_functions());
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_physical_devices());
-    INIT_OPERATION_UNWRAP_RESULT!( self::get_available_physical_device_extensions());
-    get_physical_device_features();
-    get_physical_device_properties();
+    let physical_device;
+    unsafe {
+        physical_device = AVAILABLE_PHYSICAL_DEVICES[0];
+    }
+    INIT_OPERATION_UNWRAP_RESULT!( self::init_logical_device(physical_device));
     println!("Done Loading");
 }

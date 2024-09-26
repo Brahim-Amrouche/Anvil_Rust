@@ -14,6 +14,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceFeatures);
 EXPORTED_VULKAN_FUNCTION!(vkCreateDevice);
 EXPORTED_VULKAN_FUNCTION!(vkGetDeviceProcAddr);
+EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 
 
 // Instance Level Vulkan Extensions Functions
