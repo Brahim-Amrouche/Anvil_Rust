@@ -21,3 +21,15 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceFormatsKHR);
+
+
+// Device Level Vulkan Function
+EXPORTED_VULKAN_FUNCTION!(vkGetDeviceQueue);
+EXPORTED_VULKAN_FUNCTION!(vkDeviceWaitIdle);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyDevice);
+EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
+EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
+
+// Device Level Vulkan Extensions Functions
+
+

@@ -49,6 +49,8 @@ macro_rules! DEFAULTED_IMPORT_MACROS {
         macro_rules!  LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION {($func: ident) => {}}
         #[allow(unused_macros)]
         macro_rules! LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSIONS {($function: ident, $ext: ident) => {}}
+        #[allow(unused_macros)]
+        macro_rules! LOAD_DEVICE_LEVEL_VULKAN_FUNCTION {($func: ident) => {}}
     };
 }
 
@@ -70,6 +72,7 @@ pub enum VulkanInitError {
     NO_VALID_DESIRED_FAMILY_QUEUE,
     UNAVAILABLE_DESIRED_PHYSICAL_DEVICE_EXTENSION(String),
     FAILED_INSTANTIATING_LOGICAL_DEVICE,
+    DEVICE_LEVEL_FUNCTION_ERROR(String)
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -88,7 +91,8 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
-            | VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(msg) => write!(f, "{}" ,msg),
+            | VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(msg)
+            | VulkanInitError::DEVICE_LEVEL_FUNCTION_ERROR(msg) => write!(f, "{}" ,msg),
         }
     }
 }
@@ -526,6 +530,37 @@ pub fn init_logical_device(physical_device: vulkan_bindings::VkPhysicalDevice) -
     Ok(())   
 }
 
+
+pub fn load_device_level_functions() -> Result<(), VulkanInitError>
+{
+    unsafe {
+        DEFAULTED_IMPORT_MACROS!();
+
+        macro_rules! LOAD_DEVICE_LEVEL_VULKAN_FUNCTION {
+            ($function: ident) => {
+                paste! {
+                    let fn_vkGetDeviceProcAddr = vkGetDeviceProcAddr.unwrap();
+                    let func_name = CString::new(stringify!($function)).unwrap();
+                    let func = fn_vkGetDeviceProcAddr(LOGICAL_DEVICE, func_name.as_ptr());
+                    $function = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>]>(func);
+                    match $function {
+                        Some(_) => (),
+                        None => {
+                            let err = VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(
+                                format!("Couldn't load device level vulkan function: {}", stringify!($function))
+                            );
+                            return  Err(err);
+                        }
+                    };
+                }
+            };
+        }
+
+        include!("loaded_functions.rs");
+    }
+    Ok(())
+}
+
 pub fn initialize_vulkan(){
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_lib() ); 
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_extensions() );
@@ -538,5 +573,6 @@ pub fn initialize_vulkan(){
         physical_device = AVAILABLE_PHYSICAL_DEVICES[0];
     }
     INIT_OPERATION_UNWRAP_RESULT!( self::init_logical_device(physical_device));
+    INIT_OPERATION_UNWRAP_RESULT!( self::load_device_level_functions());
     println!("Done Loading");
 }
