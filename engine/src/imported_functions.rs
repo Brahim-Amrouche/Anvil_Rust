@@ -31,5 +31,6 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 
 // Device Level Vulkan Extensions Functions
+EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);
 
 

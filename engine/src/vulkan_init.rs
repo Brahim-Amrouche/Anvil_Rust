@@ -51,6 +51,8 @@ macro_rules! DEFAULTED_IMPORT_MACROS {
         macro_rules! LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSIONS {($function: ident, $ext: ident) => {}}
         #[allow(unused_macros)]
         macro_rules! LOAD_DEVICE_LEVEL_VULKAN_FUNCTION {($func: ident) => {}}
+        #[allow(unused_macros)]
+        macro_rules!  LOAD_DEVICE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSION {($func: ident, $ext:ident) => {}}
     };
 }
 
@@ -287,7 +289,7 @@ pub fn load_vulkan_instance_functions() -> Result<(), VulkanInitError>
                 paste! {
                     let ref enabled_extensions = *std::ptr::addr_of!(ENABLED_EXTENSIONS);
                     let proc_addr = vkGetInstanceProcAddr.unwrap();
-                    let func_extension_name = String::from_utf8(vulkan_bindings::[<$ext>].into()).unwrap();
+                    let func_extension_name = String::from_utf8(vulkan_bindings::[<$ext>].into()).unwrap().trim_end_matches('\0').to_string();
                     let cstr_func_name = CString::new(stringify!($function)).unwrap();
                     for extension in enabled_extensions
                     {
@@ -306,9 +308,16 @@ pub fn load_vulkan_instance_functions() -> Result<(), VulkanInitError>
                             };
                         }
                     }
+                    if $function.is_none() {
+                        let err = VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(
+                            format!("Couldn't load instance level extension vulkan function: {}", stringify!($function))
+                        );
+                        return  Err(err);
+                    }
                 }
             };
         }
+
 
         include!("loaded_functions.rs");  
     }
@@ -556,14 +565,51 @@ pub fn load_device_level_functions() -> Result<(), VulkanInitError>
             };
         }
 
+        macro_rules!  LOAD_DEVICE_LEVEL_VULKAN_FUNCTION_FROM_EXTENSION {
+            ($function: ident , $ext: ident) => {
+                paste!{
+                    let ref ph_extensions = *std::ptr::addr_of!(ENABLED_PHYSICAL_DEVICE_EXTENSIONS);
+                    let fn_vkGetDeviceProcAddr = vkGetDeviceProcAddr.unwrap();
+                    let func_name = CString::new(stringify!($function)).unwrap();
+                    let extension_name = String::from_utf8(vulkan_bindings::[<$ext>].into()).unwrap().trim_end_matches('\0').to_string();
+                    for ph_ext in ph_extensions
+                    {
+                        if extension_name == *ph_ext
+                        {
+                            let func = fn_vkGetDeviceProcAddr(LOGICAL_DEVICE, func_name.as_ptr());
+                            $function = std::mem::transmute::<vulkan_bindings::PFN_vkVoidFunction, vulkan_bindings::[<PFN_$function>] >(func);
+                            if $function.is_none()
+                            {
+                                println!("Erro here");
+                                let err = VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(
+                                    format!("Couldn't load device level extension vulkan function: {}", stringify!($function))
+                                );
+                                return  Err(err);
+                            }
+                        }
+                    }
+                    if $function.is_none() {
+                        let err = VulkanInitError::INSTANCE_VK_EXT_FUNCTION_ERROR(
+                            format!("Couldn't load device level extension vulkan function: {}", stringify!($function))
+                        );
+                        return  Err(err);
+                    }
+                }
+            };
+        }
+        
         include!("loaded_functions.rs");
     }
     Ok(())
 }
 
 pub fn initialize_vulkan(){
+    unsafe {
+        ENABLED_EXTENSIONS.extend_from_slice(&["VK_KHR_surface", "VK_KHR_display"]);
+    }
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_lib() ); 
     INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_extensions() );
+    // list_available_extensions();
     INIT_OPERATION_UNWRAP_RESULT!( self::check_desired_extensions() );
     INIT_OPERATION_UNWRAP_RESULT!( self::instantiate_vulkan()) ;
     INIT_OPERATION_UNWRAP_RESULT!( self::load_vulkan_instance_functions());
@@ -571,6 +617,7 @@ pub fn initialize_vulkan(){
     let physical_device;
     unsafe {
         physical_device = AVAILABLE_PHYSICAL_DEVICES[0];
+        ENABLED_PHYSICAL_DEVICE_EXTENSIONS.push("VK_KHR_swapchain");
     }
     INIT_OPERATION_UNWRAP_RESULT!( self::init_logical_device(physical_device));
     INIT_OPERATION_UNWRAP_RESULT!( self::load_device_level_functions());
