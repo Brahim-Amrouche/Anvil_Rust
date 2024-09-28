@@ -6,6 +6,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetInstanceProcAddr);
 EXPORTED_VULKAN_FUNCTION!(vkEnumerateInstanceExtensionProperties);
 EXPORTED_VULKAN_FUNCTION!(vkEnumerateInstanceLayerProperties);
 EXPORTED_VULKAN_FUNCTION!(vkCreateInstance);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyInstance);
 
 // Instance Level Vulkan Functions
 EXPORTED_VULKAN_FUNCTION!(vkEnumeratePhysicalDevices);

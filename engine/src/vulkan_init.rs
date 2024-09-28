@@ -3,7 +3,6 @@ use std::ffi::CString;
 use crate::vulkan_bindings;
 
 static mut VULKAN_INSTANCE:Option<VulkanInstance>= None;
-static mut VULKAN_PHYSICAL_DEVICES : Vec<VulkanPhysicalDevice> = Vec::new();
 
 macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {
@@ -91,6 +90,7 @@ impl std::error::Error for VulkanInitError {}
 
 pub struct QueueInfo {
     familyIndex : usize,
+    capability : vulkan_bindings::VkQueueFlags,
     priorities : Vec<f32>
 }
 
@@ -98,7 +98,8 @@ pub struct VulkanInstance {
     vulkan_library: libloading::Library,
     available_extensions : Vec<vulkan_bindings::VkExtensionProperties>,
     enabled_extensions : Vec<&'static str>,
-    instance : vulkan_bindings::VkInstance
+    instance : vulkan_bindings::VkInstance,
+    physical_devices : Vec<VulkanPhysicalDevice>
 }
 
 impl VulkanInstance {
@@ -109,13 +110,15 @@ impl VulkanInstance {
                 vulkan_library : libloading::Library::new("libvulkan.so.1")?,
                 available_extensions : Vec::new(),
                 enabled_extensions: desired_extensions.into(),
-                instance : std::ptr::null_mut()
+                instance : std::ptr::null_mut(),
+                physical_devices: Vec::new()
             };
             vulkan_instance.load_global_functions()?;
             vulkan_instance.load_available_extensions()?;
             vulkan_instance.extensions_are_valid()?;
             vulkan_instance.instantiate_vulkan()?;
             vulkan_instance.load_vulkan_instance_functions()?;
+            vulkan_instance.load_physical_devices()?;
             Ok(vulkan_instance)
         }
     }
@@ -326,6 +329,47 @@ impl VulkanInstance {
         }
         Ok(())
     }
+
+    pub fn load_physical_devices(&mut self) -> Result<(), VulkanInitError>
+    {
+        unsafe {
+            let fn_vkEnumeratePhysicalDevices = vkEnumeratePhysicalDevices.unwrap();
+            let mut devices_count = 0;
+            let result = fn_vkEnumeratePhysicalDevices(self.instance, &mut devices_count, std::ptr::null_mut());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
+            {
+                return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
+            }
+            let mut physical_devices : Vec<vulkan_bindings::VkPhysicalDevice> = vec![std::ptr::null_mut(); devices_count as usize];
+            let result = fn_vkEnumeratePhysicalDevices(self.instance, &mut devices_count, physical_devices.as_mut_ptr());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
+            {
+                return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
+            }
+            for (idx,  ph_device) in physical_devices.into_iter().enumerate()
+            {
+                self.physical_devices.push(VulkanPhysicalDevice::new(ph_device));
+                self.physical_devices[idx].load_infos()?;
+            }
+        }
+        Ok(())
+    }
+
+    pub fn create_logical_device(&mut self, desired_extensions : &[&'static str], desired_capabilites: &[vulkan_bindings::VkQueueFlags]) 
+        -> Result<VulkanLogicalDevice, VulkanInitError >
+    {
+        VulkanLogicalDevice::new(self, desired_extensions, desired_capabilites)
+    }
+
+    pub fn destroy(mut self)
+    {
+        unsafe {
+            let fn_vkDestroyInstance = vkDestroyInstance.unwrap();
+            fn_vkDestroyInstance(self.instance, std::ptr::null());
+            self.instance = std::ptr::null_mut();
+            VULKAN_INSTANCE = None;
+        }
+    }
 }
 
 pub struct VulkanPhysicalDevice {
@@ -432,9 +476,9 @@ impl VulkanPhysicalDevice {
     {
         'outer: for desire_capability in desired_capabilities {
             for (idx,  queue )in self.family_queues.iter().enumerate() {
-                if queue.queueCount > 0 && (queue.queueFlags & desire_capability != 0)
+                if queue.queueCount > 0 && (queue.queueFlags & *desire_capability != 0)
                 {
-                    self.desired_queues.push(QueueInfo { familyIndex: idx, priorities: vec![0.5f32; queue.queueCount as usize]});
+                    self.desired_queues.push(QueueInfo { familyIndex: idx, capability: *desire_capability  ,priorities: vec![0.5f32; queue.queueCount as usize]});
                     self.family_queues.remove(idx);
                     continue 'outer;
                 }
@@ -471,36 +515,32 @@ impl VulkanPhysicalDevice {
     
 }
 
-struct  VulkanLogicalDevice {
+pub struct  VulkanLogicalDevice {
     pub device : vulkan_bindings::VkDevice,
     pub demanded_queues : Vec<vulkan_bindings::VkDeviceQueueCreateInfo>,
     pub enabled_extensions : Vec<&'static str>,
-    pub enabled_capabilites : Vec<vulkan_bindings::VkQueueFlags>,
     pub physical_device : *const VulkanPhysicalDevice
 }
 
 impl  VulkanLogicalDevice {
 
-    pub fn new(desired_extensions: &[&'static str], desired_capabilites: &[vulkan_bindings::VkQueueFlags]) -> Result<Self, VulkanInitError> {
+    pub fn new(vulkan_instance: &mut VulkanInstance, desired_extensions: &[&'static str], desired_capabilites: &[vulkan_bindings::VkQueueFlags]) -> Result<Self, VulkanInitError> {
         let mut vulkan_logical_device = VulkanLogicalDevice {
             device : std::ptr::null_mut(),
             demanded_queues : Vec::new(),
             enabled_extensions : desired_extensions.to_vec(),
-            enabled_capabilites : desired_capabilites.into(),
             physical_device : std::ptr::null()
         };
-        unsafe {
-            let ref mut physical_devices = *std::ptr::addr_of_mut!(VULKAN_PHYSICAL_DEVICES);
-            for ph_device in  physical_devices {
-                if ph_device.has_desired_extensions(desired_extensions) 
-                    && ph_device.has_desired_family_queues(desired_capabilites)
-                {
-                    vulkan_logical_device.physical_device = ph_device;
-                    vulkan_logical_device.init_device_queue_info();
-                    vulkan_logical_device.create_logical_device()?;
-                    vulkan_logical_device.load_device_functions()?;
-                    return Ok(vulkan_logical_device); 
-                }
+        let ref mut physical_devices = vulkan_instance.physical_devices;
+        for ph_device in  physical_devices {
+            if ph_device.has_desired_extensions(desired_extensions) 
+                && ph_device.has_desired_family_queues(desired_capabilites)
+            {
+                vulkan_logical_device.physical_device = ph_device;
+                vulkan_logical_device.init_device_queue_info();
+                vulkan_logical_device.create_logical_device()?;
+                vulkan_logical_device.load_device_functions()?;
+                return Ok(vulkan_logical_device); 
             }
         }
         Err(VulkanInitError::NO_CAPABLE_PHYSICAL_DEVICE)
@@ -617,50 +657,34 @@ impl  VulkanLogicalDevice {
     }
 
 
-    pub fn get_device_queue(& self ,queue_fam_idx:usize ,  queue_idx: usize) -> Result<vulkan_bindings::VkQueue, VulkanInitError>
+    pub fn get_device_queue(& self , desired_capability: vulkan_bindings::VkQueueFlags , queue_idx: usize) -> Option<vulkan_bindings::VkQueue>
     {
-        let mut queue : vulkan_bindings::VkQueue = std::ptr::null_mut();
         unsafe 
         {
+            let mut queue : vulkan_bindings::VkQueue = std::ptr::null_mut();
             let ref physical_device = *self.physical_device;
             let fn_vkGetDeviceQueue = vkGetDeviceQueue.unwrap();
-            if queue_fam_idx >= physical_device.desired_queues.len() || queue_idx >=  physical_device.desired_queues[queue_fam_idx].priorities.len()
-            {
-                return  Err(VulkanInitError::WRONG_DEVICE_QUEUE_INDEX);
+
+            for fam_queue in  &physical_device.desired_queues {
+                if (fam_queue.capability &  desired_capability != 0) && queue_idx < fam_queue.priorities.len() 
+                {
+                    fn_vkGetDeviceQueue(self.device, fam_queue.familyIndex as u32 , queue_idx as u32, &mut queue);
+                    return Some(queue);
+                }
             }
-            fn_vkGetDeviceQueue(self.device, physical_device.desired_queues[queue_fam_idx].familyIndex as u32 , queue_idx as u32, &mut queue);
-        }
-        Ok(queue)
-    }
-
-}
-
-
-pub fn get_vulkan_available_physical_devices() -> Result<(), VulkanInitError>
-{
-    unsafe {
-        let fn_vkEnumeratePhysicalDevices = vkEnumeratePhysicalDevices.unwrap();
-        let mut devices_count = 0;
-        let vulkan_instance = (*std::ptr::addr_of_mut!(VULKAN_INSTANCE)).as_mut();
-        let vk_instance = vulkan_instance.unwrap();
-        let result = fn_vkEnumeratePhysicalDevices(vk_instance.instance, &mut devices_count, std::ptr::null_mut());
-        if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
-        {
-            return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
-        }
-        let mut physical_devices : Vec<vulkan_bindings::VkPhysicalDevice> = vec![std::ptr::null_mut(); devices_count as usize];
-        let result = fn_vkEnumeratePhysicalDevices(vk_instance.instance, &mut devices_count, physical_devices.as_mut_ptr());
-        if result != vulkan_bindings::VkResult_VK_SUCCESS || devices_count == 0
-        {
-            return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
-        }
-        for (idx,  ph_device) in physical_devices.into_iter().enumerate()
-        {
-            VULKAN_PHYSICAL_DEVICES.push(VulkanPhysicalDevice::new(ph_device));
-            VULKAN_PHYSICAL_DEVICES[idx].load_infos()?;
+            None
         }
     }
-    Ok(())
+
+    pub fn destroy(mut self)
+    {
+        unsafe {
+            let fn_vkDestroyDevice = vkDestroyDevice.unwrap();
+            fn_vkDestroyDevice(self.device, std::ptr::null());
+            self.device = std::ptr::null_mut();
+        }
+    }
+
 }
 
 macro_rules! INIT_OPERATION_UNWRAP_RESULT {
@@ -677,6 +701,7 @@ macro_rules! INIT_OPERATION_UNWRAP_RESULT {
 
 pub fn initialize_vulkan()
 {
+    let logical_device;
     unsafe {
         VULKAN_INSTANCE = match VulkanInstance::new(&["VK_KHR_surface", "VK_KHR_display"]) {
             Ok(i) => Some(i),
@@ -684,9 +709,23 @@ pub fn initialize_vulkan()
                 eprintln!("{}", e);
                 std::process::exit(1);
             }
-        }
+        };
+        let vk = (*std::ptr::addr_of_mut!(VULKAN_INSTANCE)).as_mut();
+        let vk = vk.unwrap();
+        logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT]);
+
     }
-    INIT_OPERATION_UNWRAP_RESULT!( self::get_vulkan_available_physical_devices());
-    INIT_OPERATION_UNWRAP_RESULT!( VulkanLogicalDevice::new(&["VK_KHR_swapchain"], &[vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT]));
+    let logical_device = match logical_device {
+        Ok(l) => l,
+        Err(e) => {
+            eprintln!("{}", e);
+            std::process::exit(1);
+        }
+    };
+    let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT, 0);
+    let _queue = match queue {
+        Some(q) => q,
+        None => {eprintln!("No Valid Queue"); std::process::exit(1)}
+    };
     println!("Done Loading");
 }
