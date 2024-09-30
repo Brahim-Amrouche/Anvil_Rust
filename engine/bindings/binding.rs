@@ -81,103 +81,22 @@ where
     }
 }
 pub const VULKAN_H_: u32 = 1;
-pub const _STDINT_H: u32 = 1;
-pub const _FEATURES_H: u32 = 1;
-pub const _DEFAULT_SOURCE: u32 = 1;
-pub const __GLIBC_USE_ISOC2X: u32 = 0;
-pub const __USE_ISOC11: u32 = 1;
-pub const __USE_ISOC99: u32 = 1;
-pub const __USE_ISOC95: u32 = 1;
-pub const __USE_POSIX_IMPLICITLY: u32 = 1;
-pub const _POSIX_SOURCE: u32 = 1;
-pub const _POSIX_C_SOURCE: u32 = 200809;
-pub const __USE_POSIX: u32 = 1;
-pub const __USE_POSIX2: u32 = 1;
-pub const __USE_POSIX199309: u32 = 1;
-pub const __USE_POSIX199506: u32 = 1;
-pub const __USE_XOPEN2K: u32 = 1;
-pub const __USE_XOPEN2K8: u32 = 1;
-pub const _ATFILE_SOURCE: u32 = 1;
-pub const __WORDSIZE: u32 = 64;
-pub const __WORDSIZE_TIME64_COMPAT32: u32 = 1;
-pub const __SYSCALL_WORDSIZE: u32 = 64;
-pub const __TIMESIZE: u32 = 64;
-pub const __USE_MISC: u32 = 1;
-pub const __USE_ATFILE: u32 = 1;
-pub const __USE_FORTIFY_LEVEL: u32 = 0;
-pub const __GLIBC_USE_DEPRECATED_GETS: u32 = 0;
-pub const __GLIBC_USE_DEPRECATED_SCANF: u32 = 0;
-pub const __GLIBC_USE_C2X_STRTOL: u32 = 0;
-pub const _STDC_PREDEF_H: u32 = 1;
-pub const __STDC_IEC_559__: u32 = 1;
-pub const __STDC_IEC_60559_BFP__: u32 = 201404;
-pub const __STDC_IEC_559_COMPLEX__: u32 = 1;
-pub const __STDC_IEC_60559_COMPLEX__: u32 = 201404;
-pub const __STDC_ISO_10646__: u32 = 201706;
-pub const __GNU_LIBRARY__: u32 = 6;
-pub const __GLIBC__: u32 = 2;
-pub const __GLIBC_MINOR__: u32 = 39;
-pub const _SYS_CDEFS_H: u32 = 1;
-pub const __glibc_c99_flexarr_available: u32 = 1;
-pub const __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI: u32 = 0;
-pub const __HAVE_GENERIC_SELECTION: u32 = 1;
-pub const __GLIBC_USE_LIB_EXT2: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_BFP_EXT: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_BFP_EXT_C2X: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_EXT: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_FUNCS_EXT: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X: u32 = 0;
-pub const __GLIBC_USE_IEC_60559_TYPES_EXT: u32 = 0;
-pub const _BITS_TYPES_H: u32 = 1;
-pub const _BITS_TYPESIZES_H: u32 = 1;
-pub const __OFF_T_MATCHES_OFF64_T: u32 = 1;
-pub const __INO_T_MATCHES_INO64_T: u32 = 1;
-pub const __RLIM_T_MATCHES_RLIM64_T: u32 = 1;
-pub const __STATFS_MATCHES_STATFS64: u32 = 1;
-pub const __KERNEL_OLD_TIMEVAL_MATCHES_TIMEVAL64: u32 = 1;
-pub const __FD_SETSIZE: u32 = 1024;
-pub const _BITS_TIME64_H: u32 = 1;
-pub const _BITS_WCHAR_H: u32 = 1;
-pub const _BITS_STDINT_INTN_H: u32 = 1;
-pub const _BITS_STDINT_UINTN_H: u32 = 1;
-pub const _BITS_STDINT_LEAST_H: u32 = 1;
-pub const INT8_MIN: i32 = -128;
-pub const INT16_MIN: i32 = -32768;
-pub const INT32_MIN: i32 = -2147483648;
-pub const INT8_MAX: u32 = 127;
-pub const INT16_MAX: u32 = 32767;
-pub const INT32_MAX: u32 = 2147483647;
-pub const UINT8_MAX: u32 = 255;
-pub const UINT16_MAX: u32 = 65535;
-pub const UINT32_MAX: u32 = 4294967295;
-pub const INT_LEAST8_MIN: i32 = -128;
-pub const INT_LEAST16_MIN: i32 = -32768;
-pub const INT_LEAST32_MIN: i32 = -2147483648;
-pub const INT_LEAST8_MAX: u32 = 127;
-pub const INT_LEAST16_MAX: u32 = 32767;
-pub const INT_LEAST32_MAX: u32 = 2147483647;
-pub const UINT_LEAST8_MAX: u32 = 255;
-pub const UINT_LEAST16_MAX: u32 = 65535;
-pub const UINT_LEAST32_MAX: u32 = 4294967295;
-pub const INT_FAST8_MIN: i32 = -128;
-pub const INT_FAST16_MIN: i64 = -9223372036854775808;
-pub const INT_FAST32_MIN: i64 = -9223372036854775808;
-pub const INT_FAST8_MAX: u32 = 127;
-pub const INT_FAST16_MAX: u64 = 9223372036854775807;
-pub const INT_FAST32_MAX: u64 = 9223372036854775807;
-pub const UINT_FAST8_MAX: u32 = 255;
-pub const UINT_FAST16_MAX: i32 = -1;
-pub const UINT_FAST32_MAX: i32 = -1;
-pub const INTPTR_MIN: i64 = -9223372036854775808;
-pub const INTPTR_MAX: u64 = 9223372036854775807;
-pub const UINTPTR_MAX: i32 = -1;
-pub const PTRDIFF_MIN: i64 = -9223372036854775808;
-pub const PTRDIFF_MAX: u64 = 9223372036854775807;
-pub const SIG_ATOMIC_MIN: i32 = -2147483648;
-pub const SIG_ATOMIC_MAX: u32 = 2147483647;
-pub const SIZE_MAX: i32 = -1;
+pub const _VCRT_COMPILER_PREPROCESSOR: u32 = 1;
+pub const _SAL_VERSION: u32 = 20;
+pub const __SAL_H_VERSION: u32 = 180000000;
+pub const _USE_DECLSPECS_FOR_SAL: u32 = 0;
+pub const _USE_ATTRIBUTES_FOR_SAL: u32 = 0;
+pub const _CRT_PACKING: u32 = 8;
+pub const _HAS_EXCEPTIONS: u32 = 1;
+pub const _STL_LANG: u32 = 0;
+pub const _HAS_CXX17: u32 = 0;
+pub const _HAS_CXX20: u32 = 0;
+pub const _HAS_CXX23: u32 = 0;
+pub const _HAS_NODISCARD: u32 = 0;
+pub const WCHAR_MIN: u32 = 0;
+pub const WCHAR_MAX: u32 = 65535;
 pub const WINT_MIN: u32 = 0;
-pub const WINT_MAX: u32 = 4294967295;
+pub const WINT_MAX: u32 = 65535;
 pub const VULKAN_CORE_H_: u32 = 1;
 pub const VK_VERSION_1_0: u32 = 1;
 pub const VK_USE_64_BIT_PTR_DEFINES: u32 = 1;
@@ -1495,115 +1414,43 @@ pub const VK_KHR_RAY_QUERY_EXTENSION_NAME: &[u8; 17] = b"VK_KHR_ray_query\0";
 pub const VK_EXT_mesh_shader: u32 = 1;
 pub const VK_EXT_MESH_SHADER_SPEC_VERSION: u32 = 1;
 pub const VK_EXT_MESH_SHADER_EXTENSION_NAME: &[u8; 19] = b"VK_EXT_mesh_shader\0";
-pub type wchar_t = ::std::os::raw::c_int;
-#[repr(C)]
-#[repr(align(16))]
-#[derive(Debug, Copy, Clone)]
-pub struct max_align_t {
-    pub __clang_max_align_nonce1: ::std::os::raw::c_longlong,
-    pub __bindgen_padding_0: u64,
-    pub __clang_max_align_nonce2: u128,
+pub type wchar_t = ::std::os::raw::c_ushort;
+pub type max_align_t = f64;
+pub type va_list = *mut ::std::os::raw::c_char;
+extern "C" {
+    pub fn __va_start(arg1: *mut *mut ::std::os::raw::c_char, ...);
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of max_align_t"][::std::mem::size_of::<max_align_t>() - 32usize];
-    ["Alignment of max_align_t"][::std::mem::align_of::<max_align_t>() - 16usize];
-    ["Offset of field: max_align_t::__clang_max_align_nonce1"]
-        [::std::mem::offset_of!(max_align_t, __clang_max_align_nonce1) - 0usize];
-    ["Offset of field: max_align_t::__clang_max_align_nonce2"]
-        [::std::mem::offset_of!(max_align_t, __clang_max_align_nonce2) - 16usize];
-};
-pub type __u_char = ::std::os::raw::c_uchar;
-pub type __u_short = ::std::os::raw::c_ushort;
-pub type __u_int = ::std::os::raw::c_uint;
-pub type __u_long = ::std::os::raw::c_ulong;
-pub type __int8_t = ::std::os::raw::c_schar;
-pub type __uint8_t = ::std::os::raw::c_uchar;
-pub type __int16_t = ::std::os::raw::c_short;
-pub type __uint16_t = ::std::os::raw::c_ushort;
-pub type __int32_t = ::std::os::raw::c_int;
-pub type __uint32_t = ::std::os::raw::c_uint;
-pub type __int64_t = ::std::os::raw::c_long;
-pub type __uint64_t = ::std::os::raw::c_ulong;
-pub type __int_least8_t = __int8_t;
-pub type __uint_least8_t = __uint8_t;
-pub type __int_least16_t = __int16_t;
-pub type __uint_least16_t = __uint16_t;
-pub type __int_least32_t = __int32_t;
-pub type __uint_least32_t = __uint32_t;
-pub type __int_least64_t = __int64_t;
-pub type __uint_least64_t = __uint64_t;
-pub type __quad_t = ::std::os::raw::c_long;
-pub type __u_quad_t = ::std::os::raw::c_ulong;
-pub type __intmax_t = ::std::os::raw::c_long;
-pub type __uintmax_t = ::std::os::raw::c_ulong;
-pub type __dev_t = ::std::os::raw::c_ulong;
-pub type __uid_t = ::std::os::raw::c_uint;
-pub type __gid_t = ::std::os::raw::c_uint;
-pub type __ino_t = ::std::os::raw::c_ulong;
-pub type __ino64_t = ::std::os::raw::c_ulong;
-pub type __mode_t = ::std::os::raw::c_uint;
-pub type __nlink_t = ::std::os::raw::c_ulong;
-pub type __off_t = ::std::os::raw::c_long;
-pub type __off64_t = ::std::os::raw::c_long;
-pub type __pid_t = ::std::os::raw::c_int;
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct __fsid_t {
-    pub __val: [::std::os::raw::c_int; 2usize],
+pub type __vcrt_bool = bool;
+extern "C" {
+    pub fn __security_init_cookie();
 }
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of __fsid_t"][::std::mem::size_of::<__fsid_t>() - 8usize];
-    ["Alignment of __fsid_t"][::std::mem::align_of::<__fsid_t>() - 4usize];
-    ["Offset of field: __fsid_t::__val"][::std::mem::offset_of!(__fsid_t, __val) - 0usize];
-};
-pub type __clock_t = ::std::os::raw::c_long;
-pub type __rlim_t = ::std::os::raw::c_ulong;
-pub type __rlim64_t = ::std::os::raw::c_ulong;
-pub type __id_t = ::std::os::raw::c_uint;
-pub type __time_t = ::std::os::raw::c_long;
-pub type __useconds_t = ::std::os::raw::c_uint;
-pub type __suseconds_t = ::std::os::raw::c_long;
-pub type __suseconds64_t = ::std::os::raw::c_long;
-pub type __daddr_t = ::std::os::raw::c_int;
-pub type __key_t = ::std::os::raw::c_int;
-pub type __clockid_t = ::std::os::raw::c_int;
-pub type __timer_t = *mut ::std::os::raw::c_void;
-pub type __blksize_t = ::std::os::raw::c_long;
-pub type __blkcnt_t = ::std::os::raw::c_long;
-pub type __blkcnt64_t = ::std::os::raw::c_long;
-pub type __fsblkcnt_t = ::std::os::raw::c_ulong;
-pub type __fsblkcnt64_t = ::std::os::raw::c_ulong;
-pub type __fsfilcnt_t = ::std::os::raw::c_ulong;
-pub type __fsfilcnt64_t = ::std::os::raw::c_ulong;
-pub type __fsword_t = ::std::os::raw::c_long;
-pub type __ssize_t = ::std::os::raw::c_long;
-pub type __syscall_slong_t = ::std::os::raw::c_long;
-pub type __syscall_ulong_t = ::std::os::raw::c_ulong;
-pub type __loff_t = __off64_t;
-pub type __caddr_t = *mut ::std::os::raw::c_char;
-pub type __intptr_t = ::std::os::raw::c_long;
-pub type __socklen_t = ::std::os::raw::c_uint;
-pub type __sig_atomic_t = ::std::os::raw::c_int;
-pub type int_least8_t = __int_least8_t;
-pub type int_least16_t = __int_least16_t;
-pub type int_least32_t = __int_least32_t;
-pub type int_least64_t = __int_least64_t;
-pub type uint_least8_t = __uint_least8_t;
-pub type uint_least16_t = __uint_least16_t;
-pub type uint_least32_t = __uint_least32_t;
-pub type uint_least64_t = __uint_least64_t;
+extern "C" {
+    pub fn __security_check_cookie(_StackCookie: usize);
+}
+extern "C" {
+    pub fn __report_gsfailure(_StackCookie: usize) -> !;
+}
+extern "C" {
+    pub static mut __security_cookie: usize;
+}
+pub type int_least8_t = ::std::os::raw::c_schar;
+pub type int_least16_t = ::std::os::raw::c_short;
+pub type int_least32_t = ::std::os::raw::c_int;
+pub type int_least64_t = ::std::os::raw::c_longlong;
+pub type uint_least8_t = ::std::os::raw::c_uchar;
+pub type uint_least16_t = ::std::os::raw::c_ushort;
+pub type uint_least32_t = ::std::os::raw::c_uint;
+pub type uint_least64_t = ::std::os::raw::c_ulonglong;
 pub type int_fast8_t = ::std::os::raw::c_schar;
-pub type int_fast16_t = ::std::os::raw::c_long;
-pub type int_fast32_t = ::std::os::raw::c_long;
-pub type int_fast64_t = ::std::os::raw::c_long;
+pub type int_fast16_t = ::std::os::raw::c_int;
+pub type int_fast32_t = ::std::os::raw::c_int;
+pub type int_fast64_t = ::std::os::raw::c_longlong;
 pub type uint_fast8_t = ::std::os::raw::c_uchar;
-pub type uint_fast16_t = ::std::os::raw::c_ulong;
-pub type uint_fast32_t = ::std::os::raw::c_ulong;
-pub type uint_fast64_t = ::std::os::raw::c_ulong;
-pub type intmax_t = __intmax_t;
-pub type uintmax_t = __uintmax_t;
+pub type uint_fast16_t = ::std::os::raw::c_uint;
+pub type uint_fast32_t = ::std::os::raw::c_uint;
+pub type uint_fast64_t = ::std::os::raw::c_ulonglong;
+pub type intmax_t = ::std::os::raw::c_longlong;
+pub type uintmax_t = ::std::os::raw::c_ulonglong;
 pub type VkBool32 = u32;
 pub type VkDeviceAddress = u64;
 pub type VkDeviceSize = u64;
@@ -3677,12 +3524,12 @@ pub const VkStructureType_VK_STRUCTURE_TYPE_DEVICE_IMAGE_MEMORY_REQUIREMENTS_KHR
 pub const VkStructureType_VK_STRUCTURE_TYPE_SHADER_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT:
     VkStructureType = 1000225001;
 pub const VkStructureType_VK_STRUCTURE_TYPE_MAX_ENUM: VkStructureType = 2147483647;
-pub type VkStructureType = ::std::os::raw::c_uint;
+pub type VkStructureType = ::std::os::raw::c_int;
 pub const VkPipelineCacheHeaderVersion_VK_PIPELINE_CACHE_HEADER_VERSION_ONE:
     VkPipelineCacheHeaderVersion = 1;
 pub const VkPipelineCacheHeaderVersion_VK_PIPELINE_CACHE_HEADER_VERSION_MAX_ENUM:
     VkPipelineCacheHeaderVersion = 2147483647;
-pub type VkPipelineCacheHeaderVersion = ::std::os::raw::c_uint;
+pub type VkPipelineCacheHeaderVersion = ::std::os::raw::c_int;
 pub const VkImageLayout_VK_IMAGE_LAYOUT_UNDEFINED: VkImageLayout = 0;
 pub const VkImageLayout_VK_IMAGE_LAYOUT_GENERAL: VkImageLayout = 1;
 pub const VkImageLayout_VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL: VkImageLayout = 2;
@@ -3729,7 +3576,7 @@ pub const VkImageLayout_VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL_KHR: VkImageLa
 pub const VkImageLayout_VK_IMAGE_LAYOUT_READ_ONLY_OPTIMAL_KHR: VkImageLayout = 1000314000;
 pub const VkImageLayout_VK_IMAGE_LAYOUT_ATTACHMENT_OPTIMAL_KHR: VkImageLayout = 1000314001;
 pub const VkImageLayout_VK_IMAGE_LAYOUT_MAX_ENUM: VkImageLayout = 2147483647;
-pub type VkImageLayout = ::std::os::raw::c_uint;
+pub type VkImageLayout = ::std::os::raw::c_int;
 pub const VkObjectType_VK_OBJECT_TYPE_UNKNOWN: VkObjectType = 0;
 pub const VkObjectType_VK_OBJECT_TYPE_INSTANCE: VkObjectType = 1;
 pub const VkObjectType_VK_OBJECT_TYPE_PHYSICAL_DEVICE: VkObjectType = 2;
@@ -3785,7 +3632,7 @@ pub const VkObjectType_VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR: VkObjectTy
 pub const VkObjectType_VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR: VkObjectType = 1000156000;
 pub const VkObjectType_VK_OBJECT_TYPE_PRIVATE_DATA_SLOT_EXT: VkObjectType = 1000295000;
 pub const VkObjectType_VK_OBJECT_TYPE_MAX_ENUM: VkObjectType = 2147483647;
-pub type VkObjectType = ::std::os::raw::c_uint;
+pub type VkObjectType = ::std::os::raw::c_int;
 pub const VkVendorId_VK_VENDOR_ID_KHRONOS: VkVendorId = 65536;
 pub const VkVendorId_VK_VENDOR_ID_VIV: VkVendorId = 65537;
 pub const VkVendorId_VK_VENDOR_ID_VSI: VkVendorId = 65538;
@@ -3795,7 +3642,7 @@ pub const VkVendorId_VK_VENDOR_ID_MESA: VkVendorId = 65541;
 pub const VkVendorId_VK_VENDOR_ID_POCL: VkVendorId = 65542;
 pub const VkVendorId_VK_VENDOR_ID_MOBILEYE: VkVendorId = 65543;
 pub const VkVendorId_VK_VENDOR_ID_MAX_ENUM: VkVendorId = 2147483647;
-pub type VkVendorId = ::std::os::raw::c_uint;
+pub type VkVendorId = ::std::os::raw::c_int;
 pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_COMMAND: VkSystemAllocationScope = 0;
 pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_OBJECT: VkSystemAllocationScope = 1;
 pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_CACHE: VkSystemAllocationScope = 2;
@@ -3803,12 +3650,12 @@ pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_DEVICE: VkSystemAll
 pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE: VkSystemAllocationScope = 4;
 pub const VkSystemAllocationScope_VK_SYSTEM_ALLOCATION_SCOPE_MAX_ENUM: VkSystemAllocationScope =
     2147483647;
-pub type VkSystemAllocationScope = ::std::os::raw::c_uint;
+pub type VkSystemAllocationScope = ::std::os::raw::c_int;
 pub const VkInternalAllocationType_VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE:
     VkInternalAllocationType = 0;
 pub const VkInternalAllocationType_VK_INTERNAL_ALLOCATION_TYPE_MAX_ENUM: VkInternalAllocationType =
     2147483647;
-pub type VkInternalAllocationType = ::std::os::raw::c_uint;
+pub type VkInternalAllocationType = ::std::os::raw::c_int;
 pub const VkFormat_VK_FORMAT_UNDEFINED: VkFormat = 0;
 pub const VkFormat_VK_FORMAT_R4G4_UNORM_PACK8: VkFormat = 1;
 pub const VkFormat_VK_FORMAT_R4G4B4A4_UNORM_PACK16: VkFormat = 2;
@@ -4115,24 +3962,24 @@ pub const VkFormat_VK_FORMAT_A4R4G4B4_UNORM_PACK16_EXT: VkFormat = 1000340000;
 pub const VkFormat_VK_FORMAT_A4B4G4R4_UNORM_PACK16_EXT: VkFormat = 1000340001;
 pub const VkFormat_VK_FORMAT_R16G16_S10_5_NV: VkFormat = 1000464000;
 pub const VkFormat_VK_FORMAT_MAX_ENUM: VkFormat = 2147483647;
-pub type VkFormat = ::std::os::raw::c_uint;
+pub type VkFormat = ::std::os::raw::c_int;
 pub const VkImageTiling_VK_IMAGE_TILING_OPTIMAL: VkImageTiling = 0;
 pub const VkImageTiling_VK_IMAGE_TILING_LINEAR: VkImageTiling = 1;
 pub const VkImageTiling_VK_IMAGE_TILING_DRM_FORMAT_MODIFIER_EXT: VkImageTiling = 1000158000;
 pub const VkImageTiling_VK_IMAGE_TILING_MAX_ENUM: VkImageTiling = 2147483647;
-pub type VkImageTiling = ::std::os::raw::c_uint;
+pub type VkImageTiling = ::std::os::raw::c_int;
 pub const VkImageType_VK_IMAGE_TYPE_1D: VkImageType = 0;
 pub const VkImageType_VK_IMAGE_TYPE_2D: VkImageType = 1;
 pub const VkImageType_VK_IMAGE_TYPE_3D: VkImageType = 2;
 pub const VkImageType_VK_IMAGE_TYPE_MAX_ENUM: VkImageType = 2147483647;
-pub type VkImageType = ::std::os::raw::c_uint;
+pub type VkImageType = ::std::os::raw::c_int;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_OTHER: VkPhysicalDeviceType = 0;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU: VkPhysicalDeviceType = 1;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU: VkPhysicalDeviceType = 2;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU: VkPhysicalDeviceType = 3;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU: VkPhysicalDeviceType = 4;
 pub const VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_MAX_ENUM: VkPhysicalDeviceType = 2147483647;
-pub type VkPhysicalDeviceType = ::std::os::raw::c_uint;
+pub type VkPhysicalDeviceType = ::std::os::raw::c_int;
 pub const VkQueryType_VK_QUERY_TYPE_OCCLUSION: VkQueryType = 0;
 pub const VkQueryType_VK_QUERY_TYPE_PIPELINE_STATISTICS: VkQueryType = 1;
 pub const VkQueryType_VK_QUERY_TYPE_TIMESTAMP: VkQueryType = 2;
@@ -4154,11 +4001,11 @@ pub const VkQueryType_VK_QUERY_TYPE_ACCELERATION_STRUCTURE_SIZE_KHR: VkQueryType
 pub const VkQueryType_VK_QUERY_TYPE_MICROMAP_SERIALIZATION_SIZE_EXT: VkQueryType = 1000396000;
 pub const VkQueryType_VK_QUERY_TYPE_MICROMAP_COMPACTED_SIZE_EXT: VkQueryType = 1000396001;
 pub const VkQueryType_VK_QUERY_TYPE_MAX_ENUM: VkQueryType = 2147483647;
-pub type VkQueryType = ::std::os::raw::c_uint;
+pub type VkQueryType = ::std::os::raw::c_int;
 pub const VkSharingMode_VK_SHARING_MODE_EXCLUSIVE: VkSharingMode = 0;
 pub const VkSharingMode_VK_SHARING_MODE_CONCURRENT: VkSharingMode = 1;
 pub const VkSharingMode_VK_SHARING_MODE_MAX_ENUM: VkSharingMode = 2147483647;
-pub type VkSharingMode = ::std::os::raw::c_uint;
+pub type VkSharingMode = ::std::os::raw::c_int;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_IDENTITY: VkComponentSwizzle = 0;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_ZERO: VkComponentSwizzle = 1;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_ONE: VkComponentSwizzle = 2;
@@ -4167,7 +4014,7 @@ pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_G: VkComponentSwizzle = 4;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_B: VkComponentSwizzle = 5;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_A: VkComponentSwizzle = 6;
 pub const VkComponentSwizzle_VK_COMPONENT_SWIZZLE_MAX_ENUM: VkComponentSwizzle = 2147483647;
-pub type VkComponentSwizzle = ::std::os::raw::c_uint;
+pub type VkComponentSwizzle = ::std::os::raw::c_int;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_1D: VkImageViewType = 0;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_2D: VkImageViewType = 1;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_3D: VkImageViewType = 2;
@@ -4176,7 +4023,7 @@ pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_1D_ARRAY: VkImageViewType = 4;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_2D_ARRAY: VkImageViewType = 5;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_CUBE_ARRAY: VkImageViewType = 6;
 pub const VkImageViewType_VK_IMAGE_VIEW_TYPE_MAX_ENUM: VkImageViewType = 2147483647;
-pub type VkImageViewType = ::std::os::raw::c_uint;
+pub type VkImageViewType = ::std::os::raw::c_int;
 pub const VkBlendFactor_VK_BLEND_FACTOR_ZERO: VkBlendFactor = 0;
 pub const VkBlendFactor_VK_BLEND_FACTOR_ONE: VkBlendFactor = 1;
 pub const VkBlendFactor_VK_BLEND_FACTOR_SRC_COLOR: VkBlendFactor = 2;
@@ -4197,7 +4044,7 @@ pub const VkBlendFactor_VK_BLEND_FACTOR_ONE_MINUS_SRC1_COLOR: VkBlendFactor = 16
 pub const VkBlendFactor_VK_BLEND_FACTOR_SRC1_ALPHA: VkBlendFactor = 17;
 pub const VkBlendFactor_VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA: VkBlendFactor = 18;
 pub const VkBlendFactor_VK_BLEND_FACTOR_MAX_ENUM: VkBlendFactor = 2147483647;
-pub type VkBlendFactor = ::std::os::raw::c_uint;
+pub type VkBlendFactor = ::std::os::raw::c_int;
 pub const VkBlendOp_VK_BLEND_OP_ADD: VkBlendOp = 0;
 pub const VkBlendOp_VK_BLEND_OP_SUBTRACT: VkBlendOp = 1;
 pub const VkBlendOp_VK_BLEND_OP_REVERSE_SUBTRACT: VkBlendOp = 2;
@@ -4250,7 +4097,7 @@ pub const VkBlendOp_VK_BLEND_OP_RED_EXT: VkBlendOp = 1000148043;
 pub const VkBlendOp_VK_BLEND_OP_GREEN_EXT: VkBlendOp = 1000148044;
 pub const VkBlendOp_VK_BLEND_OP_BLUE_EXT: VkBlendOp = 1000148045;
 pub const VkBlendOp_VK_BLEND_OP_MAX_ENUM: VkBlendOp = 2147483647;
-pub type VkBlendOp = ::std::os::raw::c_uint;
+pub type VkBlendOp = ::std::os::raw::c_int;
 pub const VkCompareOp_VK_COMPARE_OP_NEVER: VkCompareOp = 0;
 pub const VkCompareOp_VK_COMPARE_OP_LESS: VkCompareOp = 1;
 pub const VkCompareOp_VK_COMPARE_OP_EQUAL: VkCompareOp = 2;
@@ -4260,7 +4107,7 @@ pub const VkCompareOp_VK_COMPARE_OP_NOT_EQUAL: VkCompareOp = 5;
 pub const VkCompareOp_VK_COMPARE_OP_GREATER_OR_EQUAL: VkCompareOp = 6;
 pub const VkCompareOp_VK_COMPARE_OP_ALWAYS: VkCompareOp = 7;
 pub const VkCompareOp_VK_COMPARE_OP_MAX_ENUM: VkCompareOp = 2147483647;
-pub type VkCompareOp = ::std::os::raw::c_uint;
+pub type VkCompareOp = ::std::os::raw::c_int;
 pub const VkDynamicState_VK_DYNAMIC_STATE_VIEWPORT: VkDynamicState = 0;
 pub const VkDynamicState_VK_DYNAMIC_STATE_SCISSOR: VkDynamicState = 1;
 pub const VkDynamicState_VK_DYNAMIC_STATE_LINE_WIDTH: VkDynamicState = 2;
@@ -4363,15 +4210,15 @@ pub const VkDynamicState_VK_DYNAMIC_STATE_RASTERIZER_DISCARD_ENABLE_EXT: VkDynam
 pub const VkDynamicState_VK_DYNAMIC_STATE_DEPTH_BIAS_ENABLE_EXT: VkDynamicState = 1000377002;
 pub const VkDynamicState_VK_DYNAMIC_STATE_PRIMITIVE_RESTART_ENABLE_EXT: VkDynamicState = 1000377004;
 pub const VkDynamicState_VK_DYNAMIC_STATE_MAX_ENUM: VkDynamicState = 2147483647;
-pub type VkDynamicState = ::std::os::raw::c_uint;
+pub type VkDynamicState = ::std::os::raw::c_int;
 pub const VkFrontFace_VK_FRONT_FACE_COUNTER_CLOCKWISE: VkFrontFace = 0;
 pub const VkFrontFace_VK_FRONT_FACE_CLOCKWISE: VkFrontFace = 1;
 pub const VkFrontFace_VK_FRONT_FACE_MAX_ENUM: VkFrontFace = 2147483647;
-pub type VkFrontFace = ::std::os::raw::c_uint;
+pub type VkFrontFace = ::std::os::raw::c_int;
 pub const VkVertexInputRate_VK_VERTEX_INPUT_RATE_VERTEX: VkVertexInputRate = 0;
 pub const VkVertexInputRate_VK_VERTEX_INPUT_RATE_INSTANCE: VkVertexInputRate = 1;
 pub const VkVertexInputRate_VK_VERTEX_INPUT_RATE_MAX_ENUM: VkVertexInputRate = 2147483647;
-pub type VkVertexInputRate = ::std::os::raw::c_uint;
+pub type VkVertexInputRate = ::std::os::raw::c_int;
 pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_POINT_LIST: VkPrimitiveTopology = 0;
 pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_LINE_LIST: VkPrimitiveTopology = 1;
 pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_LINE_STRIP: VkPrimitiveTopology = 2;
@@ -4388,13 +4235,13 @@ pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENC
     VkPrimitiveTopology = 9;
 pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_PATCH_LIST: VkPrimitiveTopology = 10;
 pub const VkPrimitiveTopology_VK_PRIMITIVE_TOPOLOGY_MAX_ENUM: VkPrimitiveTopology = 2147483647;
-pub type VkPrimitiveTopology = ::std::os::raw::c_uint;
+pub type VkPrimitiveTopology = ::std::os::raw::c_int;
 pub const VkPolygonMode_VK_POLYGON_MODE_FILL: VkPolygonMode = 0;
 pub const VkPolygonMode_VK_POLYGON_MODE_LINE: VkPolygonMode = 1;
 pub const VkPolygonMode_VK_POLYGON_MODE_POINT: VkPolygonMode = 2;
 pub const VkPolygonMode_VK_POLYGON_MODE_FILL_RECTANGLE_NV: VkPolygonMode = 1000153000;
 pub const VkPolygonMode_VK_POLYGON_MODE_MAX_ENUM: VkPolygonMode = 2147483647;
-pub type VkPolygonMode = ::std::os::raw::c_uint;
+pub type VkPolygonMode = ::std::os::raw::c_int;
 pub const VkStencilOp_VK_STENCIL_OP_KEEP: VkStencilOp = 0;
 pub const VkStencilOp_VK_STENCIL_OP_ZERO: VkStencilOp = 1;
 pub const VkStencilOp_VK_STENCIL_OP_REPLACE: VkStencilOp = 2;
@@ -4404,7 +4251,7 @@ pub const VkStencilOp_VK_STENCIL_OP_INVERT: VkStencilOp = 5;
 pub const VkStencilOp_VK_STENCIL_OP_INCREMENT_AND_WRAP: VkStencilOp = 6;
 pub const VkStencilOp_VK_STENCIL_OP_DECREMENT_AND_WRAP: VkStencilOp = 7;
 pub const VkStencilOp_VK_STENCIL_OP_MAX_ENUM: VkStencilOp = 2147483647;
-pub type VkStencilOp = ::std::os::raw::c_uint;
+pub type VkStencilOp = ::std::os::raw::c_int;
 pub const VkLogicOp_VK_LOGIC_OP_CLEAR: VkLogicOp = 0;
 pub const VkLogicOp_VK_LOGIC_OP_AND: VkLogicOp = 1;
 pub const VkLogicOp_VK_LOGIC_OP_AND_REVERSE: VkLogicOp = 2;
@@ -4422,7 +4269,7 @@ pub const VkLogicOp_VK_LOGIC_OP_OR_INVERTED: VkLogicOp = 13;
 pub const VkLogicOp_VK_LOGIC_OP_NAND: VkLogicOp = 14;
 pub const VkLogicOp_VK_LOGIC_OP_SET: VkLogicOp = 15;
 pub const VkLogicOp_VK_LOGIC_OP_MAX_ENUM: VkLogicOp = 2147483647;
-pub type VkLogicOp = ::std::os::raw::c_uint;
+pub type VkLogicOp = ::std::os::raw::c_int;
 pub const VkBorderColor_VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK: VkBorderColor = 0;
 pub const VkBorderColor_VK_BORDER_COLOR_INT_TRANSPARENT_BLACK: VkBorderColor = 1;
 pub const VkBorderColor_VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK: VkBorderColor = 2;
@@ -4432,13 +4279,13 @@ pub const VkBorderColor_VK_BORDER_COLOR_INT_OPAQUE_WHITE: VkBorderColor = 5;
 pub const VkBorderColor_VK_BORDER_COLOR_FLOAT_CUSTOM_EXT: VkBorderColor = 1000287003;
 pub const VkBorderColor_VK_BORDER_COLOR_INT_CUSTOM_EXT: VkBorderColor = 1000287004;
 pub const VkBorderColor_VK_BORDER_COLOR_MAX_ENUM: VkBorderColor = 2147483647;
-pub type VkBorderColor = ::std::os::raw::c_uint;
+pub type VkBorderColor = ::std::os::raw::c_int;
 pub const VkFilter_VK_FILTER_NEAREST: VkFilter = 0;
 pub const VkFilter_VK_FILTER_LINEAR: VkFilter = 1;
 pub const VkFilter_VK_FILTER_CUBIC_EXT: VkFilter = 1000015000;
 pub const VkFilter_VK_FILTER_CUBIC_IMG: VkFilter = 1000015000;
 pub const VkFilter_VK_FILTER_MAX_ENUM: VkFilter = 2147483647;
-pub type VkFilter = ::std::os::raw::c_uint;
+pub type VkFilter = ::std::os::raw::c_int;
 pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_REPEAT: VkSamplerAddressMode = 0;
 pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT: VkSamplerAddressMode = 1;
 pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE: VkSamplerAddressMode = 2;
@@ -4448,11 +4295,11 @@ pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE: VkS
 pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE_KHR:
     VkSamplerAddressMode = 4;
 pub const VkSamplerAddressMode_VK_SAMPLER_ADDRESS_MODE_MAX_ENUM: VkSamplerAddressMode = 2147483647;
-pub type VkSamplerAddressMode = ::std::os::raw::c_uint;
+pub type VkSamplerAddressMode = ::std::os::raw::c_int;
 pub const VkSamplerMipmapMode_VK_SAMPLER_MIPMAP_MODE_NEAREST: VkSamplerMipmapMode = 0;
 pub const VkSamplerMipmapMode_VK_SAMPLER_MIPMAP_MODE_LINEAR: VkSamplerMipmapMode = 1;
 pub const VkSamplerMipmapMode_VK_SAMPLER_MIPMAP_MODE_MAX_ENUM: VkSamplerMipmapMode = 2147483647;
-pub type VkSamplerMipmapMode = ::std::os::raw::c_uint;
+pub type VkSamplerMipmapMode = ::std::os::raw::c_int;
 pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_SAMPLER: VkDescriptorType = 0;
 pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER: VkDescriptorType = 1;
 pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE: VkDescriptorType = 2;
@@ -4477,14 +4324,14 @@ pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK_EXT: VkDescri
     1000138000;
 pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_MUTABLE_VALVE: VkDescriptorType = 1000351000;
 pub const VkDescriptorType_VK_DESCRIPTOR_TYPE_MAX_ENUM: VkDescriptorType = 2147483647;
-pub type VkDescriptorType = ::std::os::raw::c_uint;
+pub type VkDescriptorType = ::std::os::raw::c_int;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_LOAD: VkAttachmentLoadOp = 0;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_CLEAR: VkAttachmentLoadOp = 1;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_DONT_CARE: VkAttachmentLoadOp = 2;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_NONE_KHR: VkAttachmentLoadOp = 1000400000;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_NONE_EXT: VkAttachmentLoadOp = 1000400000;
 pub const VkAttachmentLoadOp_VK_ATTACHMENT_LOAD_OP_MAX_ENUM: VkAttachmentLoadOp = 2147483647;
-pub type VkAttachmentLoadOp = ::std::os::raw::c_uint;
+pub type VkAttachmentLoadOp = ::std::os::raw::c_int;
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_STORE: VkAttachmentStoreOp = 0;
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_DONT_CARE: VkAttachmentStoreOp = 1;
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_NONE: VkAttachmentStoreOp = 1000301000;
@@ -4492,7 +4339,7 @@ pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_NONE_KHR: VkAttachmentStore
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_NONE_QCOM: VkAttachmentStoreOp = 1000301000;
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_NONE_EXT: VkAttachmentStoreOp = 1000301000;
 pub const VkAttachmentStoreOp_VK_ATTACHMENT_STORE_OP_MAX_ENUM: VkAttachmentStoreOp = 2147483647;
-pub type VkAttachmentStoreOp = ::std::os::raw::c_uint;
+pub type VkAttachmentStoreOp = ::std::os::raw::c_int;
 pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_GRAPHICS: VkPipelineBindPoint = 0;
 pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_COMPUTE: VkPipelineBindPoint = 1;
 pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR: VkPipelineBindPoint =
@@ -4502,11 +4349,11 @@ pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_SUBPASS_SHADING_HUAWEI: VkP
 pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_RAY_TRACING_NV: VkPipelineBindPoint =
     1000165000;
 pub const VkPipelineBindPoint_VK_PIPELINE_BIND_POINT_MAX_ENUM: VkPipelineBindPoint = 2147483647;
-pub type VkPipelineBindPoint = ::std::os::raw::c_uint;
+pub type VkPipelineBindPoint = ::std::os::raw::c_int;
 pub const VkCommandBufferLevel_VK_COMMAND_BUFFER_LEVEL_PRIMARY: VkCommandBufferLevel = 0;
 pub const VkCommandBufferLevel_VK_COMMAND_BUFFER_LEVEL_SECONDARY: VkCommandBufferLevel = 1;
 pub const VkCommandBufferLevel_VK_COMMAND_BUFFER_LEVEL_MAX_ENUM: VkCommandBufferLevel = 2147483647;
-pub type VkCommandBufferLevel = ::std::os::raw::c_uint;
+pub type VkCommandBufferLevel = ::std::os::raw::c_int;
 pub const VkIndexType_VK_INDEX_TYPE_UINT16: VkIndexType = 0;
 pub const VkIndexType_VK_INDEX_TYPE_UINT32: VkIndexType = 1;
 pub const VkIndexType_VK_INDEX_TYPE_NONE_KHR: VkIndexType = 1000165000;
@@ -4514,7 +4361,7 @@ pub const VkIndexType_VK_INDEX_TYPE_UINT8_KHR: VkIndexType = 1000265000;
 pub const VkIndexType_VK_INDEX_TYPE_NONE_NV: VkIndexType = 1000165000;
 pub const VkIndexType_VK_INDEX_TYPE_UINT8_EXT: VkIndexType = 1000265000;
 pub const VkIndexType_VK_INDEX_TYPE_MAX_ENUM: VkIndexType = 2147483647;
-pub type VkIndexType = ::std::os::raw::c_uint;
+pub type VkIndexType = ::std::os::raw::c_int;
 pub const VkSubpassContents_VK_SUBPASS_CONTENTS_INLINE: VkSubpassContents = 0;
 pub const VkSubpassContents_VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS: VkSubpassContents = 1;
 pub const VkSubpassContents_VK_SUBPASS_CONTENTS_INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR:
@@ -4522,7 +4369,7 @@ pub const VkSubpassContents_VK_SUBPASS_CONTENTS_INLINE_AND_SECONDARY_COMMAND_BUF
 pub const VkSubpassContents_VK_SUBPASS_CONTENTS_INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT:
     VkSubpassContents = 1000451000;
 pub const VkSubpassContents_VK_SUBPASS_CONTENTS_MAX_ENUM: VkSubpassContents = 2147483647;
-pub type VkSubpassContents = ::std::os::raw::c_uint;
+pub type VkSubpassContents = ::std::os::raw::c_int;
 pub const VkAccessFlagBits_VK_ACCESS_INDIRECT_COMMAND_READ_BIT: VkAccessFlagBits = 1;
 pub const VkAccessFlagBits_VK_ACCESS_INDEX_READ_BIT: VkAccessFlagBits = 2;
 pub const VkAccessFlagBits_VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT: VkAccessFlagBits = 4;
@@ -4564,7 +4411,7 @@ pub const VkAccessFlagBits_VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_NV: VkAcce
     4194304;
 pub const VkAccessFlagBits_VK_ACCESS_NONE_KHR: VkAccessFlagBits = 0;
 pub const VkAccessFlagBits_VK_ACCESS_FLAG_BITS_MAX_ENUM: VkAccessFlagBits = 2147483647;
-pub type VkAccessFlagBits = ::std::os::raw::c_uint;
+pub type VkAccessFlagBits = ::std::os::raw::c_int;
 pub type VkAccessFlags = VkFlags;
 pub const VkImageAspectFlagBits_VK_IMAGE_ASPECT_COLOR_BIT: VkImageAspectFlagBits = 1;
 pub const VkImageAspectFlagBits_VK_IMAGE_ASPECT_DEPTH_BIT: VkImageAspectFlagBits = 2;
@@ -4585,7 +4432,7 @@ pub const VkImageAspectFlagBits_VK_IMAGE_ASPECT_PLANE_2_BIT_KHR: VkImageAspectFl
 pub const VkImageAspectFlagBits_VK_IMAGE_ASPECT_NONE_KHR: VkImageAspectFlagBits = 0;
 pub const VkImageAspectFlagBits_VK_IMAGE_ASPECT_FLAG_BITS_MAX_ENUM: VkImageAspectFlagBits =
     2147483647;
-pub type VkImageAspectFlagBits = ::std::os::raw::c_uint;
+pub type VkImageAspectFlagBits = ::std::os::raw::c_int;
 pub type VkImageAspectFlags = VkFlags;
 pub const VkFormatFeatureFlagBits_VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT: VkFormatFeatureFlagBits = 1;
 pub const VkFormatFeatureFlagBits_VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT: VkFormatFeatureFlagBits = 2;
@@ -4659,7 +4506,7 @@ pub const VkFormatFeatureFlagBits_VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_K
     VkFormatFeatureFlagBits = 8388608;
 pub const VkFormatFeatureFlagBits_VK_FORMAT_FEATURE_FLAG_BITS_MAX_ENUM: VkFormatFeatureFlagBits =
     2147483647;
-pub type VkFormatFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkFormatFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkFormatFeatureFlags = VkFlags;
 pub const VkImageCreateFlagBits_VK_IMAGE_CREATE_SPARSE_BINDING_BIT: VkImageCreateFlagBits = 1;
 pub const VkImageCreateFlagBits_VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT: VkImageCreateFlagBits = 2;
@@ -4700,7 +4547,7 @@ pub const VkImageCreateFlagBits_VK_IMAGE_CREATE_DISJOINT_BIT_KHR: VkImageCreateF
 pub const VkImageCreateFlagBits_VK_IMAGE_CREATE_ALIAS_BIT_KHR: VkImageCreateFlagBits = 1024;
 pub const VkImageCreateFlagBits_VK_IMAGE_CREATE_FLAG_BITS_MAX_ENUM: VkImageCreateFlagBits =
     2147483647;
-pub type VkImageCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkImageCreateFlagBits = ::std::os::raw::c_int;
 pub type VkImageCreateFlags = VkFlags;
 pub const VkSampleCountFlagBits_VK_SAMPLE_COUNT_1_BIT: VkSampleCountFlagBits = 1;
 pub const VkSampleCountFlagBits_VK_SAMPLE_COUNT_2_BIT: VkSampleCountFlagBits = 2;
@@ -4711,7 +4558,7 @@ pub const VkSampleCountFlagBits_VK_SAMPLE_COUNT_32_BIT: VkSampleCountFlagBits = 
 pub const VkSampleCountFlagBits_VK_SAMPLE_COUNT_64_BIT: VkSampleCountFlagBits = 64;
 pub const VkSampleCountFlagBits_VK_SAMPLE_COUNT_FLAG_BITS_MAX_ENUM: VkSampleCountFlagBits =
     2147483647;
-pub type VkSampleCountFlagBits = ::std::os::raw::c_uint;
+pub type VkSampleCountFlagBits = ::std::os::raw::c_int;
 pub type VkSampleCountFlags = VkFlags;
 pub const VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT: VkImageUsageFlagBits = 1;
 pub const VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_DST_BIT: VkImageUsageFlagBits = 2;
@@ -4745,19 +4592,19 @@ pub const VkImageUsageFlagBits_VK_IMAGE_USAGE_SAMPLE_BLOCK_MATCH_BIT_QCOM: VkIma
     2097152;
 pub const VkImageUsageFlagBits_VK_IMAGE_USAGE_SHADING_RATE_IMAGE_BIT_NV: VkImageUsageFlagBits = 256;
 pub const VkImageUsageFlagBits_VK_IMAGE_USAGE_FLAG_BITS_MAX_ENUM: VkImageUsageFlagBits = 2147483647;
-pub type VkImageUsageFlagBits = ::std::os::raw::c_uint;
+pub type VkImageUsageFlagBits = ::std::os::raw::c_int;
 pub type VkImageUsageFlags = VkFlags;
 pub const VkInstanceCreateFlagBits_VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR:
     VkInstanceCreateFlagBits = 1;
 pub const VkInstanceCreateFlagBits_VK_INSTANCE_CREATE_FLAG_BITS_MAX_ENUM: VkInstanceCreateFlagBits =
     2147483647;
-pub type VkInstanceCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkInstanceCreateFlagBits = ::std::os::raw::c_int;
 pub type VkInstanceCreateFlags = VkFlags;
 pub const VkMemoryHeapFlagBits_VK_MEMORY_HEAP_DEVICE_LOCAL_BIT: VkMemoryHeapFlagBits = 1;
 pub const VkMemoryHeapFlagBits_VK_MEMORY_HEAP_MULTI_INSTANCE_BIT: VkMemoryHeapFlagBits = 2;
 pub const VkMemoryHeapFlagBits_VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR: VkMemoryHeapFlagBits = 2;
 pub const VkMemoryHeapFlagBits_VK_MEMORY_HEAP_FLAG_BITS_MAX_ENUM: VkMemoryHeapFlagBits = 2147483647;
-pub type VkMemoryHeapFlagBits = ::std::os::raw::c_uint;
+pub type VkMemoryHeapFlagBits = ::std::os::raw::c_int;
 pub type VkMemoryHeapFlags = VkFlags;
 pub const VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT: VkMemoryPropertyFlagBits =
     1;
@@ -4777,7 +4624,7 @@ pub const VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_RDMA_CAPABLE_BIT_NV:
     VkMemoryPropertyFlagBits = 256;
 pub const VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_FLAG_BITS_MAX_ENUM: VkMemoryPropertyFlagBits =
     2147483647;
-pub type VkMemoryPropertyFlagBits = ::std::os::raw::c_uint;
+pub type VkMemoryPropertyFlagBits = ::std::os::raw::c_int;
 pub type VkMemoryPropertyFlags = VkFlags;
 pub const VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT: VkQueueFlagBits = 1;
 pub const VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT: VkQueueFlagBits = 2;
@@ -4788,14 +4635,14 @@ pub const VkQueueFlagBits_VK_QUEUE_VIDEO_DECODE_BIT_KHR: VkQueueFlagBits = 32;
 pub const VkQueueFlagBits_VK_QUEUE_VIDEO_ENCODE_BIT_KHR: VkQueueFlagBits = 64;
 pub const VkQueueFlagBits_VK_QUEUE_OPTICAL_FLOW_BIT_NV: VkQueueFlagBits = 256;
 pub const VkQueueFlagBits_VK_QUEUE_FLAG_BITS_MAX_ENUM: VkQueueFlagBits = 2147483647;
-pub type VkQueueFlagBits = ::std::os::raw::c_uint;
+pub type VkQueueFlagBits = ::std::os::raw::c_int;
 pub type VkQueueFlags = VkFlags;
 pub type VkDeviceCreateFlags = VkFlags;
 pub const VkDeviceQueueCreateFlagBits_VK_DEVICE_QUEUE_CREATE_PROTECTED_BIT:
     VkDeviceQueueCreateFlagBits = 1;
 pub const VkDeviceQueueCreateFlagBits_VK_DEVICE_QUEUE_CREATE_FLAG_BITS_MAX_ENUM:
     VkDeviceQueueCreateFlagBits = 2147483647;
-pub type VkDeviceQueueCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkDeviceQueueCreateFlagBits = ::std::os::raw::c_int;
 pub type VkDeviceQueueCreateFlags = VkFlags;
 pub const VkPipelineStageFlagBits_VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT: VkPipelineStageFlagBits = 1;
 pub const VkPipelineStageFlagBits_VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT: VkPipelineStageFlagBits = 2;
@@ -4857,17 +4704,17 @@ pub const VkPipelineStageFlagBits_VK_PIPELINE_STAGE_MESH_SHADER_BIT_NV: VkPipeli
 pub const VkPipelineStageFlagBits_VK_PIPELINE_STAGE_NONE_KHR: VkPipelineStageFlagBits = 0;
 pub const VkPipelineStageFlagBits_VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM: VkPipelineStageFlagBits =
     2147483647;
-pub type VkPipelineStageFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineStageFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineStageFlags = VkFlags;
 pub const VkMemoryMapFlagBits_VK_MEMORY_MAP_PLACED_BIT_EXT: VkMemoryMapFlagBits = 1;
 pub const VkMemoryMapFlagBits_VK_MEMORY_MAP_FLAG_BITS_MAX_ENUM: VkMemoryMapFlagBits = 2147483647;
-pub type VkMemoryMapFlagBits = ::std::os::raw::c_uint;
+pub type VkMemoryMapFlagBits = ::std::os::raw::c_int;
 pub type VkMemoryMapFlags = VkFlags;
 pub const VkSparseMemoryBindFlagBits_VK_SPARSE_MEMORY_BIND_METADATA_BIT:
     VkSparseMemoryBindFlagBits = 1;
 pub const VkSparseMemoryBindFlagBits_VK_SPARSE_MEMORY_BIND_FLAG_BITS_MAX_ENUM:
     VkSparseMemoryBindFlagBits = 2147483647;
-pub type VkSparseMemoryBindFlagBits = ::std::os::raw::c_uint;
+pub type VkSparseMemoryBindFlagBits = ::std::os::raw::c_int;
 pub type VkSparseMemoryBindFlags = VkFlags;
 pub const VkSparseImageFormatFlagBits_VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT:
     VkSparseImageFormatFlagBits = 1;
@@ -4877,19 +4724,19 @@ pub const VkSparseImageFormatFlagBits_VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_S
     VkSparseImageFormatFlagBits = 4;
 pub const VkSparseImageFormatFlagBits_VK_SPARSE_IMAGE_FORMAT_FLAG_BITS_MAX_ENUM:
     VkSparseImageFormatFlagBits = 2147483647;
-pub type VkSparseImageFormatFlagBits = ::std::os::raw::c_uint;
+pub type VkSparseImageFormatFlagBits = ::std::os::raw::c_int;
 pub type VkSparseImageFormatFlags = VkFlags;
 pub const VkFenceCreateFlagBits_VK_FENCE_CREATE_SIGNALED_BIT: VkFenceCreateFlagBits = 1;
 pub const VkFenceCreateFlagBits_VK_FENCE_CREATE_FLAG_BITS_MAX_ENUM: VkFenceCreateFlagBits =
     2147483647;
-pub type VkFenceCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkFenceCreateFlagBits = ::std::os::raw::c_int;
 pub type VkFenceCreateFlags = VkFlags;
 pub type VkSemaphoreCreateFlags = VkFlags;
 pub const VkEventCreateFlagBits_VK_EVENT_CREATE_DEVICE_ONLY_BIT: VkEventCreateFlagBits = 1;
 pub const VkEventCreateFlagBits_VK_EVENT_CREATE_DEVICE_ONLY_BIT_KHR: VkEventCreateFlagBits = 1;
 pub const VkEventCreateFlagBits_VK_EVENT_CREATE_FLAG_BITS_MAX_ENUM: VkEventCreateFlagBits =
     2147483647;
-pub type VkEventCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkEventCreateFlagBits = ::std::os::raw::c_int;
 pub type VkEventCreateFlags = VkFlags;
 pub const VkQueryPipelineStatisticFlagBits_VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT : VkQueryPipelineStatisticFlagBits = 1 ;
 pub const VkQueryPipelineStatisticFlagBits_VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT : VkQueryPipelineStatisticFlagBits = 2 ;
@@ -4909,7 +4756,7 @@ pub const VkQueryPipelineStatisticFlagBits_VK_QUERY_PIPELINE_STATISTIC_MESH_SHAD
 pub const VkQueryPipelineStatisticFlagBits_VK_QUERY_PIPELINE_STATISTIC_CLUSTER_CULLING_SHADER_INVOCATIONS_BIT_HUAWEI : VkQueryPipelineStatisticFlagBits = 8192 ;
 pub const VkQueryPipelineStatisticFlagBits_VK_QUERY_PIPELINE_STATISTIC_FLAG_BITS_MAX_ENUM:
     VkQueryPipelineStatisticFlagBits = 2147483647;
-pub type VkQueryPipelineStatisticFlagBits = ::std::os::raw::c_uint;
+pub type VkQueryPipelineStatisticFlagBits = ::std::os::raw::c_int;
 pub type VkQueryPipelineStatisticFlags = VkFlags;
 pub type VkQueryPoolCreateFlags = VkFlags;
 pub const VkQueryResultFlagBits_VK_QUERY_RESULT_64_BIT: VkQueryResultFlagBits = 1;
@@ -4919,7 +4766,7 @@ pub const VkQueryResultFlagBits_VK_QUERY_RESULT_PARTIAL_BIT: VkQueryResultFlagBi
 pub const VkQueryResultFlagBits_VK_QUERY_RESULT_WITH_STATUS_BIT_KHR: VkQueryResultFlagBits = 16;
 pub const VkQueryResultFlagBits_VK_QUERY_RESULT_FLAG_BITS_MAX_ENUM: VkQueryResultFlagBits =
     2147483647;
-pub type VkQueryResultFlagBits = ::std::os::raw::c_uint;
+pub type VkQueryResultFlagBits = ::std::os::raw::c_int;
 pub type VkQueryResultFlags = VkFlags;
 pub const VkBufferCreateFlagBits_VK_BUFFER_CREATE_SPARSE_BINDING_BIT: VkBufferCreateFlagBits = 1;
 pub const VkBufferCreateFlagBits_VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT: VkBufferCreateFlagBits = 2;
@@ -4937,7 +4784,7 @@ pub const VkBufferCreateFlagBits_VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_
     VkBufferCreateFlagBits = 16;
 pub const VkBufferCreateFlagBits_VK_BUFFER_CREATE_FLAG_BITS_MAX_ENUM: VkBufferCreateFlagBits =
     2147483647;
-pub type VkBufferCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkBufferCreateFlagBits = ::std::os::raw::c_int;
 pub type VkBufferCreateFlags = VkFlags;
 pub const VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT: VkBufferUsageFlagBits = 1;
 pub const VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_DST_BIT: VkBufferUsageFlagBits = 2;
@@ -4986,7 +4833,7 @@ pub const VkBufferUsageFlagBits_VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT_KHR:
     VkBufferUsageFlagBits = 131072;
 pub const VkBufferUsageFlagBits_VK_BUFFER_USAGE_FLAG_BITS_MAX_ENUM: VkBufferUsageFlagBits =
     2147483647;
-pub type VkBufferUsageFlagBits = ::std::os::raw::c_uint;
+pub type VkBufferUsageFlagBits = ::std::os::raw::c_int;
 pub type VkBufferUsageFlags = VkFlags;
 pub type VkBufferViewCreateFlags = VkFlags;
 pub const VkImageViewCreateFlagBits_VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DYNAMIC_BIT_EXT:
@@ -4996,7 +4843,7 @@ pub const VkImageViewCreateFlagBits_VK_IMAGE_VIEW_CREATE_FRAGMENT_DENSITY_MAP_DE
     VkImageViewCreateFlagBits = 2;
 pub const VkImageViewCreateFlagBits_VK_IMAGE_VIEW_CREATE_FLAG_BITS_MAX_ENUM:
     VkImageViewCreateFlagBits = 2147483647;
-pub type VkImageViewCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkImageViewCreateFlagBits = ::std::os::raw::c_int;
 pub type VkImageViewCreateFlags = VkFlags;
 pub type VkShaderModuleCreateFlags = VkFlags;
 pub const VkPipelineCacheCreateFlagBits_VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT:
@@ -5005,7 +4852,7 @@ pub const VkPipelineCacheCreateFlagBits_VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNC
     VkPipelineCacheCreateFlagBits = 1;
 pub const VkPipelineCacheCreateFlagBits_VK_PIPELINE_CACHE_CREATE_FLAG_BITS_MAX_ENUM:
     VkPipelineCacheCreateFlagBits = 2147483647;
-pub type VkPipelineCacheCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineCacheCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineCacheCreateFlags = VkFlags;
 pub const VkColorComponentFlagBits_VK_COLOR_COMPONENT_R_BIT: VkColorComponentFlagBits = 1;
 pub const VkColorComponentFlagBits_VK_COLOR_COMPONENT_G_BIT: VkColorComponentFlagBits = 2;
@@ -5013,7 +4860,7 @@ pub const VkColorComponentFlagBits_VK_COLOR_COMPONENT_B_BIT: VkColorComponentFla
 pub const VkColorComponentFlagBits_VK_COLOR_COMPONENT_A_BIT: VkColorComponentFlagBits = 8;
 pub const VkColorComponentFlagBits_VK_COLOR_COMPONENT_FLAG_BITS_MAX_ENUM: VkColorComponentFlagBits =
     2147483647;
-pub type VkColorComponentFlagBits = ::std::os::raw::c_uint;
+pub type VkColorComponentFlagBits = ::std::os::raw::c_int;
 pub type VkColorComponentFlags = VkFlags;
 pub const VkPipelineCreateFlagBits_VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT:
     VkPipelineCreateFlagBits = 1;
@@ -5080,7 +4927,7 @@ pub const VkPipelineCreateFlagBits_VK_PIPELINE_CREATE_EARLY_RETURN_ON_FAILURE_BI
     VkPipelineCreateFlagBits = 512;
 pub const VkPipelineCreateFlagBits_VK_PIPELINE_CREATE_FLAG_BITS_MAX_ENUM: VkPipelineCreateFlagBits =
     2147483647;
-pub type VkPipelineCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineCreateFlags = VkFlags;
 pub const VkPipelineShaderStageCreateFlagBits_VK_PIPELINE_SHADER_STAGE_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT : VkPipelineShaderStageCreateFlagBits = 1 ;
 pub const VkPipelineShaderStageCreateFlagBits_VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT : VkPipelineShaderStageCreateFlagBits = 2 ;
@@ -5088,7 +4935,7 @@ pub const VkPipelineShaderStageCreateFlagBits_VK_PIPELINE_SHADER_STAGE_CREATE_AL
 pub const VkPipelineShaderStageCreateFlagBits_VK_PIPELINE_SHADER_STAGE_CREATE_REQUIRE_FULL_SUBGROUPS_BIT_EXT : VkPipelineShaderStageCreateFlagBits = 2 ;
 pub const VkPipelineShaderStageCreateFlagBits_VK_PIPELINE_SHADER_STAGE_CREATE_FLAG_BITS_MAX_ENUM:
     VkPipelineShaderStageCreateFlagBits = 2147483647;
-pub type VkPipelineShaderStageCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineShaderStageCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineShaderStageCreateFlags = VkFlags;
 pub const VkShaderStageFlagBits_VK_SHADER_STAGE_VERTEX_BIT: VkShaderStageFlagBits = 1;
 pub const VkShaderStageFlagBits_VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT: VkShaderStageFlagBits = 2;
@@ -5121,13 +4968,13 @@ pub const VkShaderStageFlagBits_VK_SHADER_STAGE_TASK_BIT_NV: VkShaderStageFlagBi
 pub const VkShaderStageFlagBits_VK_SHADER_STAGE_MESH_BIT_NV: VkShaderStageFlagBits = 128;
 pub const VkShaderStageFlagBits_VK_SHADER_STAGE_FLAG_BITS_MAX_ENUM: VkShaderStageFlagBits =
     2147483647;
-pub type VkShaderStageFlagBits = ::std::os::raw::c_uint;
+pub type VkShaderStageFlagBits = ::std::os::raw::c_int;
 pub const VkCullModeFlagBits_VK_CULL_MODE_NONE: VkCullModeFlagBits = 0;
 pub const VkCullModeFlagBits_VK_CULL_MODE_FRONT_BIT: VkCullModeFlagBits = 1;
 pub const VkCullModeFlagBits_VK_CULL_MODE_BACK_BIT: VkCullModeFlagBits = 2;
 pub const VkCullModeFlagBits_VK_CULL_MODE_FRONT_AND_BACK: VkCullModeFlagBits = 3;
 pub const VkCullModeFlagBits_VK_CULL_MODE_FLAG_BITS_MAX_ENUM: VkCullModeFlagBits = 2147483647;
-pub type VkCullModeFlagBits = ::std::os::raw::c_uint;
+pub type VkCullModeFlagBits = ::std::os::raw::c_int;
 pub type VkCullModeFlags = VkFlags;
 pub type VkPipelineVertexInputStateCreateFlags = VkFlags;
 pub type VkPipelineInputAssemblyStateCreateFlags = VkFlags;
@@ -5140,19 +4987,19 @@ pub const VkPipelineDepthStencilStateCreateFlagBits_VK_PIPELINE_DEPTH_STENCIL_ST
 pub const VkPipelineDepthStencilStateCreateFlagBits_VK_PIPELINE_DEPTH_STENCIL_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_DEPTH_ACCESS_BIT_ARM : VkPipelineDepthStencilStateCreateFlagBits = 1 ;
 pub const VkPipelineDepthStencilStateCreateFlagBits_VK_PIPELINE_DEPTH_STENCIL_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_BIT_ARM : VkPipelineDepthStencilStateCreateFlagBits = 2 ;
 pub const VkPipelineDepthStencilStateCreateFlagBits_VK_PIPELINE_DEPTH_STENCIL_STATE_CREATE_FLAG_BITS_MAX_ENUM : VkPipelineDepthStencilStateCreateFlagBits = 2147483647 ;
-pub type VkPipelineDepthStencilStateCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineDepthStencilStateCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineDepthStencilStateCreateFlags = VkFlags;
 pub const VkPipelineColorBlendStateCreateFlagBits_VK_PIPELINE_COLOR_BLEND_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_BIT_EXT : VkPipelineColorBlendStateCreateFlagBits = 1 ;
 pub const VkPipelineColorBlendStateCreateFlagBits_VK_PIPELINE_COLOR_BLEND_STATE_CREATE_RASTERIZATION_ORDER_ATTACHMENT_ACCESS_BIT_ARM : VkPipelineColorBlendStateCreateFlagBits = 1 ;
 pub const VkPipelineColorBlendStateCreateFlagBits_VK_PIPELINE_COLOR_BLEND_STATE_CREATE_FLAG_BITS_MAX_ENUM : VkPipelineColorBlendStateCreateFlagBits = 2147483647 ;
-pub type VkPipelineColorBlendStateCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineColorBlendStateCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineColorBlendStateCreateFlags = VkFlags;
 pub type VkPipelineDynamicStateCreateFlags = VkFlags;
 pub const VkPipelineLayoutCreateFlagBits_VK_PIPELINE_LAYOUT_CREATE_INDEPENDENT_SETS_BIT_EXT:
     VkPipelineLayoutCreateFlagBits = 2;
 pub const VkPipelineLayoutCreateFlagBits_VK_PIPELINE_LAYOUT_CREATE_FLAG_BITS_MAX_ENUM:
     VkPipelineLayoutCreateFlagBits = 2147483647;
-pub type VkPipelineLayoutCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineLayoutCreateFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineLayoutCreateFlags = VkFlags;
 pub type VkShaderStageFlags = VkFlags;
 pub const VkSamplerCreateFlagBits_VK_SAMPLER_CREATE_SUBSAMPLED_BIT_EXT: VkSamplerCreateFlagBits = 1;
@@ -5166,7 +5013,7 @@ pub const VkSamplerCreateFlagBits_VK_SAMPLER_CREATE_IMAGE_PROCESSING_BIT_QCOM:
     VkSamplerCreateFlagBits = 16;
 pub const VkSamplerCreateFlagBits_VK_SAMPLER_CREATE_FLAG_BITS_MAX_ENUM: VkSamplerCreateFlagBits =
     2147483647;
-pub type VkSamplerCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkSamplerCreateFlagBits = ::std::os::raw::c_int;
 pub type VkSamplerCreateFlags = VkFlags;
 pub const VkDescriptorPoolCreateFlagBits_VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT:
     VkDescriptorPoolCreateFlagBits = 1;
@@ -5182,7 +5029,7 @@ pub const VkDescriptorPoolCreateFlagBits_VK_DESCRIPTOR_POOL_CREATE_HOST_ONLY_BIT
     VkDescriptorPoolCreateFlagBits = 4;
 pub const VkDescriptorPoolCreateFlagBits_VK_DESCRIPTOR_POOL_CREATE_FLAG_BITS_MAX_ENUM:
     VkDescriptorPoolCreateFlagBits = 2147483647;
-pub type VkDescriptorPoolCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkDescriptorPoolCreateFlagBits = ::std::os::raw::c_int;
 pub type VkDescriptorPoolCreateFlags = VkFlags;
 pub type VkDescriptorPoolResetFlags = VkFlags;
 pub const VkDescriptorSetLayoutCreateFlagBits_VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT : VkDescriptorSetLayoutCreateFlagBits = 2 ;
@@ -5197,13 +5044,13 @@ pub const VkDescriptorSetLayoutCreateFlagBits_VK_DESCRIPTOR_SET_LAYOUT_CREATE_UP
 pub const VkDescriptorSetLayoutCreateFlagBits_VK_DESCRIPTOR_SET_LAYOUT_CREATE_HOST_ONLY_POOL_BIT_VALVE : VkDescriptorSetLayoutCreateFlagBits = 4 ;
 pub const VkDescriptorSetLayoutCreateFlagBits_VK_DESCRIPTOR_SET_LAYOUT_CREATE_FLAG_BITS_MAX_ENUM:
     VkDescriptorSetLayoutCreateFlagBits = 2147483647;
-pub type VkDescriptorSetLayoutCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkDescriptorSetLayoutCreateFlagBits = ::std::os::raw::c_int;
 pub type VkDescriptorSetLayoutCreateFlags = VkFlags;
 pub const VkAttachmentDescriptionFlagBits_VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT:
     VkAttachmentDescriptionFlagBits = 1;
 pub const VkAttachmentDescriptionFlagBits_VK_ATTACHMENT_DESCRIPTION_FLAG_BITS_MAX_ENUM:
     VkAttachmentDescriptionFlagBits = 2147483647;
-pub type VkAttachmentDescriptionFlagBits = ::std::os::raw::c_uint;
+pub type VkAttachmentDescriptionFlagBits = ::std::os::raw::c_int;
 pub type VkAttachmentDescriptionFlags = VkFlags;
 pub const VkDependencyFlagBits_VK_DEPENDENCY_BY_REGION_BIT: VkDependencyFlagBits = 1;
 pub const VkDependencyFlagBits_VK_DEPENDENCY_DEVICE_GROUP_BIT: VkDependencyFlagBits = 4;
@@ -5212,7 +5059,7 @@ pub const VkDependencyFlagBits_VK_DEPENDENCY_FEEDBACK_LOOP_BIT_EXT: VkDependency
 pub const VkDependencyFlagBits_VK_DEPENDENCY_VIEW_LOCAL_BIT_KHR: VkDependencyFlagBits = 2;
 pub const VkDependencyFlagBits_VK_DEPENDENCY_DEVICE_GROUP_BIT_KHR: VkDependencyFlagBits = 4;
 pub const VkDependencyFlagBits_VK_DEPENDENCY_FLAG_BITS_MAX_ENUM: VkDependencyFlagBits = 2147483647;
-pub type VkDependencyFlagBits = ::std::os::raw::c_uint;
+pub type VkDependencyFlagBits = ::std::os::raw::c_int;
 pub type VkDependencyFlags = VkFlags;
 pub const VkFramebufferCreateFlagBits_VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT:
     VkFramebufferCreateFlagBits = 1;
@@ -5220,13 +5067,13 @@ pub const VkFramebufferCreateFlagBits_VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT_KHR:
     VkFramebufferCreateFlagBits = 1;
 pub const VkFramebufferCreateFlagBits_VK_FRAMEBUFFER_CREATE_FLAG_BITS_MAX_ENUM:
     VkFramebufferCreateFlagBits = 2147483647;
-pub type VkFramebufferCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkFramebufferCreateFlagBits = ::std::os::raw::c_int;
 pub type VkFramebufferCreateFlags = VkFlags;
 pub const VkRenderPassCreateFlagBits_VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM:
     VkRenderPassCreateFlagBits = 2;
 pub const VkRenderPassCreateFlagBits_VK_RENDER_PASS_CREATE_FLAG_BITS_MAX_ENUM:
     VkRenderPassCreateFlagBits = 2147483647;
-pub type VkRenderPassCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkRenderPassCreateFlagBits = ::std::os::raw::c_int;
 pub type VkRenderPassCreateFlags = VkFlags;
 pub const VkSubpassDescriptionFlagBits_VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX:
     VkSubpassDescriptionFlagBits = 1;
@@ -5246,7 +5093,7 @@ pub const VkSubpassDescriptionFlagBits_VK_SUBPASS_DESCRIPTION_RASTERIZATION_ORDE
 pub const VkSubpassDescriptionFlagBits_VK_SUBPASS_DESCRIPTION_RASTERIZATION_ORDER_ATTACHMENT_STENCIL_ACCESS_BIT_ARM : VkSubpassDescriptionFlagBits = 64 ;
 pub const VkSubpassDescriptionFlagBits_VK_SUBPASS_DESCRIPTION_FLAG_BITS_MAX_ENUM:
     VkSubpassDescriptionFlagBits = 2147483647;
-pub type VkSubpassDescriptionFlagBits = ::std::os::raw::c_uint;
+pub type VkSubpassDescriptionFlagBits = ::std::os::raw::c_int;
 pub type VkSubpassDescriptionFlags = VkFlags;
 pub const VkCommandPoolCreateFlagBits_VK_COMMAND_POOL_CREATE_TRANSIENT_BIT:
     VkCommandPoolCreateFlagBits = 1;
@@ -5256,13 +5103,13 @@ pub const VkCommandPoolCreateFlagBits_VK_COMMAND_POOL_CREATE_PROTECTED_BIT:
     VkCommandPoolCreateFlagBits = 4;
 pub const VkCommandPoolCreateFlagBits_VK_COMMAND_POOL_CREATE_FLAG_BITS_MAX_ENUM:
     VkCommandPoolCreateFlagBits = 2147483647;
-pub type VkCommandPoolCreateFlagBits = ::std::os::raw::c_uint;
+pub type VkCommandPoolCreateFlagBits = ::std::os::raw::c_int;
 pub type VkCommandPoolCreateFlags = VkFlags;
 pub const VkCommandPoolResetFlagBits_VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT:
     VkCommandPoolResetFlagBits = 1;
 pub const VkCommandPoolResetFlagBits_VK_COMMAND_POOL_RESET_FLAG_BITS_MAX_ENUM:
     VkCommandPoolResetFlagBits = 2147483647;
-pub type VkCommandPoolResetFlagBits = ::std::os::raw::c_uint;
+pub type VkCommandPoolResetFlagBits = ::std::os::raw::c_int;
 pub type VkCommandPoolResetFlags = VkFlags;
 pub const VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT:
     VkCommandBufferUsageFlagBits = 1;
@@ -5272,18 +5119,18 @@ pub const VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_
     VkCommandBufferUsageFlagBits = 4;
 pub const VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_FLAG_BITS_MAX_ENUM:
     VkCommandBufferUsageFlagBits = 2147483647;
-pub type VkCommandBufferUsageFlagBits = ::std::os::raw::c_uint;
+pub type VkCommandBufferUsageFlagBits = ::std::os::raw::c_int;
 pub type VkCommandBufferUsageFlags = VkFlags;
 pub const VkQueryControlFlagBits_VK_QUERY_CONTROL_PRECISE_BIT: VkQueryControlFlagBits = 1;
 pub const VkQueryControlFlagBits_VK_QUERY_CONTROL_FLAG_BITS_MAX_ENUM: VkQueryControlFlagBits =
     2147483647;
-pub type VkQueryControlFlagBits = ::std::os::raw::c_uint;
+pub type VkQueryControlFlagBits = ::std::os::raw::c_int;
 pub type VkQueryControlFlags = VkFlags;
 pub const VkCommandBufferResetFlagBits_VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT:
     VkCommandBufferResetFlagBits = 1;
 pub const VkCommandBufferResetFlagBits_VK_COMMAND_BUFFER_RESET_FLAG_BITS_MAX_ENUM:
     VkCommandBufferResetFlagBits = 2147483647;
-pub type VkCommandBufferResetFlagBits = ::std::os::raw::c_uint;
+pub type VkCommandBufferResetFlagBits = ::std::os::raw::c_int;
 pub type VkCommandBufferResetFlags = VkFlags;
 pub const VkStencilFaceFlagBits_VK_STENCIL_FACE_FRONT_BIT: VkStencilFaceFlagBits = 1;
 pub const VkStencilFaceFlagBits_VK_STENCIL_FACE_BACK_BIT: VkStencilFaceFlagBits = 2;
@@ -5291,7 +5138,7 @@ pub const VkStencilFaceFlagBits_VK_STENCIL_FACE_FRONT_AND_BACK: VkStencilFaceFla
 pub const VkStencilFaceFlagBits_VK_STENCIL_FRONT_AND_BACK: VkStencilFaceFlagBits = 3;
 pub const VkStencilFaceFlagBits_VK_STENCIL_FACE_FLAG_BITS_MAX_ENUM: VkStencilFaceFlagBits =
     2147483647;
-pub type VkStencilFaceFlagBits = ::std::os::raw::c_uint;
+pub type VkStencilFaceFlagBits = ::std::os::raw::c_int;
 pub type VkStencilFaceFlags = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -9847,7 +9694,7 @@ pub const VkPointClippingBehavior_VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ON
     VkPointClippingBehavior = 1;
 pub const VkPointClippingBehavior_VK_POINT_CLIPPING_BEHAVIOR_MAX_ENUM: VkPointClippingBehavior =
     2147483647;
-pub type VkPointClippingBehavior = ::std::os::raw::c_uint;
+pub type VkPointClippingBehavior = ::std::os::raw::c_int;
 pub const VkTessellationDomainOrigin_VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT:
     VkTessellationDomainOrigin = 0;
 pub const VkTessellationDomainOrigin_VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT:
@@ -9858,7 +9705,7 @@ pub const VkTessellationDomainOrigin_VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KH
     VkTessellationDomainOrigin = 1;
 pub const VkTessellationDomainOrigin_VK_TESSELLATION_DOMAIN_ORIGIN_MAX_ENUM:
     VkTessellationDomainOrigin = 2147483647;
-pub type VkTessellationDomainOrigin = ::std::os::raw::c_uint;
+pub type VkTessellationDomainOrigin = ::std::os::raw::c_int;
 pub const VkSamplerYcbcrModelConversion_VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY:
     VkSamplerYcbcrModelConversion = 0;
 pub const VkSamplerYcbcrModelConversion_VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY:
@@ -9881,19 +9728,19 @@ pub const VkSamplerYcbcrModelConversion_VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_
     VkSamplerYcbcrModelConversion = 4;
 pub const VkSamplerYcbcrModelConversion_VK_SAMPLER_YCBCR_MODEL_CONVERSION_MAX_ENUM:
     VkSamplerYcbcrModelConversion = 2147483647;
-pub type VkSamplerYcbcrModelConversion = ::std::os::raw::c_uint;
+pub type VkSamplerYcbcrModelConversion = ::std::os::raw::c_int;
 pub const VkSamplerYcbcrRange_VK_SAMPLER_YCBCR_RANGE_ITU_FULL: VkSamplerYcbcrRange = 0;
 pub const VkSamplerYcbcrRange_VK_SAMPLER_YCBCR_RANGE_ITU_NARROW: VkSamplerYcbcrRange = 1;
 pub const VkSamplerYcbcrRange_VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR: VkSamplerYcbcrRange = 0;
 pub const VkSamplerYcbcrRange_VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR: VkSamplerYcbcrRange = 1;
 pub const VkSamplerYcbcrRange_VK_SAMPLER_YCBCR_RANGE_MAX_ENUM: VkSamplerYcbcrRange = 2147483647;
-pub type VkSamplerYcbcrRange = ::std::os::raw::c_uint;
+pub type VkSamplerYcbcrRange = ::std::os::raw::c_int;
 pub const VkChromaLocation_VK_CHROMA_LOCATION_COSITED_EVEN: VkChromaLocation = 0;
 pub const VkChromaLocation_VK_CHROMA_LOCATION_MIDPOINT: VkChromaLocation = 1;
 pub const VkChromaLocation_VK_CHROMA_LOCATION_COSITED_EVEN_KHR: VkChromaLocation = 0;
 pub const VkChromaLocation_VK_CHROMA_LOCATION_MIDPOINT_KHR: VkChromaLocation = 1;
 pub const VkChromaLocation_VK_CHROMA_LOCATION_MAX_ENUM: VkChromaLocation = 2147483647;
-pub type VkChromaLocation = ::std::os::raw::c_uint;
+pub type VkChromaLocation = ::std::os::raw::c_int;
 pub const VkDescriptorUpdateTemplateType_VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET:
     VkDescriptorUpdateTemplateType = 0;
 pub const VkDescriptorUpdateTemplateType_VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR:
@@ -9902,7 +9749,7 @@ pub const VkDescriptorUpdateTemplateType_VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESC
     VkDescriptorUpdateTemplateType = 0;
 pub const VkDescriptorUpdateTemplateType_VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_MAX_ENUM:
     VkDescriptorUpdateTemplateType = 2147483647;
-pub type VkDescriptorUpdateTemplateType = ::std::os::raw::c_uint;
+pub type VkDescriptorUpdateTemplateType = ::std::os::raw::c_int;
 pub const VkSubgroupFeatureFlagBits_VK_SUBGROUP_FEATURE_BASIC_BIT: VkSubgroupFeatureFlagBits = 1;
 pub const VkSubgroupFeatureFlagBits_VK_SUBGROUP_FEATURE_VOTE_BIT: VkSubgroupFeatureFlagBits = 2;
 pub const VkSubgroupFeatureFlagBits_VK_SUBGROUP_FEATURE_ARITHMETIC_BIT: VkSubgroupFeatureFlagBits =
@@ -9922,7 +9769,7 @@ pub const VkSubgroupFeatureFlagBits_VK_SUBGROUP_FEATURE_ROTATE_CLUSTERED_BIT_KHR
     VkSubgroupFeatureFlagBits = 1024;
 pub const VkSubgroupFeatureFlagBits_VK_SUBGROUP_FEATURE_FLAG_BITS_MAX_ENUM:
     VkSubgroupFeatureFlagBits = 2147483647;
-pub type VkSubgroupFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkSubgroupFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkSubgroupFeatureFlags = VkFlags;
 pub const VkPeerMemoryFeatureFlagBits_VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT:
     VkPeerMemoryFeatureFlagBits = 1;
@@ -9942,7 +9789,7 @@ pub const VkPeerMemoryFeatureFlagBits_VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHR
     VkPeerMemoryFeatureFlagBits = 8;
 pub const VkPeerMemoryFeatureFlagBits_VK_PEER_MEMORY_FEATURE_FLAG_BITS_MAX_ENUM:
     VkPeerMemoryFeatureFlagBits = 2147483647;
-pub type VkPeerMemoryFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkPeerMemoryFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkPeerMemoryFeatureFlags = VkFlags;
 pub const VkMemoryAllocateFlagBits_VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT: VkMemoryAllocateFlagBits = 1;
 pub const VkMemoryAllocateFlagBits_VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT: VkMemoryAllocateFlagBits =
@@ -9957,7 +9804,7 @@ pub const VkMemoryAllocateFlagBits_VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REP
     VkMemoryAllocateFlagBits = 4;
 pub const VkMemoryAllocateFlagBits_VK_MEMORY_ALLOCATE_FLAG_BITS_MAX_ENUM: VkMemoryAllocateFlagBits =
     2147483647;
-pub type VkMemoryAllocateFlagBits = ::std::os::raw::c_uint;
+pub type VkMemoryAllocateFlagBits = ::std::os::raw::c_int;
 pub type VkMemoryAllocateFlags = VkFlags;
 pub type VkCommandPoolTrimFlags = VkFlags;
 pub type VkDescriptorUpdateTemplateCreateFlags = VkFlags;
@@ -9995,7 +9842,7 @@ pub const VkExternalMemoryHandleTypeFlagBits_VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D1
 pub const VkExternalMemoryHandleTypeFlagBits_VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR : VkExternalMemoryHandleTypeFlagBits = 64 ;
 pub const VkExternalMemoryHandleTypeFlagBits_VK_EXTERNAL_MEMORY_HANDLE_TYPE_FLAG_BITS_MAX_ENUM:
     VkExternalMemoryHandleTypeFlagBits = 2147483647;
-pub type VkExternalMemoryHandleTypeFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalMemoryHandleTypeFlagBits = ::std::os::raw::c_int;
 pub type VkExternalMemoryHandleTypeFlags = VkFlags;
 pub const VkExternalMemoryFeatureFlagBits_VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT:
     VkExternalMemoryFeatureFlagBits = 1;
@@ -10011,7 +9858,7 @@ pub const VkExternalMemoryFeatureFlagBits_VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_
     VkExternalMemoryFeatureFlagBits = 4;
 pub const VkExternalMemoryFeatureFlagBits_VK_EXTERNAL_MEMORY_FEATURE_FLAG_BITS_MAX_ENUM:
     VkExternalMemoryFeatureFlagBits = 2147483647;
-pub type VkExternalMemoryFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalMemoryFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkExternalMemoryFeatureFlags = VkFlags;
 pub const VkExternalFenceHandleTypeFlagBits_VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT:
     VkExternalFenceHandleTypeFlagBits = 1;
@@ -10030,7 +9877,7 @@ pub const VkExternalFenceHandleTypeFlagBits_VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_F
     VkExternalFenceHandleTypeFlagBits = 8;
 pub const VkExternalFenceHandleTypeFlagBits_VK_EXTERNAL_FENCE_HANDLE_TYPE_FLAG_BITS_MAX_ENUM:
     VkExternalFenceHandleTypeFlagBits = 2147483647;
-pub type VkExternalFenceHandleTypeFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalFenceHandleTypeFlagBits = ::std::os::raw::c_int;
 pub type VkExternalFenceHandleTypeFlags = VkFlags;
 pub const VkExternalFenceFeatureFlagBits_VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT:
     VkExternalFenceFeatureFlagBits = 1;
@@ -10042,13 +9889,13 @@ pub const VkExternalFenceFeatureFlagBits_VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BI
     VkExternalFenceFeatureFlagBits = 2;
 pub const VkExternalFenceFeatureFlagBits_VK_EXTERNAL_FENCE_FEATURE_FLAG_BITS_MAX_ENUM:
     VkExternalFenceFeatureFlagBits = 2147483647;
-pub type VkExternalFenceFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalFenceFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkExternalFenceFeatureFlags = VkFlags;
 pub const VkFenceImportFlagBits_VK_FENCE_IMPORT_TEMPORARY_BIT: VkFenceImportFlagBits = 1;
 pub const VkFenceImportFlagBits_VK_FENCE_IMPORT_TEMPORARY_BIT_KHR: VkFenceImportFlagBits = 1;
 pub const VkFenceImportFlagBits_VK_FENCE_IMPORT_FLAG_BITS_MAX_ENUM: VkFenceImportFlagBits =
     2147483647;
-pub type VkFenceImportFlagBits = ::std::os::raw::c_uint;
+pub type VkFenceImportFlagBits = ::std::os::raw::c_int;
 pub type VkFenceImportFlags = VkFlags;
 pub const VkSemaphoreImportFlagBits_VK_SEMAPHORE_IMPORT_TEMPORARY_BIT: VkSemaphoreImportFlagBits =
     1;
@@ -10056,7 +9903,7 @@ pub const VkSemaphoreImportFlagBits_VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR:
     VkSemaphoreImportFlagBits = 1;
 pub const VkSemaphoreImportFlagBits_VK_SEMAPHORE_IMPORT_FLAG_BITS_MAX_ENUM:
     VkSemaphoreImportFlagBits = 2147483647;
-pub type VkSemaphoreImportFlagBits = ::std::os::raw::c_uint;
+pub type VkSemaphoreImportFlagBits = ::std::os::raw::c_int;
 pub type VkSemaphoreImportFlags = VkFlags;
 pub const VkExternalSemaphoreHandleTypeFlagBits_VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT:
     VkExternalSemaphoreHandleTypeFlagBits = 1;
@@ -10073,7 +9920,7 @@ pub const VkExternalSemaphoreHandleTypeFlagBits_VK_EXTERNAL_SEMAPHORE_HANDLE_TYP
 pub const VkExternalSemaphoreHandleTypeFlagBits_VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR : VkExternalSemaphoreHandleTypeFlagBits = 8 ;
 pub const VkExternalSemaphoreHandleTypeFlagBits_VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR : VkExternalSemaphoreHandleTypeFlagBits = 16 ;
 pub const VkExternalSemaphoreHandleTypeFlagBits_VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_FLAG_BITS_MAX_ENUM : VkExternalSemaphoreHandleTypeFlagBits = 2147483647 ;
-pub type VkExternalSemaphoreHandleTypeFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalSemaphoreHandleTypeFlagBits = ::std::os::raw::c_int;
 pub type VkExternalSemaphoreHandleTypeFlags = VkFlags;
 pub const VkExternalSemaphoreFeatureFlagBits_VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT:
     VkExternalSemaphoreFeatureFlagBits = 1;
@@ -10085,7 +9932,7 @@ pub const VkExternalSemaphoreFeatureFlagBits_VK_EXTERNAL_SEMAPHORE_FEATURE_IMPOR
     VkExternalSemaphoreFeatureFlagBits = 2;
 pub const VkExternalSemaphoreFeatureFlagBits_VK_EXTERNAL_SEMAPHORE_FEATURE_FLAG_BITS_MAX_ENUM:
     VkExternalSemaphoreFeatureFlagBits = 2147483647;
-pub type VkExternalSemaphoreFeatureFlagBits = ::std::os::raw::c_uint;
+pub type VkExternalSemaphoreFeatureFlagBits = ::std::os::raw::c_int;
 pub type VkExternalSemaphoreFeatureFlags = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -11984,7 +11831,7 @@ pub const VkDriverId_VK_DRIVER_ID_GOOGLE_SWIFTSHADER_KHR: VkDriverId = 10;
 pub const VkDriverId_VK_DRIVER_ID_GGP_PROPRIETARY_KHR: VkDriverId = 11;
 pub const VkDriverId_VK_DRIVER_ID_BROADCOM_PROPRIETARY_KHR: VkDriverId = 12;
 pub const VkDriverId_VK_DRIVER_ID_MAX_ENUM: VkDriverId = 2147483647;
-pub type VkDriverId = ::std::os::raw::c_uint;
+pub type VkDriverId = ::std::os::raw::c_int;
 pub const VkShaderFloatControlsIndependence_VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY:
     VkShaderFloatControlsIndependence = 0;
 pub const VkShaderFloatControlsIndependence_VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL:
@@ -11998,7 +11845,7 @@ pub const VkShaderFloatControlsIndependence_VK_SHADER_FLOAT_CONTROLS_INDEPENDENC
     VkShaderFloatControlsIndependence = 2;
 pub const VkShaderFloatControlsIndependence_VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_MAX_ENUM:
     VkShaderFloatControlsIndependence = 2147483647;
-pub type VkShaderFloatControlsIndependence = ::std::os::raw::c_uint;
+pub type VkShaderFloatControlsIndependence = ::std::os::raw::c_int;
 pub const VkSamplerReductionMode_VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE:
     VkSamplerReductionMode = 0;
 pub const VkSamplerReductionMode_VK_SAMPLER_REDUCTION_MODE_MIN: VkSamplerReductionMode = 1;
@@ -12011,13 +11858,13 @@ pub const VkSamplerReductionMode_VK_SAMPLER_REDUCTION_MODE_MIN_EXT: VkSamplerRed
 pub const VkSamplerReductionMode_VK_SAMPLER_REDUCTION_MODE_MAX_EXT: VkSamplerReductionMode = 2;
 pub const VkSamplerReductionMode_VK_SAMPLER_REDUCTION_MODE_MAX_ENUM: VkSamplerReductionMode =
     2147483647;
-pub type VkSamplerReductionMode = ::std::os::raw::c_uint;
+pub type VkSamplerReductionMode = ::std::os::raw::c_int;
 pub const VkSemaphoreType_VK_SEMAPHORE_TYPE_BINARY: VkSemaphoreType = 0;
 pub const VkSemaphoreType_VK_SEMAPHORE_TYPE_TIMELINE: VkSemaphoreType = 1;
 pub const VkSemaphoreType_VK_SEMAPHORE_TYPE_BINARY_KHR: VkSemaphoreType = 0;
 pub const VkSemaphoreType_VK_SEMAPHORE_TYPE_TIMELINE_KHR: VkSemaphoreType = 1;
 pub const VkSemaphoreType_VK_SEMAPHORE_TYPE_MAX_ENUM: VkSemaphoreType = 2147483647;
-pub type VkSemaphoreType = ::std::os::raw::c_uint;
+pub type VkSemaphoreType = ::std::os::raw::c_int;
 pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_NONE: VkResolveModeFlagBits = 0;
 pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_SAMPLE_ZERO_BIT: VkResolveModeFlagBits = 1;
 pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_AVERAGE_BIT: VkResolveModeFlagBits = 2;
@@ -12032,7 +11879,7 @@ pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_MIN_BIT_KHR: VkResolveModeFlagBi
 pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_MAX_BIT_KHR: VkResolveModeFlagBits = 8;
 pub const VkResolveModeFlagBits_VK_RESOLVE_MODE_FLAG_BITS_MAX_ENUM: VkResolveModeFlagBits =
     2147483647;
-pub type VkResolveModeFlagBits = ::std::os::raw::c_uint;
+pub type VkResolveModeFlagBits = ::std::os::raw::c_int;
 pub type VkResolveModeFlags = VkFlags;
 pub const VkDescriptorBindingFlagBits_VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT:
     VkDescriptorBindingFlagBits = 1;
@@ -12052,13 +11899,13 @@ pub const VkDescriptorBindingFlagBits_VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_
     VkDescriptorBindingFlagBits = 8;
 pub const VkDescriptorBindingFlagBits_VK_DESCRIPTOR_BINDING_FLAG_BITS_MAX_ENUM:
     VkDescriptorBindingFlagBits = 2147483647;
-pub type VkDescriptorBindingFlagBits = ::std::os::raw::c_uint;
+pub type VkDescriptorBindingFlagBits = ::std::os::raw::c_int;
 pub type VkDescriptorBindingFlags = VkFlags;
 pub const VkSemaphoreWaitFlagBits_VK_SEMAPHORE_WAIT_ANY_BIT: VkSemaphoreWaitFlagBits = 1;
 pub const VkSemaphoreWaitFlagBits_VK_SEMAPHORE_WAIT_ANY_BIT_KHR: VkSemaphoreWaitFlagBits = 1;
 pub const VkSemaphoreWaitFlagBits_VK_SEMAPHORE_WAIT_FLAG_BITS_MAX_ENUM: VkSemaphoreWaitFlagBits =
     2147483647;
-pub type VkSemaphoreWaitFlagBits = ::std::os::raw::c_uint;
+pub type VkSemaphoreWaitFlagBits = ::std::os::raw::c_int;
 pub type VkSemaphoreWaitFlags = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -14096,7 +13943,7 @@ pub const VkPipelineCreationFeedbackFlagBits_VK_PIPELINE_CREATION_FEEDBACK_APPLI
 pub const VkPipelineCreationFeedbackFlagBits_VK_PIPELINE_CREATION_FEEDBACK_BASE_PIPELINE_ACCELERATION_BIT_EXT : VkPipelineCreationFeedbackFlagBits = 4 ;
 pub const VkPipelineCreationFeedbackFlagBits_VK_PIPELINE_CREATION_FEEDBACK_FLAG_BITS_MAX_ENUM:
     VkPipelineCreationFeedbackFlagBits = 2147483647;
-pub type VkPipelineCreationFeedbackFlagBits = ::std::os::raw::c_uint;
+pub type VkPipelineCreationFeedbackFlagBits = ::std::os::raw::c_int;
 pub type VkPipelineCreationFeedbackFlags = VkFlags;
 pub const VkToolPurposeFlagBits_VK_TOOL_PURPOSE_VALIDATION_BIT: VkToolPurposeFlagBits = 1;
 pub const VkToolPurposeFlagBits_VK_TOOL_PURPOSE_PROFILING_BIT: VkToolPurposeFlagBits = 2;
@@ -14114,7 +13961,7 @@ pub const VkToolPurposeFlagBits_VK_TOOL_PURPOSE_MODIFYING_FEATURES_BIT_EXT: VkTo
     16;
 pub const VkToolPurposeFlagBits_VK_TOOL_PURPOSE_FLAG_BITS_MAX_ENUM: VkToolPurposeFlagBits =
     2147483647;
-pub type VkToolPurposeFlagBits = ::std::os::raw::c_uint;
+pub type VkToolPurposeFlagBits = ::std::os::raw::c_int;
 pub type VkToolPurposeFlags = VkFlags;
 pub type VkPrivateDataSlotCreateFlags = VkFlags;
 pub type VkPipelineStageFlags2 = VkFlags64;
@@ -14274,7 +14121,7 @@ pub const VK_ACCESS_2_OPTICAL_FLOW_WRITE_BIT_NV: VkAccessFlagBits2 = 87960930222
 pub const VkSubmitFlagBits_VK_SUBMIT_PROTECTED_BIT: VkSubmitFlagBits = 1;
 pub const VkSubmitFlagBits_VK_SUBMIT_PROTECTED_BIT_KHR: VkSubmitFlagBits = 1;
 pub const VkSubmitFlagBits_VK_SUBMIT_FLAG_BITS_MAX_ENUM: VkSubmitFlagBits = 2147483647;
-pub type VkSubmitFlagBits = ::std::os::raw::c_uint;
+pub type VkSubmitFlagBits = ::std::os::raw::c_int;
 pub type VkSubmitFlags = VkFlags;
 pub const VkRenderingFlagBits_VK_RENDERING_CONTENTS_SECONDARY_COMMAND_BUFFERS_BIT:
     VkRenderingFlagBits = 1;
@@ -14288,7 +14135,7 @@ pub const VkRenderingFlagBits_VK_RENDERING_SUSPENDING_BIT_KHR: VkRenderingFlagBi
 pub const VkRenderingFlagBits_VK_RENDERING_RESUMING_BIT_KHR: VkRenderingFlagBits = 4;
 pub const VkRenderingFlagBits_VK_RENDERING_CONTENTS_INLINE_BIT_EXT: VkRenderingFlagBits = 16;
 pub const VkRenderingFlagBits_VK_RENDERING_FLAG_BITS_MAX_ENUM: VkRenderingFlagBits = 2147483647;
-pub type VkRenderingFlagBits = ::std::os::raw::c_uint;
+pub type VkRenderingFlagBits = ::std::os::raw::c_int;
 pub type VkRenderingFlags = VkFlags;
 pub type VkFormatFeatureFlags2 = VkFlags64;
 pub type VkFormatFeatureFlagBits2 = VkFlags64;
@@ -16265,7 +16112,7 @@ pub const VkPresentModeKHR_VK_PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR: VkPresentM
 pub const VkPresentModeKHR_VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR: VkPresentModeKHR =
     1000111001;
 pub const VkPresentModeKHR_VK_PRESENT_MODE_MAX_ENUM_KHR: VkPresentModeKHR = 2147483647;
-pub type VkPresentModeKHR = ::std::os::raw::c_uint;
+pub type VkPresentModeKHR = ::std::os::raw::c_int;
 pub const VkColorSpaceKHR_VK_COLOR_SPACE_SRGB_NONLINEAR_KHR: VkColorSpaceKHR = 0;
 pub const VkColorSpaceKHR_VK_COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT: VkColorSpaceKHR = 1000104001;
 pub const VkColorSpaceKHR_VK_COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT: VkColorSpaceKHR = 1000104002;
@@ -16285,7 +16132,7 @@ pub const VkColorSpaceKHR_VK_COLOR_SPACE_DISPLAY_NATIVE_AMD: VkColorSpaceKHR = 1
 pub const VkColorSpaceKHR_VK_COLORSPACE_SRGB_NONLINEAR_KHR: VkColorSpaceKHR = 0;
 pub const VkColorSpaceKHR_VK_COLOR_SPACE_DCI_P3_LINEAR_EXT: VkColorSpaceKHR = 1000104003;
 pub const VkColorSpaceKHR_VK_COLOR_SPACE_MAX_ENUM_KHR: VkColorSpaceKHR = 2147483647;
-pub type VkColorSpaceKHR = ::std::os::raw::c_uint;
+pub type VkColorSpaceKHR = ::std::os::raw::c_int;
 pub const VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR:
     VkSurfaceTransformFlagBitsKHR = 1;
 pub const VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR:
@@ -16304,7 +16151,7 @@ pub const VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR:
     VkSurfaceTransformFlagBitsKHR = 256;
 pub const VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_FLAG_BITS_MAX_ENUM_KHR:
     VkSurfaceTransformFlagBitsKHR = 2147483647;
-pub type VkSurfaceTransformFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkSurfaceTransformFlagBitsKHR = ::std::os::raw::c_int;
 pub const VkCompositeAlphaFlagBitsKHR_VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR:
     VkCompositeAlphaFlagBitsKHR = 1;
 pub const VkCompositeAlphaFlagBitsKHR_VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR:
@@ -16315,7 +16162,7 @@ pub const VkCompositeAlphaFlagBitsKHR_VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR:
     VkCompositeAlphaFlagBitsKHR = 8;
 pub const VkCompositeAlphaFlagBitsKHR_VK_COMPOSITE_ALPHA_FLAG_BITS_MAX_ENUM_KHR:
     VkCompositeAlphaFlagBitsKHR = 2147483647;
-pub type VkCompositeAlphaFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkCompositeAlphaFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkCompositeAlphaFlagsKHR = VkFlags;
 pub type VkSurfaceTransformFlagsKHR = VkFlags;
 #[repr(C)]
@@ -16428,7 +16275,7 @@ pub const VkSwapchainCreateFlagBitsKHR_VK_SWAPCHAIN_CREATE_DEFERRED_MEMORY_ALLOC
     VkSwapchainCreateFlagBitsKHR = 8;
 pub const VkSwapchainCreateFlagBitsKHR_VK_SWAPCHAIN_CREATE_FLAG_BITS_MAX_ENUM_KHR:
     VkSwapchainCreateFlagBitsKHR = 2147483647;
-pub type VkSwapchainCreateFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkSwapchainCreateFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkSwapchainCreateFlagsKHR = VkFlags;
 pub const VkDeviceGroupPresentModeFlagBitsKHR_VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR:
     VkDeviceGroupPresentModeFlagBitsKHR = 1;
@@ -16438,7 +16285,7 @@ pub const VkDeviceGroupPresentModeFlagBitsKHR_VK_DEVICE_GROUP_PRESENT_MODE_SUM_B
     VkDeviceGroupPresentModeFlagBitsKHR = 4;
 pub const VkDeviceGroupPresentModeFlagBitsKHR_VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR : VkDeviceGroupPresentModeFlagBitsKHR = 8 ;
 pub const VkDeviceGroupPresentModeFlagBitsKHR_VK_DEVICE_GROUP_PRESENT_MODE_FLAG_BITS_MAX_ENUM_KHR : VkDeviceGroupPresentModeFlagBitsKHR = 2147483647 ;
-pub type VkDeviceGroupPresentModeFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkDeviceGroupPresentModeFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkDeviceGroupPresentModeFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -16769,7 +16616,7 @@ pub const VkDisplayPlaneAlphaFlagBitsKHR_VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMUL
     VkDisplayPlaneAlphaFlagBitsKHR = 8;
 pub const VkDisplayPlaneAlphaFlagBitsKHR_VK_DISPLAY_PLANE_ALPHA_FLAG_BITS_MAX_ENUM_KHR:
     VkDisplayPlaneAlphaFlagBitsKHR = 2147483647;
-pub type VkDisplayPlaneAlphaFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkDisplayPlaneAlphaFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkDisplayPlaneAlphaFlagsKHR = VkFlags;
 pub type VkDisplaySurfaceCreateFlagsKHR = VkFlags;
 #[repr(C)]
@@ -17079,7 +16926,7 @@ pub const VkVideoCodecOperationFlagBitsKHR_VK_VIDEO_CODEC_OPERATION_DECODE_AV1_B
     VkVideoCodecOperationFlagBitsKHR = 4;
 pub const VkVideoCodecOperationFlagBitsKHR_VK_VIDEO_CODEC_OPERATION_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoCodecOperationFlagBitsKHR = 2147483647;
-pub type VkVideoCodecOperationFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoCodecOperationFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoCodecOperationFlagsKHR = VkFlags;
 pub const VkVideoChromaSubsamplingFlagBitsKHR_VK_VIDEO_CHROMA_SUBSAMPLING_INVALID_KHR:
     VkVideoChromaSubsamplingFlagBitsKHR = 0;
@@ -17093,7 +16940,7 @@ pub const VkVideoChromaSubsamplingFlagBitsKHR_VK_VIDEO_CHROMA_SUBSAMPLING_444_BI
     VkVideoChromaSubsamplingFlagBitsKHR = 8;
 pub const VkVideoChromaSubsamplingFlagBitsKHR_VK_VIDEO_CHROMA_SUBSAMPLING_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoChromaSubsamplingFlagBitsKHR = 2147483647;
-pub type VkVideoChromaSubsamplingFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoChromaSubsamplingFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoChromaSubsamplingFlagsKHR = VkFlags;
 pub const VkVideoComponentBitDepthFlagBitsKHR_VK_VIDEO_COMPONENT_BIT_DEPTH_INVALID_KHR:
     VkVideoComponentBitDepthFlagBitsKHR = 0;
@@ -17104,7 +16951,7 @@ pub const VkVideoComponentBitDepthFlagBitsKHR_VK_VIDEO_COMPONENT_BIT_DEPTH_10_BI
 pub const VkVideoComponentBitDepthFlagBitsKHR_VK_VIDEO_COMPONENT_BIT_DEPTH_12_BIT_KHR:
     VkVideoComponentBitDepthFlagBitsKHR = 16;
 pub const VkVideoComponentBitDepthFlagBitsKHR_VK_VIDEO_COMPONENT_BIT_DEPTH_FLAG_BITS_MAX_ENUM_KHR : VkVideoComponentBitDepthFlagBitsKHR = 2147483647 ;
-pub type VkVideoComponentBitDepthFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoComponentBitDepthFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoComponentBitDepthFlagsKHR = VkFlags;
 pub const VkVideoCapabilityFlagBitsKHR_VK_VIDEO_CAPABILITY_PROTECTED_CONTENT_BIT_KHR:
     VkVideoCapabilityFlagBitsKHR = 1;
@@ -17112,7 +16959,7 @@ pub const VkVideoCapabilityFlagBitsKHR_VK_VIDEO_CAPABILITY_SEPARATE_REFERENCE_IM
     VkVideoCapabilityFlagBitsKHR = 2;
 pub const VkVideoCapabilityFlagBitsKHR_VK_VIDEO_CAPABILITY_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoCapabilityFlagBitsKHR = 2147483647;
-pub type VkVideoCapabilityFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoCapabilityFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoCapabilityFlagsKHR = VkFlags;
 pub const VkVideoSessionCreateFlagBitsKHR_VK_VIDEO_SESSION_CREATE_PROTECTED_CONTENT_BIT_KHR:
     VkVideoSessionCreateFlagBitsKHR = 1;
@@ -17121,7 +16968,7 @@ pub const VkVideoSessionCreateFlagBitsKHR_VK_VIDEO_SESSION_CREATE_INLINE_QUERIES
     VkVideoSessionCreateFlagBitsKHR = 4;
 pub const VkVideoSessionCreateFlagBitsKHR_VK_VIDEO_SESSION_CREATE_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoSessionCreateFlagBitsKHR = 2147483647;
-pub type VkVideoSessionCreateFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoSessionCreateFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoSessionCreateFlagsKHR = VkFlags;
 pub type VkVideoSessionParametersCreateFlagsKHR = VkFlags;
 pub type VkVideoBeginCodingFlagsKHR = VkFlags;
@@ -17134,7 +16981,7 @@ pub const VkVideoCodingControlFlagBitsKHR_VK_VIDEO_CODING_CONTROL_ENCODE_QUALITY
     VkVideoCodingControlFlagBitsKHR = 4;
 pub const VkVideoCodingControlFlagBitsKHR_VK_VIDEO_CODING_CONTROL_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoCodingControlFlagBitsKHR = 2147483647;
-pub type VkVideoCodingControlFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoCodingControlFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoCodingControlFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -17690,7 +17537,7 @@ pub const VkVideoDecodeCapabilityFlagBitsKHR_VK_VIDEO_DECODE_CAPABILITY_DPB_AND_
 pub const VkVideoDecodeCapabilityFlagBitsKHR_VK_VIDEO_DECODE_CAPABILITY_DPB_AND_OUTPUT_DISTINCT_BIT_KHR : VkVideoDecodeCapabilityFlagBitsKHR = 2 ;
 pub const VkVideoDecodeCapabilityFlagBitsKHR_VK_VIDEO_DECODE_CAPABILITY_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoDecodeCapabilityFlagBitsKHR = 2147483647;
-pub type VkVideoDecodeCapabilityFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoDecodeCapabilityFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoDecodeCapabilityFlagsKHR = VkFlags;
 pub const VkVideoDecodeUsageFlagBitsKHR_VK_VIDEO_DECODE_USAGE_DEFAULT_KHR:
     VkVideoDecodeUsageFlagBitsKHR = 0;
@@ -17702,7 +17549,7 @@ pub const VkVideoDecodeUsageFlagBitsKHR_VK_VIDEO_DECODE_USAGE_STREAMING_BIT_KHR:
     VkVideoDecodeUsageFlagBitsKHR = 4;
 pub const VkVideoDecodeUsageFlagBitsKHR_VK_VIDEO_DECODE_USAGE_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoDecodeUsageFlagBitsKHR = 2147483647;
-pub type VkVideoDecodeUsageFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoDecodeUsageFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoDecodeUsageFlagsKHR = VkFlags;
 pub type VkVideoDecodeFlagsKHR = VkFlags;
 #[repr(C)]
@@ -17799,7 +17646,7 @@ pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_INVALID:
     StdVideoH264ChromaFormatIdc = 2147483647;
 pub const StdVideoH264ChromaFormatIdc_STD_VIDEO_H264_CHROMA_FORMAT_IDC_MAX_ENUM:
     StdVideoH264ChromaFormatIdc = 2147483647;
-pub type StdVideoH264ChromaFormatIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ChromaFormatIdc = ::std::os::raw::c_int;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_BASELINE: StdVideoH264ProfileIdc = 66;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_MAIN: StdVideoH264ProfileIdc = 77;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_HIGH: StdVideoH264ProfileIdc = 100;
@@ -17809,7 +17656,7 @@ pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_INVALID: StdVideoH26
     2147483647;
 pub const StdVideoH264ProfileIdc_STD_VIDEO_H264_PROFILE_IDC_MAX_ENUM: StdVideoH264ProfileIdc =
     2147483647;
-pub type StdVideoH264ProfileIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ProfileIdc = ::std::os::raw::c_int;
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_1_0: StdVideoH264LevelIdc = 0;
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_1_1: StdVideoH264LevelIdc = 1;
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_1_2: StdVideoH264LevelIdc = 2;
@@ -17831,13 +17678,13 @@ pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_6_1: StdVideoH264LevelId
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_6_2: StdVideoH264LevelIdc = 18;
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_INVALID: StdVideoH264LevelIdc = 2147483647;
 pub const StdVideoH264LevelIdc_STD_VIDEO_H264_LEVEL_IDC_MAX_ENUM: StdVideoH264LevelIdc = 2147483647;
-pub type StdVideoH264LevelIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264LevelIdc = ::std::os::raw::c_int;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_0: StdVideoH264PocType = 0;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_1: StdVideoH264PocType = 1;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_2: StdVideoH264PocType = 2;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_INVALID: StdVideoH264PocType = 2147483647;
 pub const StdVideoH264PocType_STD_VIDEO_H264_POC_TYPE_MAX_ENUM: StdVideoH264PocType = 2147483647;
-pub type StdVideoH264PocType = ::std::os::raw::c_uint;
+pub type StdVideoH264PocType = ::std::os::raw::c_int;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_UNSPECIFIED:
     StdVideoH264AspectRatioIdc = 0;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_SQUARE:
@@ -17878,7 +17725,7 @@ pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_INVALID:
     StdVideoH264AspectRatioIdc = 2147483647;
 pub const StdVideoH264AspectRatioIdc_STD_VIDEO_H264_ASPECT_RATIO_IDC_MAX_ENUM:
     StdVideoH264AspectRatioIdc = 2147483647;
-pub type StdVideoH264AspectRatioIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264AspectRatioIdc = ::std::os::raw::c_int;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_DEFAULT:
     StdVideoH264WeightedBipredIdc = 0;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_EXPLICIT:
@@ -17889,7 +17736,7 @@ pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_INVAL
     StdVideoH264WeightedBipredIdc = 2147483647;
 pub const StdVideoH264WeightedBipredIdc_STD_VIDEO_H264_WEIGHTED_BIPRED_IDC_MAX_ENUM:
     StdVideoH264WeightedBipredIdc = 2147483647;
-pub type StdVideoH264WeightedBipredIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264WeightedBipredIdc = ::std::os::raw::c_int;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_SHORT_TERM_SUBTRACT : StdVideoH264ModificationOfPicNumsIdc = 0 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_SHORT_TERM_ADD : StdVideoH264ModificationOfPicNumsIdc = 1 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_LONG_TERM : StdVideoH264ModificationOfPicNumsIdc = 2 ;
@@ -17897,7 +17744,7 @@ pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PI
     StdVideoH264ModificationOfPicNumsIdc = 3;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_INVALID : StdVideoH264ModificationOfPicNumsIdc = 2147483647 ;
 pub const StdVideoH264ModificationOfPicNumsIdc_STD_VIDEO_H264_MODIFICATION_OF_PIC_NUMS_IDC_MAX_ENUM : StdVideoH264ModificationOfPicNumsIdc = 2147483647 ;
-pub type StdVideoH264ModificationOfPicNumsIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264ModificationOfPicNumsIdc = ::std::os::raw::c_int;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_END:
     StdVideoH264MemMgmtControlOp = 0;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_UNMARK_SHORT_TERM:
@@ -17914,7 +17761,7 @@ pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_INVALI
     StdVideoH264MemMgmtControlOp = 2147483647;
 pub const StdVideoH264MemMgmtControlOp_STD_VIDEO_H264_MEM_MGMT_CONTROL_OP_MAX_ENUM:
     StdVideoH264MemMgmtControlOp = 2147483647;
-pub type StdVideoH264MemMgmtControlOp = ::std::os::raw::c_uint;
+pub type StdVideoH264MemMgmtControlOp = ::std::os::raw::c_int;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_0: StdVideoH264CabacInitIdc = 0;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_1: StdVideoH264CabacInitIdc = 1;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_2: StdVideoH264CabacInitIdc = 2;
@@ -17922,13 +17769,13 @@ pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_INVALID: StdVid
     2147483647;
 pub const StdVideoH264CabacInitIdc_STD_VIDEO_H264_CABAC_INIT_IDC_MAX_ENUM:
     StdVideoH264CabacInitIdc = 2147483647;
-pub type StdVideoH264CabacInitIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264CabacInitIdc = ::std::os::raw::c_int;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_DISABLED : StdVideoH264DisableDeblockingFilterIdc = 0 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_ENABLED : StdVideoH264DisableDeblockingFilterIdc = 1 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_PARTIAL : StdVideoH264DisableDeblockingFilterIdc = 2 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_INVALID : StdVideoH264DisableDeblockingFilterIdc = 2147483647 ;
 pub const StdVideoH264DisableDeblockingFilterIdc_STD_VIDEO_H264_DISABLE_DEBLOCKING_FILTER_IDC_MAX_ENUM : StdVideoH264DisableDeblockingFilterIdc = 2147483647 ;
-pub type StdVideoH264DisableDeblockingFilterIdc = ::std::os::raw::c_uint;
+pub type StdVideoH264DisableDeblockingFilterIdc = ::std::os::raw::c_int;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_P: StdVideoH264SliceType = 0;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_B: StdVideoH264SliceType = 1;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_I: StdVideoH264SliceType = 2;
@@ -17936,7 +17783,7 @@ pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_INVALID: StdVideoH264S
     2147483647;
 pub const StdVideoH264SliceType_STD_VIDEO_H264_SLICE_TYPE_MAX_ENUM: StdVideoH264SliceType =
     2147483647;
-pub type StdVideoH264SliceType = ::std::os::raw::c_uint;
+pub type StdVideoH264SliceType = ::std::os::raw::c_int;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_P: StdVideoH264PictureType = 0;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_B: StdVideoH264PictureType = 1;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_I: StdVideoH264PictureType = 2;
@@ -17945,7 +17792,7 @@ pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_INVALID: StdVideoH
     2147483647;
 pub const StdVideoH264PictureType_STD_VIDEO_H264_PICTURE_TYPE_MAX_ENUM: StdVideoH264PictureType =
     2147483647;
-pub type StdVideoH264PictureType = ::std::os::raw::c_uint;
+pub type StdVideoH264PictureType = ::std::os::raw::c_int;
 pub const StdVideoH264NonVclNaluType_STD_VIDEO_H264_NON_VCL_NALU_TYPE_SPS:
     StdVideoH264NonVclNaluType = 0;
 pub const StdVideoH264NonVclNaluType_STD_VIDEO_H264_NON_VCL_NALU_TYPE_PPS:
@@ -17964,7 +17811,7 @@ pub const StdVideoH264NonVclNaluType_STD_VIDEO_H264_NON_VCL_NALU_TYPE_INVALID:
     StdVideoH264NonVclNaluType = 2147483647;
 pub const StdVideoH264NonVclNaluType_STD_VIDEO_H264_NON_VCL_NALU_TYPE_MAX_ENUM:
     StdVideoH264NonVclNaluType = 2147483647;
-pub type StdVideoH264NonVclNaluType = ::std::os::raw::c_uint;
+pub type StdVideoH264NonVclNaluType = ::std::os::raw::c_int;
 #[repr(C)]
 #[repr(align(4))]
 #[derive(Debug, Copy, Clone)]
@@ -19587,7 +19434,7 @@ pub const VkVideoEncodeH264CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H264_CAPABILITY
 pub const VkVideoEncodeH264CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H264_CAPABILITY_PER_SLICE_CONSTANT_QP_BIT_KHR : VkVideoEncodeH264CapabilityFlagBitsKHR = 128 ;
 pub const VkVideoEncodeH264CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H264_CAPABILITY_GENERATE_PREFIX_NALU_BIT_KHR : VkVideoEncodeH264CapabilityFlagBitsKHR = 256 ;
 pub const VkVideoEncodeH264CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H264_CAPABILITY_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH264CapabilityFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH264CapabilityFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH264CapabilityFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH264CapabilityFlagsKHR = VkFlags;
 pub const VkVideoEncodeH264StdFlagBitsKHR_VK_VIDEO_ENCODE_H264_STD_SEPARATE_COLOR_PLANE_FLAG_SET_BIT_KHR : VkVideoEncodeH264StdFlagBitsKHR = 1 ;
 pub const VkVideoEncodeH264StdFlagBitsKHR_VK_VIDEO_ENCODE_H264_STD_QPPRIME_Y_ZERO_TRANSFORM_BYPASS_FLAG_SET_BIT_KHR : VkVideoEncodeH264StdFlagBitsKHR = 2 ;
@@ -19613,7 +19460,7 @@ pub const VkVideoEncodeH264StdFlagBitsKHR_VK_VIDEO_ENCODE_H264_STD_SLICE_QP_DELT
 pub const VkVideoEncodeH264StdFlagBitsKHR_VK_VIDEO_ENCODE_H264_STD_DIFFERENT_SLICE_QP_DELTA_BIT_KHR : VkVideoEncodeH264StdFlagBitsKHR = 1048576 ;
 pub const VkVideoEncodeH264StdFlagBitsKHR_VK_VIDEO_ENCODE_H264_STD_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeH264StdFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeH264StdFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH264StdFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH264StdFlagsKHR = VkFlags;
 pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONTROL_ATTEMPT_HRD_COMPLIANCE_BIT_KHR : VkVideoEncodeH264RateControlFlagBitsKHR = 1 ;
 pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONTROL_REGULAR_GOP_BIT_KHR : VkVideoEncodeH264RateControlFlagBitsKHR = 2 ;
@@ -19621,7 +19468,7 @@ pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONT
 pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONTROL_REFERENCE_PATTERN_DYADIC_BIT_KHR : VkVideoEncodeH264RateControlFlagBitsKHR = 8 ;
 pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONTROL_TEMPORAL_LAYER_PATTERN_DYADIC_BIT_KHR : VkVideoEncodeH264RateControlFlagBitsKHR = 16 ;
 pub const VkVideoEncodeH264RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H264_RATE_CONTROL_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH264RateControlFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH264RateControlFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH264RateControlFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH264RateControlFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -20158,7 +20005,7 @@ pub const StdVideoH265ChromaFormatIdc_STD_VIDEO_H265_CHROMA_FORMAT_IDC_INVALID:
     StdVideoH265ChromaFormatIdc = 2147483647;
 pub const StdVideoH265ChromaFormatIdc_STD_VIDEO_H265_CHROMA_FORMAT_IDC_MAX_ENUM:
     StdVideoH265ChromaFormatIdc = 2147483647;
-pub type StdVideoH265ChromaFormatIdc = ::std::os::raw::c_uint;
+pub type StdVideoH265ChromaFormatIdc = ::std::os::raw::c_int;
 pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_MAIN: StdVideoH265ProfileIdc = 1;
 pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_MAIN_10: StdVideoH265ProfileIdc = 2;
 pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_MAIN_STILL_PICTURE:
@@ -20171,7 +20018,7 @@ pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_INVALID: StdVideoH26
     2147483647;
 pub const StdVideoH265ProfileIdc_STD_VIDEO_H265_PROFILE_IDC_MAX_ENUM: StdVideoH265ProfileIdc =
     2147483647;
-pub type StdVideoH265ProfileIdc = ::std::os::raw::c_uint;
+pub type StdVideoH265ProfileIdc = ::std::os::raw::c_int;
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_1_0: StdVideoH265LevelIdc = 0;
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_2_0: StdVideoH265LevelIdc = 1;
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_2_1: StdVideoH265LevelIdc = 2;
@@ -20187,7 +20034,7 @@ pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_6_1: StdVideoH265LevelId
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_6_2: StdVideoH265LevelIdc = 12;
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_INVALID: StdVideoH265LevelIdc = 2147483647;
 pub const StdVideoH265LevelIdc_STD_VIDEO_H265_LEVEL_IDC_MAX_ENUM: StdVideoH265LevelIdc = 2147483647;
-pub type StdVideoH265LevelIdc = ::std::os::raw::c_uint;
+pub type StdVideoH265LevelIdc = ::std::os::raw::c_int;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_B: StdVideoH265SliceType = 0;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_P: StdVideoH265SliceType = 1;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_I: StdVideoH265SliceType = 2;
@@ -20195,7 +20042,7 @@ pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_INVALID: StdVideoH265S
     2147483647;
 pub const StdVideoH265SliceType_STD_VIDEO_H265_SLICE_TYPE_MAX_ENUM: StdVideoH265SliceType =
     2147483647;
-pub type StdVideoH265SliceType = ::std::os::raw::c_uint;
+pub type StdVideoH265SliceType = ::std::os::raw::c_int;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_P: StdVideoH265PictureType = 0;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_B: StdVideoH265PictureType = 1;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_I: StdVideoH265PictureType = 2;
@@ -20204,7 +20051,7 @@ pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_INVALID: StdVideoH
     2147483647;
 pub const StdVideoH265PictureType_STD_VIDEO_H265_PICTURE_TYPE_MAX_ENUM: StdVideoH265PictureType =
     2147483647;
-pub type StdVideoH265PictureType = ::std::os::raw::c_uint;
+pub type StdVideoH265PictureType = ::std::os::raw::c_int;
 pub const StdVideoH265AspectRatioIdc_STD_VIDEO_H265_ASPECT_RATIO_IDC_UNSPECIFIED:
     StdVideoH265AspectRatioIdc = 0;
 pub const StdVideoH265AspectRatioIdc_STD_VIDEO_H265_ASPECT_RATIO_IDC_SQUARE:
@@ -20245,7 +20092,7 @@ pub const StdVideoH265AspectRatioIdc_STD_VIDEO_H265_ASPECT_RATIO_IDC_INVALID:
     StdVideoH265AspectRatioIdc = 2147483647;
 pub const StdVideoH265AspectRatioIdc_STD_VIDEO_H265_ASPECT_RATIO_IDC_MAX_ENUM:
     StdVideoH265AspectRatioIdc = 2147483647;
-pub type StdVideoH265AspectRatioIdc = ::std::os::raw::c_uint;
+pub type StdVideoH265AspectRatioIdc = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct StdVideoH265DecPicBufMgr {
@@ -23678,7 +23525,7 @@ pub const VkVideoEncodeH265CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H265_CAPABILITY
 pub const VkVideoEncodeH265CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H265_CAPABILITY_MULTIPLE_TILES_PER_SLICE_SEGMENT_BIT_KHR : VkVideoEncodeH265CapabilityFlagBitsKHR = 256 ;
 pub const VkVideoEncodeH265CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H265_CAPABILITY_MULTIPLE_SLICE_SEGMENTS_PER_TILE_BIT_KHR : VkVideoEncodeH265CapabilityFlagBitsKHR = 512 ;
 pub const VkVideoEncodeH265CapabilityFlagBitsKHR_VK_VIDEO_ENCODE_H265_CAPABILITY_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH265CapabilityFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH265CapabilityFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH265CapabilityFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH265CapabilityFlagsKHR = VkFlags;
 pub const VkVideoEncodeH265StdFlagBitsKHR_VK_VIDEO_ENCODE_H265_STD_SEPARATE_COLOR_PLANE_FLAG_SET_BIT_KHR : VkVideoEncodeH265StdFlagBitsKHR = 1 ;
 pub const VkVideoEncodeH265StdFlagBitsKHR_VK_VIDEO_ENCODE_H265_STD_SAMPLE_ADAPTIVE_OFFSET_ENABLED_FLAG_SET_BIT_KHR : VkVideoEncodeH265StdFlagBitsKHR = 2 ;
@@ -23706,7 +23553,7 @@ pub const VkVideoEncodeH265StdFlagBitsKHR_VK_VIDEO_ENCODE_H265_STD_SLICE_QP_DELT
 pub const VkVideoEncodeH265StdFlagBitsKHR_VK_VIDEO_ENCODE_H265_STD_DIFFERENT_SLICE_QP_DELTA_BIT_KHR : VkVideoEncodeH265StdFlagBitsKHR = 1048576 ;
 pub const VkVideoEncodeH265StdFlagBitsKHR_VK_VIDEO_ENCODE_H265_STD_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeH265StdFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeH265StdFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH265StdFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH265StdFlagsKHR = VkFlags;
 pub const VkVideoEncodeH265CtbSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_CTB_SIZE_16_BIT_KHR:
     VkVideoEncodeH265CtbSizeFlagBitsKHR = 1;
@@ -23715,14 +23562,14 @@ pub const VkVideoEncodeH265CtbSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_CTB_SIZE_32_B
 pub const VkVideoEncodeH265CtbSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_CTB_SIZE_64_BIT_KHR:
     VkVideoEncodeH265CtbSizeFlagBitsKHR = 4;
 pub const VkVideoEncodeH265CtbSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_CTB_SIZE_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH265CtbSizeFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH265CtbSizeFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH265CtbSizeFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH265CtbSizeFlagsKHR = VkFlags;
 pub const VkVideoEncodeH265TransformBlockSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_TRANSFORM_BLOCK_SIZE_4_BIT_KHR : VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = 1 ;
 pub const VkVideoEncodeH265TransformBlockSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_TRANSFORM_BLOCK_SIZE_8_BIT_KHR : VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = 2 ;
 pub const VkVideoEncodeH265TransformBlockSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_TRANSFORM_BLOCK_SIZE_16_BIT_KHR : VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = 4 ;
 pub const VkVideoEncodeH265TransformBlockSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_TRANSFORM_BLOCK_SIZE_32_BIT_KHR : VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = 8 ;
 pub const VkVideoEncodeH265TransformBlockSizeFlagBitsKHR_VK_VIDEO_ENCODE_H265_TRANSFORM_BLOCK_SIZE_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH265TransformBlockSizeFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH265TransformBlockSizeFlagsKHR = VkFlags;
 pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONTROL_ATTEMPT_HRD_COMPLIANCE_BIT_KHR : VkVideoEncodeH265RateControlFlagBitsKHR = 1 ;
 pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONTROL_REGULAR_GOP_BIT_KHR : VkVideoEncodeH265RateControlFlagBitsKHR = 2 ;
@@ -23730,7 +23577,7 @@ pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONT
 pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONTROL_REFERENCE_PATTERN_DYADIC_BIT_KHR : VkVideoEncodeH265RateControlFlagBitsKHR = 8 ;
 pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONTROL_TEMPORAL_SUB_LAYER_PATTERN_DYADIC_BIT_KHR : VkVideoEncodeH265RateControlFlagBitsKHR = 16 ;
 pub const VkVideoEncodeH265RateControlFlagBitsKHR_VK_VIDEO_ENCODE_H265_RATE_CONTROL_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeH265RateControlFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeH265RateControlFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeH265RateControlFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeH265RateControlFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -24302,7 +24149,7 @@ pub const StdVideoDecodeH264FieldOrderCount_STD_VIDEO_DECODE_H264_FIELD_ORDER_CO
     StdVideoDecodeH264FieldOrderCount = 2147483647;
 pub const StdVideoDecodeH264FieldOrderCount_STD_VIDEO_DECODE_H264_FIELD_ORDER_COUNT_MAX_ENUM:
     StdVideoDecodeH264FieldOrderCount = 2147483647;
-pub type StdVideoDecodeH264FieldOrderCount = ::std::os::raw::c_uint;
+pub type StdVideoDecodeH264FieldOrderCount = ::std::os::raw::c_int;
 #[repr(C)]
 #[repr(align(4))]
 #[derive(Debug, Copy, Clone)]
@@ -24573,7 +24420,7 @@ pub const VkVideoDecodeH264PictureLayoutFlagBitsKHR_VK_VIDEO_DECODE_H264_PICTURE
 pub const VkVideoDecodeH264PictureLayoutFlagBitsKHR_VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_INTERLACED_INTERLEAVED_LINES_BIT_KHR : VkVideoDecodeH264PictureLayoutFlagBitsKHR = 1 ;
 pub const VkVideoDecodeH264PictureLayoutFlagBitsKHR_VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_INTERLACED_SEPARATE_PLANES_BIT_KHR : VkVideoDecodeH264PictureLayoutFlagBitsKHR = 2 ;
 pub const VkVideoDecodeH264PictureLayoutFlagBitsKHR_VK_VIDEO_DECODE_H264_PICTURE_LAYOUT_FLAG_BITS_MAX_ENUM_KHR : VkVideoDecodeH264PictureLayoutFlagBitsKHR = 2147483647 ;
-pub type VkVideoDecodeH264PictureLayoutFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoDecodeH264PictureLayoutFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoDecodeH264PictureLayoutFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -25438,7 +25285,7 @@ pub const VkPerformanceCounterUnitKHR_VK_PERFORMANCE_COUNTER_UNIT_CYCLES_KHR:
     VkPerformanceCounterUnitKHR = 10;
 pub const VkPerformanceCounterUnitKHR_VK_PERFORMANCE_COUNTER_UNIT_MAX_ENUM_KHR:
     VkPerformanceCounterUnitKHR = 2147483647;
-pub type VkPerformanceCounterUnitKHR = ::std::os::raw::c_uint;
+pub type VkPerformanceCounterUnitKHR = ::std::os::raw::c_int;
 pub const VkPerformanceCounterScopeKHR_VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR:
     VkPerformanceCounterScopeKHR = 0;
 pub const VkPerformanceCounterScopeKHR_VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR:
@@ -25452,7 +25299,7 @@ pub const VkPerformanceCounterScopeKHR_VK_QUERY_SCOPE_RENDER_PASS_KHR:
 pub const VkPerformanceCounterScopeKHR_VK_QUERY_SCOPE_COMMAND_KHR: VkPerformanceCounterScopeKHR = 2;
 pub const VkPerformanceCounterScopeKHR_VK_PERFORMANCE_COUNTER_SCOPE_MAX_ENUM_KHR:
     VkPerformanceCounterScopeKHR = 2147483647;
-pub type VkPerformanceCounterScopeKHR = ::std::os::raw::c_uint;
+pub type VkPerformanceCounterScopeKHR = ::std::os::raw::c_int;
 pub const VkPerformanceCounterStorageKHR_VK_PERFORMANCE_COUNTER_STORAGE_INT32_KHR:
     VkPerformanceCounterStorageKHR = 0;
 pub const VkPerformanceCounterStorageKHR_VK_PERFORMANCE_COUNTER_STORAGE_INT64_KHR:
@@ -25467,17 +25314,17 @@ pub const VkPerformanceCounterStorageKHR_VK_PERFORMANCE_COUNTER_STORAGE_FLOAT64_
     VkPerformanceCounterStorageKHR = 5;
 pub const VkPerformanceCounterStorageKHR_VK_PERFORMANCE_COUNTER_STORAGE_MAX_ENUM_KHR:
     VkPerformanceCounterStorageKHR = 2147483647;
-pub type VkPerformanceCounterStorageKHR = ::std::os::raw::c_uint;
+pub type VkPerformanceCounterStorageKHR = ::std::os::raw::c_int;
 pub const VkPerformanceCounterDescriptionFlagBitsKHR_VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_BIT_KHR : VkPerformanceCounterDescriptionFlagBitsKHR = 1 ;
 pub const VkPerformanceCounterDescriptionFlagBitsKHR_VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_BIT_KHR : VkPerformanceCounterDescriptionFlagBitsKHR = 2 ;
 pub const VkPerformanceCounterDescriptionFlagBitsKHR_VK_PERFORMANCE_COUNTER_DESCRIPTION_PERFORMANCE_IMPACTING_KHR : VkPerformanceCounterDescriptionFlagBitsKHR = 1 ;
 pub const VkPerformanceCounterDescriptionFlagBitsKHR_VK_PERFORMANCE_COUNTER_DESCRIPTION_CONCURRENTLY_IMPACTED_KHR : VkPerformanceCounterDescriptionFlagBitsKHR = 2 ;
 pub const VkPerformanceCounterDescriptionFlagBitsKHR_VK_PERFORMANCE_COUNTER_DESCRIPTION_FLAG_BITS_MAX_ENUM_KHR : VkPerformanceCounterDescriptionFlagBitsKHR = 2147483647 ;
-pub type VkPerformanceCounterDescriptionFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkPerformanceCounterDescriptionFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkPerformanceCounterDescriptionFlagsKHR = VkFlags;
 pub const VkAcquireProfilingLockFlagBitsKHR_VK_ACQUIRE_PROFILING_LOCK_FLAG_BITS_MAX_ENUM_KHR:
     VkAcquireProfilingLockFlagBitsKHR = 2147483647;
-pub type VkAcquireProfilingLockFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkAcquireProfilingLockFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkAcquireProfilingLockFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -26438,7 +26285,7 @@ pub const VkQueueGlobalPriorityKHR_VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT: VkQueu
     1024;
 pub const VkQueueGlobalPriorityKHR_VK_QUEUE_GLOBAL_PRIORITY_MAX_ENUM_KHR: VkQueueGlobalPriorityKHR =
     2147483647;
-pub type VkQueueGlobalPriorityKHR = ::std::os::raw::c_uint;
+pub type VkQueueGlobalPriorityKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkDeviceQueueGlobalPriorityCreateInfoKHR {
@@ -26555,7 +26402,7 @@ pub const VkFragmentShadingRateCombinerOpKHR_VK_FRAGMENT_SHADING_RATE_COMBINER_O
     VkFragmentShadingRateCombinerOpKHR = 4;
 pub const VkFragmentShadingRateCombinerOpKHR_VK_FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_ENUM_KHR:
     VkFragmentShadingRateCombinerOpKHR = 2147483647;
-pub type VkFragmentShadingRateCombinerOpKHR = ::std::os::raw::c_uint;
+pub type VkFragmentShadingRateCombinerOpKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkFragmentShadingRateAttachmentInfoKHR {
@@ -26962,7 +26809,7 @@ pub const VkPipelineExecutableStatisticFormatKHR_VK_PIPELINE_EXECUTABLE_STATISTI
 pub const VkPipelineExecutableStatisticFormatKHR_VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_UINT64_KHR : VkPipelineExecutableStatisticFormatKHR = 2 ;
 pub const VkPipelineExecutableStatisticFormatKHR_VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_FLOAT64_KHR : VkPipelineExecutableStatisticFormatKHR = 3 ;
 pub const VkPipelineExecutableStatisticFormatKHR_VK_PIPELINE_EXECUTABLE_STATISTIC_FORMAT_MAX_ENUM_KHR : VkPipelineExecutableStatisticFormatKHR = 2147483647 ;
-pub type VkPipelineExecutableStatisticFormatKHR = ::std::os::raw::c_uint;
+pub type VkPipelineExecutableStatisticFormatKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR {
@@ -27173,7 +27020,7 @@ pub type PFN_vkGetPipelineExecutableInternalRepresentationsKHR = ::std::option::
 pub const VkMemoryUnmapFlagBitsKHR_VK_MEMORY_UNMAP_RESERVE_BIT_EXT: VkMemoryUnmapFlagBitsKHR = 1;
 pub const VkMemoryUnmapFlagBitsKHR_VK_MEMORY_UNMAP_FLAG_BITS_MAX_ENUM_KHR:
     VkMemoryUnmapFlagBitsKHR = 2147483647;
-pub type VkMemoryUnmapFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkMemoryUnmapFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkMemoryUnmapFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -27316,16 +27163,16 @@ pub const VkVideoEncodeTuningModeKHR_VK_VIDEO_ENCODE_TUNING_MODE_LOSSLESS_KHR:
     VkVideoEncodeTuningModeKHR = 4;
 pub const VkVideoEncodeTuningModeKHR_VK_VIDEO_ENCODE_TUNING_MODE_MAX_ENUM_KHR:
     VkVideoEncodeTuningModeKHR = 2147483647;
-pub type VkVideoEncodeTuningModeKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeTuningModeKHR = ::std::os::raw::c_int;
 pub const VkVideoEncodeFlagBitsKHR_VK_VIDEO_ENCODE_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeFlagsKHR = VkFlags;
 pub const VkVideoEncodeCapabilityFlagBitsKHR_VK_VIDEO_ENCODE_CAPABILITY_PRECEDING_EXTERNALLY_ENCODED_BYTES_BIT_KHR : VkVideoEncodeCapabilityFlagBitsKHR = 1 ;
 pub const VkVideoEncodeCapabilityFlagBitsKHR_VK_VIDEO_ENCODE_CAPABILITY_INSUFFICIENT_BITSTREAM_BUFFER_RANGE_DETECTION_BIT_KHR : VkVideoEncodeCapabilityFlagBitsKHR = 2 ;
 pub const VkVideoEncodeCapabilityFlagBitsKHR_VK_VIDEO_ENCODE_CAPABILITY_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeCapabilityFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeCapabilityFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeCapabilityFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeCapabilityFlagsKHR = VkFlags;
 pub const VkVideoEncodeRateControlModeFlagBitsKHR_VK_VIDEO_ENCODE_RATE_CONTROL_MODE_DEFAULT_KHR:
     VkVideoEncodeRateControlModeFlagBitsKHR = 0;
@@ -27335,14 +27182,14 @@ pub const VkVideoEncodeRateControlModeFlagBitsKHR_VK_VIDEO_ENCODE_RATE_CONTROL_M
 pub const VkVideoEncodeRateControlModeFlagBitsKHR_VK_VIDEO_ENCODE_RATE_CONTROL_MODE_VBR_BIT_KHR:
     VkVideoEncodeRateControlModeFlagBitsKHR = 4;
 pub const VkVideoEncodeRateControlModeFlagBitsKHR_VK_VIDEO_ENCODE_RATE_CONTROL_MODE_FLAG_BITS_MAX_ENUM_KHR : VkVideoEncodeRateControlModeFlagBitsKHR = 2147483647 ;
-pub type VkVideoEncodeRateControlModeFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeRateControlModeFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeRateControlModeFlagsKHR = VkFlags;
 pub const VkVideoEncodeFeedbackFlagBitsKHR_VK_VIDEO_ENCODE_FEEDBACK_BITSTREAM_BUFFER_OFFSET_BIT_KHR : VkVideoEncodeFeedbackFlagBitsKHR = 1 ;
 pub const VkVideoEncodeFeedbackFlagBitsKHR_VK_VIDEO_ENCODE_FEEDBACK_BITSTREAM_BYTES_WRITTEN_BIT_KHR : VkVideoEncodeFeedbackFlagBitsKHR = 2 ;
 pub const VkVideoEncodeFeedbackFlagBitsKHR_VK_VIDEO_ENCODE_FEEDBACK_BITSTREAM_HAS_OVERRIDES_BIT_KHR : VkVideoEncodeFeedbackFlagBitsKHR = 4 ;
 pub const VkVideoEncodeFeedbackFlagBitsKHR_VK_VIDEO_ENCODE_FEEDBACK_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeFeedbackFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeFeedbackFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeFeedbackFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeFeedbackFlagsKHR = VkFlags;
 pub const VkVideoEncodeUsageFlagBitsKHR_VK_VIDEO_ENCODE_USAGE_DEFAULT_KHR:
     VkVideoEncodeUsageFlagBitsKHR = 0;
@@ -27356,7 +27203,7 @@ pub const VkVideoEncodeUsageFlagBitsKHR_VK_VIDEO_ENCODE_USAGE_CONFERENCING_BIT_K
     VkVideoEncodeUsageFlagBitsKHR = 8;
 pub const VkVideoEncodeUsageFlagBitsKHR_VK_VIDEO_ENCODE_USAGE_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeUsageFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeUsageFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeUsageFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeUsageFlagsKHR = VkFlags;
 pub const VkVideoEncodeContentFlagBitsKHR_VK_VIDEO_ENCODE_CONTENT_DEFAULT_KHR:
     VkVideoEncodeContentFlagBitsKHR = 0;
@@ -27368,7 +27215,7 @@ pub const VkVideoEncodeContentFlagBitsKHR_VK_VIDEO_ENCODE_CONTENT_RENDERED_BIT_K
     VkVideoEncodeContentFlagBitsKHR = 4;
 pub const VkVideoEncodeContentFlagBitsKHR_VK_VIDEO_ENCODE_CONTENT_FLAG_BITS_MAX_ENUM_KHR:
     VkVideoEncodeContentFlagBitsKHR = 2147483647;
-pub type VkVideoEncodeContentFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkVideoEncodeContentFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkVideoEncodeContentFlagsKHR = VkFlags;
 pub type VkVideoEncodeRateControlFlagsKHR = VkFlags;
 #[repr(C)]
@@ -28506,7 +28353,7 @@ pub const VkComponentTypeKHR_VK_COMPONENT_TYPE_UINT16_NV: VkComponentTypeKHR = 8
 pub const VkComponentTypeKHR_VK_COMPONENT_TYPE_UINT32_NV: VkComponentTypeKHR = 9;
 pub const VkComponentTypeKHR_VK_COMPONENT_TYPE_UINT64_NV: VkComponentTypeKHR = 10;
 pub const VkComponentTypeKHR_VK_COMPONENT_TYPE_MAX_ENUM_KHR: VkComponentTypeKHR = 2147483647;
-pub type VkComponentTypeKHR = ::std::os::raw::c_uint;
+pub type VkComponentTypeKHR = ::std::os::raw::c_int;
 pub const VkScopeKHR_VK_SCOPE_DEVICE_KHR: VkScopeKHR = 1;
 pub const VkScopeKHR_VK_SCOPE_WORKGROUP_KHR: VkScopeKHR = 2;
 pub const VkScopeKHR_VK_SCOPE_SUBGROUP_KHR: VkScopeKHR = 3;
@@ -28516,7 +28363,7 @@ pub const VkScopeKHR_VK_SCOPE_WORKGROUP_NV: VkScopeKHR = 2;
 pub const VkScopeKHR_VK_SCOPE_SUBGROUP_NV: VkScopeKHR = 3;
 pub const VkScopeKHR_VK_SCOPE_QUEUE_FAMILY_NV: VkScopeKHR = 5;
 pub const VkScopeKHR_VK_SCOPE_MAX_ENUM_KHR: VkScopeKHR = 2147483647;
-pub type VkScopeKHR = ::std::os::raw::c_uint;
+pub type VkScopeKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkCooperativeMatrixPropertiesKHR {
@@ -28619,7 +28466,7 @@ pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_HIGH: StdVideoAV1Profile = 1;
 pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_PROFESSIONAL: StdVideoAV1Profile = 2;
 pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_INVALID: StdVideoAV1Profile = 2147483647;
 pub const StdVideoAV1Profile_STD_VIDEO_AV1_PROFILE_MAX_ENUM: StdVideoAV1Profile = 2147483647;
-pub type StdVideoAV1Profile = ::std::os::raw::c_uint;
+pub type StdVideoAV1Profile = ::std::os::raw::c_int;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_0: StdVideoAV1Level = 0;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_1: StdVideoAV1Level = 1;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_2_2: StdVideoAV1Level = 2;
@@ -28646,14 +28493,14 @@ pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_2: StdVideoAV1Level = 22;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_7_3: StdVideoAV1Level = 23;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_INVALID: StdVideoAV1Level = 2147483647;
 pub const StdVideoAV1Level_STD_VIDEO_AV1_LEVEL_MAX_ENUM: StdVideoAV1Level = 2147483647;
-pub type StdVideoAV1Level = ::std::os::raw::c_uint;
+pub type StdVideoAV1Level = ::std::os::raw::c_int;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_KEY: StdVideoAV1FrameType = 0;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INTER: StdVideoAV1FrameType = 1;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INTRA_ONLY: StdVideoAV1FrameType = 2;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_SWITCH: StdVideoAV1FrameType = 3;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_INVALID: StdVideoAV1FrameType = 2147483647;
 pub const StdVideoAV1FrameType_STD_VIDEO_AV1_FRAME_TYPE_MAX_ENUM: StdVideoAV1FrameType = 2147483647;
-pub type StdVideoAV1FrameType = ::std::os::raw::c_uint;
+pub type StdVideoAV1FrameType = ::std::os::raw::c_int;
 pub const StdVideoAV1ReferenceName_STD_VIDEO_AV1_REFERENCE_NAME_INTRA_FRAME:
     StdVideoAV1ReferenceName = 0;
 pub const StdVideoAV1ReferenceName_STD_VIDEO_AV1_REFERENCE_NAME_LAST_FRAME:
@@ -28674,7 +28521,7 @@ pub const StdVideoAV1ReferenceName_STD_VIDEO_AV1_REFERENCE_NAME_INVALID: StdVide
     2147483647;
 pub const StdVideoAV1ReferenceName_STD_VIDEO_AV1_REFERENCE_NAME_MAX_ENUM: StdVideoAV1ReferenceName =
     2147483647;
-pub type StdVideoAV1ReferenceName = ::std::os::raw::c_uint;
+pub type StdVideoAV1ReferenceName = ::std::os::raw::c_int;
 pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_EIGHTTAP:
     StdVideoAV1InterpolationFilter = 0;
 pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_EIGHTTAP_SMOOTH:
@@ -28689,13 +28536,13 @@ pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_INVA
     StdVideoAV1InterpolationFilter = 2147483647;
 pub const StdVideoAV1InterpolationFilter_STD_VIDEO_AV1_INTERPOLATION_FILTER_MAX_ENUM:
     StdVideoAV1InterpolationFilter = 2147483647;
-pub type StdVideoAV1InterpolationFilter = ::std::os::raw::c_uint;
+pub type StdVideoAV1InterpolationFilter = ::std::os::raw::c_int;
 pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_ONLY_4X4: StdVideoAV1TxMode = 0;
 pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_LARGEST: StdVideoAV1TxMode = 1;
 pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_SELECT: StdVideoAV1TxMode = 2;
 pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_INVALID: StdVideoAV1TxMode = 2147483647;
 pub const StdVideoAV1TxMode_STD_VIDEO_AV1_TX_MODE_MAX_ENUM: StdVideoAV1TxMode = 2147483647;
-pub type StdVideoAV1TxMode = ::std::os::raw::c_uint;
+pub type StdVideoAV1TxMode = ::std::os::raw::c_int;
 pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_NONE:
     StdVideoAV1FrameRestorationType = 0;
 pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_WIENER:
@@ -28708,7 +28555,7 @@ pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_I
     StdVideoAV1FrameRestorationType = 2147483647;
 pub const StdVideoAV1FrameRestorationType_STD_VIDEO_AV1_FRAME_RESTORATION_TYPE_MAX_ENUM:
     StdVideoAV1FrameRestorationType = 2147483647;
-pub type StdVideoAV1FrameRestorationType = ::std::os::raw::c_uint;
+pub type StdVideoAV1FrameRestorationType = ::std::os::raw::c_int;
 pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_709:
     StdVideoAV1ColorPrimaries = 1;
 pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_BT_UNSPECIFIED:
@@ -28737,7 +28584,7 @@ pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_INVALID:
     StdVideoAV1ColorPrimaries = 2147483647;
 pub const StdVideoAV1ColorPrimaries_STD_VIDEO_AV1_COLOR_PRIMARIES_MAX_ENUM:
     StdVideoAV1ColorPrimaries = 2147483647;
-pub type StdVideoAV1ColorPrimaries = ::std::os::raw::c_uint;
+pub type StdVideoAV1ColorPrimaries = ::std::os::raw::c_int;
 pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_RESERVED_0:
     StdVideoAV1TransferCharacteristics = 0;
 pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_BT_709:
@@ -28777,7 +28624,7 @@ pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERIST
     StdVideoAV1TransferCharacteristics = 2147483647;
 pub const StdVideoAV1TransferCharacteristics_STD_VIDEO_AV1_TRANSFER_CHARACTERISTICS_MAX_ENUM:
     StdVideoAV1TransferCharacteristics = 2147483647;
-pub type StdVideoAV1TransferCharacteristics = ::std::os::raw::c_uint;
+pub type StdVideoAV1TransferCharacteristics = ::std::os::raw::c_int;
 pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_IDENTITY:
     StdVideoAV1MatrixCoefficients = 0;
 pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_BT_709:
@@ -28812,7 +28659,7 @@ pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_INVALI
     StdVideoAV1MatrixCoefficients = 2147483647;
 pub const StdVideoAV1MatrixCoefficients_STD_VIDEO_AV1_MATRIX_COEFFICIENTS_MAX_ENUM:
     StdVideoAV1MatrixCoefficients = 2147483647;
-pub type StdVideoAV1MatrixCoefficients = ::std::os::raw::c_uint;
+pub type StdVideoAV1MatrixCoefficients = ::std::os::raw::c_int;
 pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_UNKNOWN:
     StdVideoAV1ChromaSamplePosition = 0;
 pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_VERTICAL:
@@ -28825,7 +28672,7 @@ pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_I
     StdVideoAV1ChromaSamplePosition = 2147483647;
 pub const StdVideoAV1ChromaSamplePosition_STD_VIDEO_AV1_CHROMA_SAMPLE_POSITION_MAX_ENUM:
     StdVideoAV1ChromaSamplePosition = 2147483647;
-pub type StdVideoAV1ChromaSamplePosition = ::std::os::raw::c_uint;
+pub type StdVideoAV1ChromaSamplePosition = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct StdVideoAV1ColorConfigFlags {
@@ -31035,7 +30882,7 @@ pub const VkLineRasterizationModeKHR_VK_LINE_RASTERIZATION_MODE_RECTANGULAR_SMOO
     VkLineRasterizationModeKHR = 3;
 pub const VkLineRasterizationModeKHR_VK_LINE_RASTERIZATION_MODE_MAX_ENUM_KHR:
     VkLineRasterizationModeKHR = 2147483647;
-pub type VkLineRasterizationModeKHR = ::std::os::raw::c_uint;
+pub type VkLineRasterizationModeKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceLineRasterizationFeaturesKHR {
@@ -31163,7 +31010,7 @@ pub const VkTimeDomainKHR_VK_TIME_DOMAIN_CLOCK_MONOTONIC_EXT: VkTimeDomainKHR = 
 pub const VkTimeDomainKHR_VK_TIME_DOMAIN_CLOCK_MONOTONIC_RAW_EXT: VkTimeDomainKHR = 2;
 pub const VkTimeDomainKHR_VK_TIME_DOMAIN_QUERY_PERFORMANCE_COUNTER_EXT: VkTimeDomainKHR = 3;
 pub const VkTimeDomainKHR_VK_TIME_DOMAIN_MAX_ENUM_KHR: VkTimeDomainKHR = 2147483647;
-pub type VkTimeDomainKHR = ::std::os::raw::c_uint;
+pub type VkTimeDomainKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkCalibratedTimestampInfoKHR {
@@ -31551,7 +31398,7 @@ pub const VkPhysicalDeviceLayeredApiKHR_VK_PHYSICAL_DEVICE_LAYERED_API_OPENGLES_
     VkPhysicalDeviceLayeredApiKHR = 4;
 pub const VkPhysicalDeviceLayeredApiKHR_VK_PHYSICAL_DEVICE_LAYERED_API_MAX_ENUM_KHR:
     VkPhysicalDeviceLayeredApiKHR = 2147483647;
-pub type VkPhysicalDeviceLayeredApiKHR = ::std::os::raw::c_uint;
+pub type VkPhysicalDeviceLayeredApiKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceMaintenance7FeaturesKHR {
@@ -31779,7 +31626,7 @@ pub const VkDebugReportObjectTypeEXT_VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDA
 pub const VkDebugReportObjectTypeEXT_VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_KHR_EXT : VkDebugReportObjectTypeEXT = 1000156000 ;
 pub const VkDebugReportObjectTypeEXT_VK_DEBUG_REPORT_OBJECT_TYPE_MAX_ENUM_EXT:
     VkDebugReportObjectTypeEXT = 2147483647;
-pub type VkDebugReportObjectTypeEXT = ::std::os::raw::c_uint;
+pub type VkDebugReportObjectTypeEXT = ::std::os::raw::c_int;
 pub const VkDebugReportFlagBitsEXT_VK_DEBUG_REPORT_INFORMATION_BIT_EXT: VkDebugReportFlagBitsEXT =
     1;
 pub const VkDebugReportFlagBitsEXT_VK_DEBUG_REPORT_WARNING_BIT_EXT: VkDebugReportFlagBitsEXT = 2;
@@ -31789,7 +31636,7 @@ pub const VkDebugReportFlagBitsEXT_VK_DEBUG_REPORT_ERROR_BIT_EXT: VkDebugReportF
 pub const VkDebugReportFlagBitsEXT_VK_DEBUG_REPORT_DEBUG_BIT_EXT: VkDebugReportFlagBitsEXT = 16;
 pub const VkDebugReportFlagBitsEXT_VK_DEBUG_REPORT_FLAG_BITS_MAX_ENUM_EXT:
     VkDebugReportFlagBitsEXT = 2147483647;
-pub type VkDebugReportFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkDebugReportFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkDebugReportFlagsEXT = VkFlags;
 pub type PFN_vkDebugReportCallbackEXT = ::std::option::Option<
     unsafe extern "C" fn(
@@ -31860,7 +31707,7 @@ pub const VkRasterizationOrderAMD_VK_RASTERIZATION_ORDER_STRICT_AMD: VkRasteriza
 pub const VkRasterizationOrderAMD_VK_RASTERIZATION_ORDER_RELAXED_AMD: VkRasterizationOrderAMD = 1;
 pub const VkRasterizationOrderAMD_VK_RASTERIZATION_ORDER_MAX_ENUM_AMD: VkRasterizationOrderAMD =
     2147483647;
-pub type VkRasterizationOrderAMD = ::std::os::raw::c_uint;
+pub type VkRasterizationOrderAMD = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPipelineRasterizationStateRasterizationOrderAMD {
@@ -32463,7 +32310,7 @@ pub const VkShaderInfoTypeAMD_VK_SHADER_INFO_TYPE_STATISTICS_AMD: VkShaderInfoTy
 pub const VkShaderInfoTypeAMD_VK_SHADER_INFO_TYPE_BINARY_AMD: VkShaderInfoTypeAMD = 1;
 pub const VkShaderInfoTypeAMD_VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD: VkShaderInfoTypeAMD = 2;
 pub const VkShaderInfoTypeAMD_VK_SHADER_INFO_TYPE_MAX_ENUM_AMD: VkShaderInfoTypeAMD = 2147483647;
-pub type VkShaderInfoTypeAMD = ::std::os::raw::c_uint;
+pub type VkShaderInfoTypeAMD = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkShaderResourceUsageAMD {
@@ -32561,7 +32408,7 @@ pub const VkExternalMemoryHandleTypeFlagBitsNV_VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3
     VkExternalMemoryHandleTypeFlagBitsNV = 4;
 pub const VkExternalMemoryHandleTypeFlagBitsNV_VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV : VkExternalMemoryHandleTypeFlagBitsNV = 8 ;
 pub const VkExternalMemoryHandleTypeFlagBitsNV_VK_EXTERNAL_MEMORY_HANDLE_TYPE_FLAG_BITS_MAX_ENUM_NV : VkExternalMemoryHandleTypeFlagBitsNV = 2147483647 ;
-pub type VkExternalMemoryHandleTypeFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkExternalMemoryHandleTypeFlagBitsNV = ::std::os::raw::c_int;
 pub type VkExternalMemoryHandleTypeFlagsNV = VkFlags;
 pub const VkExternalMemoryFeatureFlagBitsNV_VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV:
     VkExternalMemoryFeatureFlagBitsNV = 1;
@@ -32571,7 +32418,7 @@ pub const VkExternalMemoryFeatureFlagBitsNV_VK_EXTERNAL_MEMORY_FEATURE_IMPORTABL
     VkExternalMemoryFeatureFlagBitsNV = 4;
 pub const VkExternalMemoryFeatureFlagBitsNV_VK_EXTERNAL_MEMORY_FEATURE_FLAG_BITS_MAX_ENUM_NV:
     VkExternalMemoryFeatureFlagBitsNV = 2147483647;
-pub type VkExternalMemoryFeatureFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkExternalMemoryFeatureFlagBitsNV = ::std::os::raw::c_int;
 pub type VkExternalMemoryFeatureFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -32658,7 +32505,7 @@ const _: () = {
 pub const VkValidationCheckEXT_VK_VALIDATION_CHECK_ALL_EXT: VkValidationCheckEXT = 0;
 pub const VkValidationCheckEXT_VK_VALIDATION_CHECK_SHADERS_EXT: VkValidationCheckEXT = 1;
 pub const VkValidationCheckEXT_VK_VALIDATION_CHECK_MAX_ENUM_EXT: VkValidationCheckEXT = 2147483647;
-pub type VkValidationCheckEXT = ::std::os::raw::c_uint;
+pub type VkValidationCheckEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkValidationFlagsEXT {
@@ -32730,13 +32577,13 @@ pub const VkPipelineRobustnessBufferBehaviorEXT_VK_PIPELINE_ROBUSTNESS_BUFFER_BE
 pub const VkPipelineRobustnessBufferBehaviorEXT_VK_PIPELINE_ROBUSTNESS_BUFFER_BEHAVIOR_ROBUST_BUFFER_ACCESS_EXT : VkPipelineRobustnessBufferBehaviorEXT = 2 ;
 pub const VkPipelineRobustnessBufferBehaviorEXT_VK_PIPELINE_ROBUSTNESS_BUFFER_BEHAVIOR_ROBUST_BUFFER_ACCESS_2_EXT : VkPipelineRobustnessBufferBehaviorEXT = 3 ;
 pub const VkPipelineRobustnessBufferBehaviorEXT_VK_PIPELINE_ROBUSTNESS_BUFFER_BEHAVIOR_MAX_ENUM_EXT : VkPipelineRobustnessBufferBehaviorEXT = 2147483647 ;
-pub type VkPipelineRobustnessBufferBehaviorEXT = ::std::os::raw::c_uint;
+pub type VkPipelineRobustnessBufferBehaviorEXT = ::std::os::raw::c_int;
 pub const VkPipelineRobustnessImageBehaviorEXT_VK_PIPELINE_ROBUSTNESS_IMAGE_BEHAVIOR_DEVICE_DEFAULT_EXT : VkPipelineRobustnessImageBehaviorEXT = 0 ;
 pub const VkPipelineRobustnessImageBehaviorEXT_VK_PIPELINE_ROBUSTNESS_IMAGE_BEHAVIOR_DISABLED_EXT : VkPipelineRobustnessImageBehaviorEXT = 1 ;
 pub const VkPipelineRobustnessImageBehaviorEXT_VK_PIPELINE_ROBUSTNESS_IMAGE_BEHAVIOR_ROBUST_IMAGE_ACCESS_EXT : VkPipelineRobustnessImageBehaviorEXT = 2 ;
 pub const VkPipelineRobustnessImageBehaviorEXT_VK_PIPELINE_ROBUSTNESS_IMAGE_BEHAVIOR_ROBUST_IMAGE_ACCESS_2_EXT : VkPipelineRobustnessImageBehaviorEXT = 3 ;
 pub const VkPipelineRobustnessImageBehaviorEXT_VK_PIPELINE_ROBUSTNESS_IMAGE_BEHAVIOR_MAX_ENUM_EXT : VkPipelineRobustnessImageBehaviorEXT = 2147483647 ;
-pub type VkPipelineRobustnessImageBehaviorEXT = ::std::os::raw::c_uint;
+pub type VkPipelineRobustnessImageBehaviorEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDevicePipelineRobustnessFeaturesEXT {
@@ -32822,7 +32669,7 @@ pub const VkConditionalRenderingFlagBitsEXT_VK_CONDITIONAL_RENDERING_INVERTED_BI
     VkConditionalRenderingFlagBitsEXT = 1;
 pub const VkConditionalRenderingFlagBitsEXT_VK_CONDITIONAL_RENDERING_FLAG_BITS_MAX_ENUM_EXT:
     VkConditionalRenderingFlagBitsEXT = 2147483647;
-pub type VkConditionalRenderingFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkConditionalRenderingFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkConditionalRenderingFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -32972,7 +32819,7 @@ pub const VkSurfaceCounterFlagBitsEXT_VK_SURFACE_COUNTER_VBLANK_EXT: VkSurfaceCo
     1;
 pub const VkSurfaceCounterFlagBitsEXT_VK_SURFACE_COUNTER_FLAG_BITS_MAX_ENUM_EXT:
     VkSurfaceCounterFlagBitsEXT = 2147483647;
-pub type VkSurfaceCounterFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkSurfaceCounterFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkSurfaceCounterFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -33036,15 +32883,15 @@ pub const VkDisplayPowerStateEXT_VK_DISPLAY_POWER_STATE_SUSPEND_EXT: VkDisplayPo
 pub const VkDisplayPowerStateEXT_VK_DISPLAY_POWER_STATE_ON_EXT: VkDisplayPowerStateEXT = 2;
 pub const VkDisplayPowerStateEXT_VK_DISPLAY_POWER_STATE_MAX_ENUM_EXT: VkDisplayPowerStateEXT =
     2147483647;
-pub type VkDisplayPowerStateEXT = ::std::os::raw::c_uint;
+pub type VkDisplayPowerStateEXT = ::std::os::raw::c_int;
 pub const VkDeviceEventTypeEXT_VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: VkDeviceEventTypeEXT = 0;
 pub const VkDeviceEventTypeEXT_VK_DEVICE_EVENT_TYPE_MAX_ENUM_EXT: VkDeviceEventTypeEXT = 2147483647;
-pub type VkDeviceEventTypeEXT = ::std::os::raw::c_uint;
+pub type VkDeviceEventTypeEXT = ::std::os::raw::c_int;
 pub const VkDisplayEventTypeEXT_VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: VkDisplayEventTypeEXT =
     0;
 pub const VkDisplayEventTypeEXT_VK_DISPLAY_EVENT_TYPE_MAX_ENUM_EXT: VkDisplayEventTypeEXT =
     2147483647;
-pub type VkDisplayEventTypeEXT = ::std::os::raw::c_uint;
+pub type VkDisplayEventTypeEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkDisplayPowerInfoEXT {
@@ -33289,7 +33136,7 @@ pub const VkViewportCoordinateSwizzleNV_VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_
     VkViewportCoordinateSwizzleNV = 7;
 pub const VkViewportCoordinateSwizzleNV_VK_VIEWPORT_COORDINATE_SWIZZLE_MAX_ENUM_NV:
     VkViewportCoordinateSwizzleNV = 2147483647;
-pub type VkViewportCoordinateSwizzleNV = ::std::os::raw::c_uint;
+pub type VkViewportCoordinateSwizzleNV = ::std::os::raw::c_int;
 pub type VkPipelineViewportSwizzleStateCreateFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -33348,7 +33195,7 @@ pub const VkDiscardRectangleModeEXT_VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT:
     VkDiscardRectangleModeEXT = 1;
 pub const VkDiscardRectangleModeEXT_VK_DISCARD_RECTANGLE_MODE_MAX_ENUM_EXT:
     VkDiscardRectangleModeEXT = 2147483647;
-pub type VkDiscardRectangleModeEXT = ::std::os::raw::c_uint;
+pub type VkDiscardRectangleModeEXT = ::std::os::raw::c_int;
 pub type VkPipelineDiscardRectangleStateCreateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -33435,7 +33282,7 @@ pub const VkConservativeRasterizationModeEXT_VK_CONSERVATIVE_RASTERIZATION_MODE_
 pub const VkConservativeRasterizationModeEXT_VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT : VkConservativeRasterizationModeEXT = 2 ;
 pub const VkConservativeRasterizationModeEXT_VK_CONSERVATIVE_RASTERIZATION_MODE_MAX_ENUM_EXT:
     VkConservativeRasterizationModeEXT = 2147483647;
-pub type VkConservativeRasterizationModeEXT = ::std::os::raw::c_uint;
+pub type VkConservativeRasterizationModeEXT = ::std::os::raw::c_int;
 pub type VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -33660,7 +33507,7 @@ pub const VkDebugUtilsMessageSeverityFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_SEVERITY
 pub const VkDebugUtilsMessageSeverityFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
     VkDebugUtilsMessageSeverityFlagBitsEXT = 4096;
 pub const VkDebugUtilsMessageSeverityFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_SEVERITY_FLAG_BITS_MAX_ENUM_EXT : VkDebugUtilsMessageSeverityFlagBitsEXT = 2147483647 ;
-pub type VkDebugUtilsMessageSeverityFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkDebugUtilsMessageSeverityFlagBitsEXT = ::std::os::raw::c_int;
 pub const VkDebugUtilsMessageTypeFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
     VkDebugUtilsMessageTypeFlagBitsEXT = 1;
 pub const VkDebugUtilsMessageTypeFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
@@ -33670,7 +33517,7 @@ pub const VkDebugUtilsMessageTypeFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORM
 pub const VkDebugUtilsMessageTypeFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_TYPE_DEVICE_ADDRESS_BINDING_BIT_EXT : VkDebugUtilsMessageTypeFlagBitsEXT = 8 ;
 pub const VkDebugUtilsMessageTypeFlagBitsEXT_VK_DEBUG_UTILS_MESSAGE_TYPE_FLAG_BITS_MAX_ENUM_EXT:
     VkDebugUtilsMessageTypeFlagBitsEXT = 2147483647;
-pub type VkDebugUtilsMessageTypeFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkDebugUtilsMessageTypeFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkDebugUtilsMessageTypeFlagsEXT = VkFlags;
 pub type VkDebugUtilsMessageSeverityFlagsEXT = VkFlags;
 pub type VkDebugUtilsMessengerCreateFlagsEXT = VkFlags;
@@ -34121,7 +33968,7 @@ pub const VkBlendOverlapEXT_VK_BLEND_OVERLAP_UNCORRELATED_EXT: VkBlendOverlapEXT
 pub const VkBlendOverlapEXT_VK_BLEND_OVERLAP_DISJOINT_EXT: VkBlendOverlapEXT = 1;
 pub const VkBlendOverlapEXT_VK_BLEND_OVERLAP_CONJOINT_EXT: VkBlendOverlapEXT = 2;
 pub const VkBlendOverlapEXT_VK_BLEND_OVERLAP_MAX_ENUM_EXT: VkBlendOverlapEXT = 2147483647;
-pub type VkBlendOverlapEXT = ::std::os::raw::c_uint;
+pub type VkBlendOverlapEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {
@@ -34251,7 +34098,7 @@ pub const VkCoverageModulationModeNV_VK_COVERAGE_MODULATION_MODE_RGBA_NV:
     VkCoverageModulationModeNV = 3;
 pub const VkCoverageModulationModeNV_VK_COVERAGE_MODULATION_MODE_MAX_ENUM_NV:
     VkCoverageModulationModeNV = 2147483647;
-pub type VkCoverageModulationModeNV = ::std::os::raw::c_uint;
+pub type VkCoverageModulationModeNV = ::std::os::raw::c_int;
 pub type VkPipelineCoverageModulationStateCreateFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -34583,7 +34430,7 @@ pub const VkValidationCacheHeaderVersionEXT_VK_VALIDATION_CACHE_HEADER_VERSION_O
     VkValidationCacheHeaderVersionEXT = 1;
 pub const VkValidationCacheHeaderVersionEXT_VK_VALIDATION_CACHE_HEADER_VERSION_MAX_ENUM_EXT:
     VkValidationCacheHeaderVersionEXT = 2147483647;
-pub type VkValidationCacheHeaderVersionEXT = ::std::os::raw::c_uint;
+pub type VkValidationCacheHeaderVersionEXT = ::std::os::raw::c_int;
 pub type VkValidationCacheCreateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -34695,7 +34542,7 @@ pub const VkShadingRatePaletteEntryNV_VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION
 pub const VkShadingRatePaletteEntryNV_VK_SHADING_RATE_PALETTE_ENTRY_1_INVOCATION_PER_4X4_PIXELS_NV : VkShadingRatePaletteEntryNV = 11 ;
 pub const VkShadingRatePaletteEntryNV_VK_SHADING_RATE_PALETTE_ENTRY_MAX_ENUM_NV:
     VkShadingRatePaletteEntryNV = 2147483647;
-pub type VkShadingRatePaletteEntryNV = ::std::os::raw::c_uint;
+pub type VkShadingRatePaletteEntryNV = ::std::os::raw::c_int;
 pub const VkCoarseSampleOrderTypeNV_VK_COARSE_SAMPLE_ORDER_TYPE_DEFAULT_NV:
     VkCoarseSampleOrderTypeNV = 0;
 pub const VkCoarseSampleOrderTypeNV_VK_COARSE_SAMPLE_ORDER_TYPE_CUSTOM_NV:
@@ -34706,7 +34553,7 @@ pub const VkCoarseSampleOrderTypeNV_VK_COARSE_SAMPLE_ORDER_TYPE_SAMPLE_MAJOR_NV:
     VkCoarseSampleOrderTypeNV = 3;
 pub const VkCoarseSampleOrderTypeNV_VK_COARSE_SAMPLE_ORDER_TYPE_MAX_ENUM_NV:
     VkCoarseSampleOrderTypeNV = 2147483647;
-pub type VkCoarseSampleOrderTypeNV = ::std::os::raw::c_uint;
+pub type VkCoarseSampleOrderTypeNV = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkShadingRatePaletteNV {
@@ -34927,7 +34774,7 @@ pub const VkRayTracingShaderGroupTypeKHR_VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANG
 pub const VkRayTracingShaderGroupTypeKHR_VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_NV : VkRayTracingShaderGroupTypeKHR = 2 ;
 pub const VkRayTracingShaderGroupTypeKHR_VK_RAY_TRACING_SHADER_GROUP_TYPE_MAX_ENUM_KHR:
     VkRayTracingShaderGroupTypeKHR = 2147483647;
-pub type VkRayTracingShaderGroupTypeKHR = ::std::os::raw::c_uint;
+pub type VkRayTracingShaderGroupTypeKHR = ::std::os::raw::c_int;
 pub use self::VkRayTracingShaderGroupTypeKHR as VkRayTracingShaderGroupTypeNV;
 pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_TRIANGLES_KHR: VkGeometryTypeKHR = 0;
 pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_AABBS_KHR: VkGeometryTypeKHR = 1;
@@ -34935,7 +34782,7 @@ pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_INSTANCES_KHR: VkGeometryTypeKHR = 
 pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_TRIANGLES_NV: VkGeometryTypeKHR = 0;
 pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_AABBS_NV: VkGeometryTypeKHR = 1;
 pub const VkGeometryTypeKHR_VK_GEOMETRY_TYPE_MAX_ENUM_KHR: VkGeometryTypeKHR = 2147483647;
-pub type VkGeometryTypeKHR = ::std::os::raw::c_uint;
+pub type VkGeometryTypeKHR = ::std::os::raw::c_int;
 pub use self::VkGeometryTypeKHR as VkGeometryTypeNV;
 pub const VkAccelerationStructureTypeKHR_VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR:
     VkAccelerationStructureTypeKHR = 0;
@@ -34949,7 +34796,7 @@ pub const VkAccelerationStructureTypeKHR_VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_L
     VkAccelerationStructureTypeKHR = 1;
 pub const VkAccelerationStructureTypeKHR_VK_ACCELERATION_STRUCTURE_TYPE_MAX_ENUM_KHR:
     VkAccelerationStructureTypeKHR = 2147483647;
-pub type VkAccelerationStructureTypeKHR = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureTypeKHR = ::std::os::raw::c_int;
 pub use self::VkAccelerationStructureTypeKHR as VkAccelerationStructureTypeNV;
 pub const VkCopyAccelerationStructureModeKHR_VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR:
     VkCopyAccelerationStructureModeKHR = 0;
@@ -34965,13 +34812,13 @@ pub const VkCopyAccelerationStructureModeKHR_VK_COPY_ACCELERATION_STRUCTURE_MODE
     VkCopyAccelerationStructureModeKHR = 1;
 pub const VkCopyAccelerationStructureModeKHR_VK_COPY_ACCELERATION_STRUCTURE_MODE_MAX_ENUM_KHR:
     VkCopyAccelerationStructureModeKHR = 2147483647;
-pub type VkCopyAccelerationStructureModeKHR = ::std::os::raw::c_uint;
+pub type VkCopyAccelerationStructureModeKHR = ::std::os::raw::c_int;
 pub use self::VkCopyAccelerationStructureModeKHR as VkCopyAccelerationStructureModeNV;
 pub const VkAccelerationStructureMemoryRequirementsTypeNV_VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_NV : VkAccelerationStructureMemoryRequirementsTypeNV = 0 ;
 pub const VkAccelerationStructureMemoryRequirementsTypeNV_VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_NV : VkAccelerationStructureMemoryRequirementsTypeNV = 1 ;
 pub const VkAccelerationStructureMemoryRequirementsTypeNV_VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_UPDATE_SCRATCH_NV : VkAccelerationStructureMemoryRequirementsTypeNV = 2 ;
 pub const VkAccelerationStructureMemoryRequirementsTypeNV_VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_MAX_ENUM_NV : VkAccelerationStructureMemoryRequirementsTypeNV = 2147483647 ;
-pub type VkAccelerationStructureMemoryRequirementsTypeNV = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureMemoryRequirementsTypeNV = ::std::os::raw::c_int;
 pub const VkGeometryFlagBitsKHR_VK_GEOMETRY_OPAQUE_BIT_KHR: VkGeometryFlagBitsKHR = 1;
 pub const VkGeometryFlagBitsKHR_VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR:
     VkGeometryFlagBitsKHR = 2;
@@ -34980,7 +34827,7 @@ pub const VkGeometryFlagBitsKHR_VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_
     VkGeometryFlagBitsKHR = 2;
 pub const VkGeometryFlagBitsKHR_VK_GEOMETRY_FLAG_BITS_MAX_ENUM_KHR: VkGeometryFlagBitsKHR =
     2147483647;
-pub type VkGeometryFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkGeometryFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkGeometryFlagsKHR = VkFlags;
 pub type VkGeometryFlagsNV = VkGeometryFlagsKHR;
 pub use self::VkGeometryFlagBitsKHR as VkGeometryFlagBitsNV;
@@ -35005,7 +34852,7 @@ pub const VkGeometryInstanceFlagBitsKHR_VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT
     VkGeometryInstanceFlagBitsKHR = 8;
 pub const VkGeometryInstanceFlagBitsKHR_VK_GEOMETRY_INSTANCE_FLAG_BITS_MAX_ENUM_KHR:
     VkGeometryInstanceFlagBitsKHR = 2147483647;
-pub type VkGeometryInstanceFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkGeometryInstanceFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkGeometryInstanceFlagsKHR = VkFlags;
 pub type VkGeometryInstanceFlagsNV = VkGeometryInstanceFlagsKHR;
 pub use self::VkGeometryInstanceFlagBitsKHR as VkGeometryInstanceFlagBitsNV;
@@ -35026,7 +34873,7 @@ pub const VkBuildAccelerationStructureFlagBitsKHR_VK_BUILD_ACCELERATION_STRUCTUR
 pub const VkBuildAccelerationStructureFlagBitsKHR_VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_NV : VkBuildAccelerationStructureFlagBitsKHR = 8 ;
 pub const VkBuildAccelerationStructureFlagBitsKHR_VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_NV : VkBuildAccelerationStructureFlagBitsKHR = 16 ;
 pub const VkBuildAccelerationStructureFlagBitsKHR_VK_BUILD_ACCELERATION_STRUCTURE_FLAG_BITS_MAX_ENUM_KHR : VkBuildAccelerationStructureFlagBitsKHR = 2147483647 ;
-pub type VkBuildAccelerationStructureFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkBuildAccelerationStructureFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkBuildAccelerationStructureFlagsKHR = VkFlags;
 pub type VkBuildAccelerationStructureFlagsNV = VkBuildAccelerationStructureFlagsKHR;
 pub use self::VkBuildAccelerationStructureFlagBitsKHR as VkBuildAccelerationStructureFlagBitsNV;
@@ -35856,7 +35703,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = ::std::option::Option<
     ),
 >;
 pub const VkPipelineCompilerControlFlagBitsAMD_VK_PIPELINE_COMPILER_CONTROL_FLAG_BITS_MAX_ENUM_AMD : VkPipelineCompilerControlFlagBitsAMD = 2147483647 ;
-pub type VkPipelineCompilerControlFlagBitsAMD = ::std::os::raw::c_uint;
+pub type VkPipelineCompilerControlFlagBitsAMD = ::std::os::raw::c_int;
 pub type VkPipelineCompilerControlFlagsAMD = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -35991,7 +35838,7 @@ pub const VkMemoryOverallocationBehaviorAMD_VK_MEMORY_OVERALLOCATION_BEHAVIOR_DI
     VkMemoryOverallocationBehaviorAMD = 2;
 pub const VkMemoryOverallocationBehaviorAMD_VK_MEMORY_OVERALLOCATION_BEHAVIOR_MAX_ENUM_AMD:
     VkMemoryOverallocationBehaviorAMD = 2147483647;
-pub type VkMemoryOverallocationBehaviorAMD = ::std::os::raw::c_uint;
+pub type VkMemoryOverallocationBehaviorAMD = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkDeviceMemoryOverallocationCreateInfoAMD {
@@ -36402,24 +36249,24 @@ pub type VkPerformanceConfigurationINTEL = *mut VkPerformanceConfigurationINTEL_
 pub const VkPerformanceConfigurationTypeINTEL_VK_PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL : VkPerformanceConfigurationTypeINTEL = 0 ;
 pub const VkPerformanceConfigurationTypeINTEL_VK_PERFORMANCE_CONFIGURATION_TYPE_MAX_ENUM_INTEL:
     VkPerformanceConfigurationTypeINTEL = 2147483647;
-pub type VkPerformanceConfigurationTypeINTEL = ::std::os::raw::c_uint;
+pub type VkPerformanceConfigurationTypeINTEL = ::std::os::raw::c_int;
 pub const VkQueryPoolSamplingModeINTEL_VK_QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL:
     VkQueryPoolSamplingModeINTEL = 0;
 pub const VkQueryPoolSamplingModeINTEL_VK_QUERY_POOL_SAMPLING_MODE_MAX_ENUM_INTEL:
     VkQueryPoolSamplingModeINTEL = 2147483647;
-pub type VkQueryPoolSamplingModeINTEL = ::std::os::raw::c_uint;
+pub type VkQueryPoolSamplingModeINTEL = ::std::os::raw::c_int;
 pub const VkPerformanceOverrideTypeINTEL_VK_PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL:
     VkPerformanceOverrideTypeINTEL = 0;
 pub const VkPerformanceOverrideTypeINTEL_VK_PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL:
     VkPerformanceOverrideTypeINTEL = 1;
 pub const VkPerformanceOverrideTypeINTEL_VK_PERFORMANCE_OVERRIDE_TYPE_MAX_ENUM_INTEL:
     VkPerformanceOverrideTypeINTEL = 2147483647;
-pub type VkPerformanceOverrideTypeINTEL = ::std::os::raw::c_uint;
+pub type VkPerformanceOverrideTypeINTEL = ::std::os::raw::c_int;
 pub const VkPerformanceParameterTypeINTEL_VK_PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL : VkPerformanceParameterTypeINTEL = 0 ;
 pub const VkPerformanceParameterTypeINTEL_VK_PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALID_BITS_INTEL : VkPerformanceParameterTypeINTEL = 1 ;
 pub const VkPerformanceParameterTypeINTEL_VK_PERFORMANCE_PARAMETER_TYPE_MAX_ENUM_INTEL:
     VkPerformanceParameterTypeINTEL = 2147483647;
-pub type VkPerformanceParameterTypeINTEL = ::std::os::raw::c_uint;
+pub type VkPerformanceParameterTypeINTEL = ::std::os::raw::c_int;
 pub const VkPerformanceValueTypeINTEL_VK_PERFORMANCE_VALUE_TYPE_UINT32_INTEL:
     VkPerformanceValueTypeINTEL = 0;
 pub const VkPerformanceValueTypeINTEL_VK_PERFORMANCE_VALUE_TYPE_UINT64_INTEL:
@@ -36432,7 +36279,7 @@ pub const VkPerformanceValueTypeINTEL_VK_PERFORMANCE_VALUE_TYPE_STRING_INTEL:
     VkPerformanceValueTypeINTEL = 4;
 pub const VkPerformanceValueTypeINTEL_VK_PERFORMANCE_VALUE_TYPE_MAX_ENUM_INTEL:
     VkPerformanceValueTypeINTEL = 2147483647;
-pub type VkPerformanceValueTypeINTEL = ::std::os::raw::c_uint;
+pub type VkPerformanceValueTypeINTEL = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union VkPerformanceValueDataINTEL {
@@ -36815,7 +36662,7 @@ pub type VkPipelineShaderStageRequiredSubgroupSizeCreateInfoEXT =
     VkPipelineShaderStageRequiredSubgroupSizeCreateInfo;
 pub const VkShaderCorePropertiesFlagBitsAMD_VK_SHADER_CORE_PROPERTIES_FLAG_BITS_MAX_ENUM_AMD:
     VkShaderCorePropertiesFlagBitsAMD = 2147483647;
-pub type VkShaderCorePropertiesFlagBitsAMD = ::std::os::raw::c_uint;
+pub type VkShaderCorePropertiesFlagBitsAMD = ::std::os::raw::c_int;
 pub type VkShaderCorePropertiesFlagsAMD = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -37057,7 +36904,7 @@ pub const VkValidationFeatureEnableEXT_VK_VALIDATION_FEATURE_ENABLE_DEBUG_PRINTF
 pub const VkValidationFeatureEnableEXT_VK_VALIDATION_FEATURE_ENABLE_SYNCHRONIZATION_VALIDATION_EXT : VkValidationFeatureEnableEXT = 4 ;
 pub const VkValidationFeatureEnableEXT_VK_VALIDATION_FEATURE_ENABLE_MAX_ENUM_EXT:
     VkValidationFeatureEnableEXT = 2147483647;
-pub type VkValidationFeatureEnableEXT = ::std::os::raw::c_uint;
+pub type VkValidationFeatureEnableEXT = ::std::os::raw::c_int;
 pub const VkValidationFeatureDisableEXT_VK_VALIDATION_FEATURE_DISABLE_ALL_EXT:
     VkValidationFeatureDisableEXT = 0;
 pub const VkValidationFeatureDisableEXT_VK_VALIDATION_FEATURE_DISABLE_SHADERS_EXT:
@@ -37075,7 +36922,7 @@ pub const VkValidationFeatureDisableEXT_VK_VALIDATION_FEATURE_DISABLE_UNIQUE_HAN
 pub const VkValidationFeatureDisableEXT_VK_VALIDATION_FEATURE_DISABLE_SHADER_VALIDATION_CACHE_EXT : VkValidationFeatureDisableEXT = 7 ;
 pub const VkValidationFeatureDisableEXT_VK_VALIDATION_FEATURE_DISABLE_MAX_ENUM_EXT:
     VkValidationFeatureDisableEXT = 2147483647;
-pub type VkValidationFeatureDisableEXT = ::std::os::raw::c_uint;
+pub type VkValidationFeatureDisableEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkValidationFeaturesEXT {
@@ -37204,7 +37051,7 @@ pub const VkCoverageReductionModeNV_VK_COVERAGE_REDUCTION_MODE_TRUNCATE_NV:
     VkCoverageReductionModeNV = 1;
 pub const VkCoverageReductionModeNV_VK_COVERAGE_REDUCTION_MODE_MAX_ENUM_NV:
     VkCoverageReductionModeNV = 2147483647;
-pub type VkCoverageReductionModeNV = ::std::os::raw::c_uint;
+pub type VkCoverageReductionModeNV = ::std::os::raw::c_int;
 pub type VkPipelineCoverageReductionStateCreateFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -37353,7 +37200,7 @@ pub const VkProvokingVertexModeEXT_VK_PROVOKING_VERTEX_MODE_LAST_VERTEX_EXT:
     VkProvokingVertexModeEXT = 1;
 pub const VkProvokingVertexModeEXT_VK_PROVOKING_VERTEX_MODE_MAX_ENUM_EXT: VkProvokingVertexModeEXT =
     2147483647;
-pub type VkProvokingVertexModeEXT = ::std::os::raw::c_uint;
+pub type VkProvokingVertexModeEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceProvokingVertexFeaturesEXT {
@@ -37630,7 +37477,7 @@ pub type PFN_vkCmdSetStencilOpEXT = ::std::option::Option<
 pub const VkHostImageCopyFlagBitsEXT_VK_HOST_IMAGE_COPY_MEMCPY_EXT: VkHostImageCopyFlagBitsEXT = 1;
 pub const VkHostImageCopyFlagBitsEXT_VK_HOST_IMAGE_COPY_FLAG_BITS_MAX_ENUM_EXT:
     VkHostImageCopyFlagBitsEXT = 2147483647;
-pub type VkHostImageCopyFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkHostImageCopyFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkHostImageCopyFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -38103,7 +37950,7 @@ pub const VkPresentScalingFlagBitsEXT_VK_PRESENT_SCALING_STRETCH_BIT_EXT:
     VkPresentScalingFlagBitsEXT = 4;
 pub const VkPresentScalingFlagBitsEXT_VK_PRESENT_SCALING_FLAG_BITS_MAX_ENUM_EXT:
     VkPresentScalingFlagBitsEXT = 2147483647;
-pub type VkPresentScalingFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkPresentScalingFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkPresentScalingFlagsEXT = VkFlags;
 pub const VkPresentGravityFlagBitsEXT_VK_PRESENT_GRAVITY_MIN_BIT_EXT: VkPresentGravityFlagBitsEXT =
     1;
@@ -38113,7 +37960,7 @@ pub const VkPresentGravityFlagBitsEXT_VK_PRESENT_GRAVITY_CENTERED_BIT_EXT:
     VkPresentGravityFlagBitsEXT = 4;
 pub const VkPresentGravityFlagBitsEXT_VK_PRESENT_GRAVITY_FLAG_BITS_MAX_ENUM_EXT:
     VkPresentGravityFlagBitsEXT = 2147483647;
-pub type VkPresentGravityFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkPresentGravityFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkPresentGravityFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -38384,18 +38231,18 @@ pub const VkIndirectCommandsTokenTypeNV_VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH
     VkIndirectCommandsTokenTypeNV = 1000428004;
 pub const VkIndirectCommandsTokenTypeNV_VK_INDIRECT_COMMANDS_TOKEN_TYPE_MAX_ENUM_NV:
     VkIndirectCommandsTokenTypeNV = 2147483647;
-pub type VkIndirectCommandsTokenTypeNV = ::std::os::raw::c_uint;
+pub type VkIndirectCommandsTokenTypeNV = ::std::os::raw::c_int;
 pub const VkIndirectStateFlagBitsNV_VK_INDIRECT_STATE_FLAG_FRONTFACE_BIT_NV:
     VkIndirectStateFlagBitsNV = 1;
 pub const VkIndirectStateFlagBitsNV_VK_INDIRECT_STATE_FLAG_BITS_MAX_ENUM_NV:
     VkIndirectStateFlagBitsNV = 2147483647;
-pub type VkIndirectStateFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkIndirectStateFlagBitsNV = ::std::os::raw::c_int;
 pub type VkIndirectStateFlagsNV = VkFlags;
 pub const VkIndirectCommandsLayoutUsageFlagBitsNV_VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EXPLICIT_PREPROCESS_BIT_NV : VkIndirectCommandsLayoutUsageFlagBitsNV = 1 ;
 pub const VkIndirectCommandsLayoutUsageFlagBitsNV_VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NV : VkIndirectCommandsLayoutUsageFlagBitsNV = 2 ;
 pub const VkIndirectCommandsLayoutUsageFlagBitsNV_VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NV : VkIndirectCommandsLayoutUsageFlagBitsNV = 4 ;
 pub const VkIndirectCommandsLayoutUsageFlagBitsNV_VK_INDIRECT_COMMANDS_LAYOUT_USAGE_FLAG_BITS_MAX_ENUM_NV : VkIndirectCommandsLayoutUsageFlagBitsNV = 2147483647 ;
-pub type VkIndirectCommandsLayoutUsageFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkIndirectCommandsLayoutUsageFlagBitsNV = ::std::os::raw::c_int;
 pub type VkIndirectCommandsLayoutUsageFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -38974,7 +38821,7 @@ pub const VkDepthBiasRepresentationEXT_VK_DEPTH_BIAS_REPRESENTATION_FLOAT_EXT:
     VkDepthBiasRepresentationEXT = 2;
 pub const VkDepthBiasRepresentationEXT_VK_DEPTH_BIAS_REPRESENTATION_MAX_ENUM_EXT:
     VkDepthBiasRepresentationEXT = 2147483647;
-pub type VkDepthBiasRepresentationEXT = ::std::os::raw::c_uint;
+pub type VkDepthBiasRepresentationEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceDepthBiasControlFeaturesEXT {
@@ -39073,7 +38920,7 @@ pub const VkDeviceMemoryReportEventTypeEXT_VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_UN
 pub const VkDeviceMemoryReportEventTypeEXT_VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_ALLOCATION_FAILED_EXT : VkDeviceMemoryReportEventTypeEXT = 4 ;
 pub const VkDeviceMemoryReportEventTypeEXT_VK_DEVICE_MEMORY_REPORT_EVENT_TYPE_MAX_ENUM_EXT:
     VkDeviceMemoryReportEventTypeEXT = 2147483647;
-pub type VkDeviceMemoryReportEventTypeEXT = ::std::os::raw::c_uint;
+pub type VkDeviceMemoryReportEventTypeEXT = ::std::os::raw::c_int;
 pub type VkDeviceMemoryReportFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -39418,7 +39265,7 @@ pub const VkDeviceDiagnosticsConfigFlagBitsNV_VK_DEVICE_DIAGNOSTICS_CONFIG_ENABL
 pub const VkDeviceDiagnosticsConfigFlagBitsNV_VK_DEVICE_DIAGNOSTICS_CONFIG_ENABLE_SHADER_ERROR_REPORTING_BIT_NV : VkDeviceDiagnosticsConfigFlagBitsNV = 8 ;
 pub const VkDeviceDiagnosticsConfigFlagBitsNV_VK_DEVICE_DIAGNOSTICS_CONFIG_FLAG_BITS_MAX_ENUM_NV:
     VkDeviceDiagnosticsConfigFlagBitsNV = 2147483647;
-pub type VkDeviceDiagnosticsConfigFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkDeviceDiagnosticsConfigFlagBitsNV = ::std::os::raw::c_int;
 pub type VkDeviceDiagnosticsConfigFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -40189,7 +40036,7 @@ pub const VkGraphicsPipelineLibraryFlagBitsEXT_VK_GRAPHICS_PIPELINE_LIBRARY_PRE_
 pub const VkGraphicsPipelineLibraryFlagBitsEXT_VK_GRAPHICS_PIPELINE_LIBRARY_FRAGMENT_SHADER_BIT_EXT : VkGraphicsPipelineLibraryFlagBitsEXT = 4 ;
 pub const VkGraphicsPipelineLibraryFlagBitsEXT_VK_GRAPHICS_PIPELINE_LIBRARY_FRAGMENT_OUTPUT_INTERFACE_BIT_EXT : VkGraphicsPipelineLibraryFlagBitsEXT = 8 ;
 pub const VkGraphicsPipelineLibraryFlagBitsEXT_VK_GRAPHICS_PIPELINE_LIBRARY_FLAG_BITS_MAX_ENUM_EXT : VkGraphicsPipelineLibraryFlagBitsEXT = 2147483647 ;
-pub type VkGraphicsPipelineLibraryFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkGraphicsPipelineLibraryFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkGraphicsPipelineLibraryFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -40292,7 +40139,7 @@ pub const VkFragmentShadingRateTypeNV_VK_FRAGMENT_SHADING_RATE_TYPE_ENUMS_NV:
     VkFragmentShadingRateTypeNV = 1;
 pub const VkFragmentShadingRateTypeNV_VK_FRAGMENT_SHADING_RATE_TYPE_MAX_ENUM_NV:
     VkFragmentShadingRateTypeNV = 2147483647;
-pub type VkFragmentShadingRateTypeNV = ::std::os::raw::c_uint;
+pub type VkFragmentShadingRateTypeNV = ::std::os::raw::c_int;
 pub const VkFragmentShadingRateNV_VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_PIXEL_NV:
     VkFragmentShadingRateNV = 0;
 pub const VkFragmentShadingRateNV_VK_FRAGMENT_SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV:
@@ -40319,7 +40166,7 @@ pub const VkFragmentShadingRateNV_VK_FRAGMENT_SHADING_RATE_NO_INVOCATIONS_NV:
     VkFragmentShadingRateNV = 15;
 pub const VkFragmentShadingRateNV_VK_FRAGMENT_SHADING_RATE_MAX_ENUM_NV: VkFragmentShadingRateNV =
     2147483647;
-pub type VkFragmentShadingRateNV = ::std::os::raw::c_uint;
+pub type VkFragmentShadingRateNV = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV {
@@ -40420,7 +40267,7 @@ pub const VkAccelerationStructureMotionInstanceTypeNV_VK_ACCELERATION_STRUCTURE_
 pub const VkAccelerationStructureMotionInstanceTypeNV_VK_ACCELERATION_STRUCTURE_MOTION_INSTANCE_TYPE_MATRIX_MOTION_NV : VkAccelerationStructureMotionInstanceTypeNV = 1 ;
 pub const VkAccelerationStructureMotionInstanceTypeNV_VK_ACCELERATION_STRUCTURE_MOTION_INSTANCE_TYPE_SRT_MOTION_NV : VkAccelerationStructureMotionInstanceTypeNV = 2 ;
 pub const VkAccelerationStructureMotionInstanceTypeNV_VK_ACCELERATION_STRUCTURE_MOTION_INSTANCE_TYPE_MAX_ENUM_NV : VkAccelerationStructureMotionInstanceTypeNV = 2147483647 ;
-pub type VkAccelerationStructureMotionInstanceTypeNV = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureMotionInstanceTypeNV = ::std::os::raw::c_int;
 pub type VkAccelerationStructureMotionInfoFlagsNV = VkFlags;
 pub type VkAccelerationStructureMotionInstanceFlagsNV = VkFlags;
 #[repr(C)]
@@ -40897,7 +40744,7 @@ pub const VkImageCompressionFlagBitsEXT_VK_IMAGE_COMPRESSION_DISABLED_EXT:
     VkImageCompressionFlagBitsEXT = 4;
 pub const VkImageCompressionFlagBitsEXT_VK_IMAGE_COMPRESSION_FLAG_BITS_MAX_ENUM_EXT:
     VkImageCompressionFlagBitsEXT = 2147483647;
-pub type VkImageCompressionFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkImageCompressionFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkImageCompressionFlagsEXT = VkFlags;
 pub const VkImageCompressionFixedRateFlagBitsEXT_VK_IMAGE_COMPRESSION_FIXED_RATE_NONE_EXT:
     VkImageCompressionFixedRateFlagBitsEXT = 0;
@@ -40950,7 +40797,7 @@ pub const VkImageCompressionFixedRateFlagBitsEXT_VK_IMAGE_COMPRESSION_FIXED_RATE
 pub const VkImageCompressionFixedRateFlagBitsEXT_VK_IMAGE_COMPRESSION_FIXED_RATE_24BPC_BIT_EXT:
     VkImageCompressionFixedRateFlagBitsEXT = 8388608;
 pub const VkImageCompressionFixedRateFlagBitsEXT_VK_IMAGE_COMPRESSION_FIXED_RATE_FLAG_BITS_MAX_ENUM_EXT : VkImageCompressionFixedRateFlagBitsEXT = 2147483647 ;
-pub type VkImageCompressionFixedRateFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkImageCompressionFixedRateFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkImageCompressionFixedRateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -41091,10 +40938,10 @@ pub const VkDeviceFaultAddressTypeEXT_VK_DEVICE_FAULT_ADDRESS_TYPE_INSTRUCTION_P
     VkDeviceFaultAddressTypeEXT = 6;
 pub const VkDeviceFaultAddressTypeEXT_VK_DEVICE_FAULT_ADDRESS_TYPE_MAX_ENUM_EXT:
     VkDeviceFaultAddressTypeEXT = 2147483647;
-pub type VkDeviceFaultAddressTypeEXT = ::std::os::raw::c_uint;
+pub type VkDeviceFaultAddressTypeEXT = ::std::os::raw::c_int;
 pub const VkDeviceFaultVendorBinaryHeaderVersionEXT_VK_DEVICE_FAULT_VENDOR_BINARY_HEADER_VERSION_ONE_EXT : VkDeviceFaultVendorBinaryHeaderVersionEXT = 1 ;
 pub const VkDeviceFaultVendorBinaryHeaderVersionEXT_VK_DEVICE_FAULT_VENDOR_BINARY_HEADER_VERSION_MAX_ENUM_EXT : VkDeviceFaultVendorBinaryHeaderVersionEXT = 2147483647 ;
-pub type VkDeviceFaultVendorBinaryHeaderVersionEXT = ::std::os::raw::c_uint;
+pub type VkDeviceFaultVendorBinaryHeaderVersionEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceFaultFeaturesEXT {
@@ -41539,12 +41386,12 @@ pub const VkDeviceAddressBindingTypeEXT_VK_DEVICE_ADDRESS_BINDING_TYPE_UNBIND_EX
     VkDeviceAddressBindingTypeEXT = 1;
 pub const VkDeviceAddressBindingTypeEXT_VK_DEVICE_ADDRESS_BINDING_TYPE_MAX_ENUM_EXT:
     VkDeviceAddressBindingTypeEXT = 2147483647;
-pub type VkDeviceAddressBindingTypeEXT = ::std::os::raw::c_uint;
+pub type VkDeviceAddressBindingTypeEXT = ::std::os::raw::c_int;
 pub const VkDeviceAddressBindingFlagBitsEXT_VK_DEVICE_ADDRESS_BINDING_INTERNAL_OBJECT_BIT_EXT:
     VkDeviceAddressBindingFlagBitsEXT = 1;
 pub const VkDeviceAddressBindingFlagBitsEXT_VK_DEVICE_ADDRESS_BINDING_FLAG_BITS_MAX_ENUM_EXT:
     VkDeviceAddressBindingFlagBitsEXT = 2147483647;
-pub type VkDeviceAddressBindingFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkDeviceAddressBindingFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkDeviceAddressBindingFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -41877,7 +41724,7 @@ pub const VkFrameBoundaryFlagBitsEXT_VK_FRAME_BOUNDARY_FRAME_END_BIT_EXT:
     VkFrameBoundaryFlagBitsEXT = 1;
 pub const VkFrameBoundaryFlagBitsEXT_VK_FRAME_BOUNDARY_FLAG_BITS_MAX_ENUM_EXT:
     VkFrameBoundaryFlagBitsEXT = 2147483647;
-pub type VkFrameBoundaryFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkFrameBoundaryFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkFrameBoundaryFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -42355,25 +42202,25 @@ pub struct VkMicromapEXT_T {
 pub type VkMicromapEXT = *mut VkMicromapEXT_T;
 pub const VkMicromapTypeEXT_VK_MICROMAP_TYPE_OPACITY_MICROMAP_EXT: VkMicromapTypeEXT = 0;
 pub const VkMicromapTypeEXT_VK_MICROMAP_TYPE_MAX_ENUM_EXT: VkMicromapTypeEXT = 2147483647;
-pub type VkMicromapTypeEXT = ::std::os::raw::c_uint;
+pub type VkMicromapTypeEXT = ::std::os::raw::c_int;
 pub const VkBuildMicromapModeEXT_VK_BUILD_MICROMAP_MODE_BUILD_EXT: VkBuildMicromapModeEXT = 0;
 pub const VkBuildMicromapModeEXT_VK_BUILD_MICROMAP_MODE_MAX_ENUM_EXT: VkBuildMicromapModeEXT =
     2147483647;
-pub type VkBuildMicromapModeEXT = ::std::os::raw::c_uint;
+pub type VkBuildMicromapModeEXT = ::std::os::raw::c_int;
 pub const VkCopyMicromapModeEXT_VK_COPY_MICROMAP_MODE_CLONE_EXT: VkCopyMicromapModeEXT = 0;
 pub const VkCopyMicromapModeEXT_VK_COPY_MICROMAP_MODE_SERIALIZE_EXT: VkCopyMicromapModeEXT = 1;
 pub const VkCopyMicromapModeEXT_VK_COPY_MICROMAP_MODE_DESERIALIZE_EXT: VkCopyMicromapModeEXT = 2;
 pub const VkCopyMicromapModeEXT_VK_COPY_MICROMAP_MODE_COMPACT_EXT: VkCopyMicromapModeEXT = 3;
 pub const VkCopyMicromapModeEXT_VK_COPY_MICROMAP_MODE_MAX_ENUM_EXT: VkCopyMicromapModeEXT =
     2147483647;
-pub type VkCopyMicromapModeEXT = ::std::os::raw::c_uint;
+pub type VkCopyMicromapModeEXT = ::std::os::raw::c_int;
 pub const VkOpacityMicromapFormatEXT_VK_OPACITY_MICROMAP_FORMAT_2_STATE_EXT:
     VkOpacityMicromapFormatEXT = 1;
 pub const VkOpacityMicromapFormatEXT_VK_OPACITY_MICROMAP_FORMAT_4_STATE_EXT:
     VkOpacityMicromapFormatEXT = 2;
 pub const VkOpacityMicromapFormatEXT_VK_OPACITY_MICROMAP_FORMAT_MAX_ENUM_EXT:
     VkOpacityMicromapFormatEXT = 2147483647;
-pub type VkOpacityMicromapFormatEXT = ::std::os::raw::c_uint;
+pub type VkOpacityMicromapFormatEXT = ::std::os::raw::c_int;
 pub const VkOpacityMicromapSpecialIndexEXT_VK_OPACITY_MICROMAP_SPECIAL_INDEX_FULLY_TRANSPARENT_EXT : VkOpacityMicromapSpecialIndexEXT = - 1 ;
 pub const VkOpacityMicromapSpecialIndexEXT_VK_OPACITY_MICROMAP_SPECIAL_INDEX_FULLY_OPAQUE_EXT:
     VkOpacityMicromapSpecialIndexEXT = -2;
@@ -42385,7 +42232,7 @@ pub type VkOpacityMicromapSpecialIndexEXT = ::std::os::raw::c_int;
 pub const VkAccelerationStructureCompatibilityKHR_VK_ACCELERATION_STRUCTURE_COMPATIBILITY_COMPATIBLE_KHR : VkAccelerationStructureCompatibilityKHR = 0 ;
 pub const VkAccelerationStructureCompatibilityKHR_VK_ACCELERATION_STRUCTURE_COMPATIBILITY_INCOMPATIBLE_KHR : VkAccelerationStructureCompatibilityKHR = 1 ;
 pub const VkAccelerationStructureCompatibilityKHR_VK_ACCELERATION_STRUCTURE_COMPATIBILITY_MAX_ENUM_KHR : VkAccelerationStructureCompatibilityKHR = 2147483647 ;
-pub type VkAccelerationStructureCompatibilityKHR = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureCompatibilityKHR = ::std::os::raw::c_int;
 pub const VkAccelerationStructureBuildTypeKHR_VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_KHR:
     VkAccelerationStructureBuildTypeKHR = 0;
 pub const VkAccelerationStructureBuildTypeKHR_VK_ACCELERATION_STRUCTURE_BUILD_TYPE_DEVICE_KHR:
@@ -42393,7 +42240,7 @@ pub const VkAccelerationStructureBuildTypeKHR_VK_ACCELERATION_STRUCTURE_BUILD_TY
 pub const VkAccelerationStructureBuildTypeKHR_VK_ACCELERATION_STRUCTURE_BUILD_TYPE_HOST_OR_DEVICE_KHR : VkAccelerationStructureBuildTypeKHR = 2 ;
 pub const VkAccelerationStructureBuildTypeKHR_VK_ACCELERATION_STRUCTURE_BUILD_TYPE_MAX_ENUM_KHR:
     VkAccelerationStructureBuildTypeKHR = 2147483647;
-pub type VkAccelerationStructureBuildTypeKHR = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureBuildTypeKHR = ::std::os::raw::c_int;
 pub const VkBuildMicromapFlagBitsEXT_VK_BUILD_MICROMAP_PREFER_FAST_TRACE_BIT_EXT:
     VkBuildMicromapFlagBitsEXT = 1;
 pub const VkBuildMicromapFlagBitsEXT_VK_BUILD_MICROMAP_PREFER_FAST_BUILD_BIT_EXT:
@@ -42402,13 +42249,13 @@ pub const VkBuildMicromapFlagBitsEXT_VK_BUILD_MICROMAP_ALLOW_COMPACTION_BIT_EXT:
     VkBuildMicromapFlagBitsEXT = 4;
 pub const VkBuildMicromapFlagBitsEXT_VK_BUILD_MICROMAP_FLAG_BITS_MAX_ENUM_EXT:
     VkBuildMicromapFlagBitsEXT = 2147483647;
-pub type VkBuildMicromapFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkBuildMicromapFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkBuildMicromapFlagsEXT = VkFlags;
 pub const VkMicromapCreateFlagBitsEXT_VK_MICROMAP_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_EXT:
     VkMicromapCreateFlagBitsEXT = 1;
 pub const VkMicromapCreateFlagBitsEXT_VK_MICROMAP_CREATE_FLAG_BITS_MAX_ENUM_EXT:
     VkMicromapCreateFlagBitsEXT = 2147483647;
-pub type VkMicromapCreateFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkMicromapCreateFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkMicromapCreateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -44407,7 +44254,7 @@ pub const VkSubpassMergeStatusEXT_VK_SUBPASS_MERGE_STATUS_NOT_MERGED_UNSPECIFIED
     VkSubpassMergeStatusEXT = 13;
 pub const VkSubpassMergeStatusEXT_VK_SUBPASS_MERGE_STATUS_MAX_ENUM_EXT: VkSubpassMergeStatusEXT =
     2147483647;
-pub type VkSubpassMergeStatusEXT = ::std::os::raw::c_uint;
+pub type VkSubpassMergeStatusEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT {
@@ -44538,7 +44385,7 @@ pub const VkDirectDriverLoadingModeLUNARG_VK_DIRECT_DRIVER_LOADING_MODE_INCLUSIV
     VkDirectDriverLoadingModeLUNARG = 1;
 pub const VkDirectDriverLoadingModeLUNARG_VK_DIRECT_DRIVER_LOADING_MODE_MAX_ENUM_LUNARG:
     VkDirectDriverLoadingModeLUNARG = 2147483647;
-pub type VkDirectDriverLoadingModeLUNARG = ::std::os::raw::c_uint;
+pub type VkDirectDriverLoadingModeLUNARG = ::std::os::raw::c_int;
 pub type VkDirectDriverLoadingFlagsLUNARG = VkFlags;
 pub type PFN_vkGetInstanceProcAddrLUNARG = ::std::option::Option<
     unsafe extern "C" fn(
@@ -44723,7 +44570,7 @@ pub const VkOpticalFlowPerformanceLevelNV_VK_OPTICAL_FLOW_PERFORMANCE_LEVEL_FAST
     VkOpticalFlowPerformanceLevelNV = 3;
 pub const VkOpticalFlowPerformanceLevelNV_VK_OPTICAL_FLOW_PERFORMANCE_LEVEL_MAX_ENUM_NV:
     VkOpticalFlowPerformanceLevelNV = 2147483647;
-pub type VkOpticalFlowPerformanceLevelNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowPerformanceLevelNV = ::std::os::raw::c_int;
 pub const VkOpticalFlowSessionBindingPointNV_VK_OPTICAL_FLOW_SESSION_BINDING_POINT_UNKNOWN_NV:
     VkOpticalFlowSessionBindingPointNV = 0;
 pub const VkOpticalFlowSessionBindingPointNV_VK_OPTICAL_FLOW_SESSION_BINDING_POINT_INPUT_NV:
@@ -44740,7 +44587,7 @@ pub const VkOpticalFlowSessionBindingPointNV_VK_OPTICAL_FLOW_SESSION_BINDING_POI
 pub const VkOpticalFlowSessionBindingPointNV_VK_OPTICAL_FLOW_SESSION_BINDING_POINT_GLOBAL_FLOW_NV : VkOpticalFlowSessionBindingPointNV = 8 ;
 pub const VkOpticalFlowSessionBindingPointNV_VK_OPTICAL_FLOW_SESSION_BINDING_POINT_MAX_ENUM_NV:
     VkOpticalFlowSessionBindingPointNV = 2147483647;
-pub type VkOpticalFlowSessionBindingPointNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowSessionBindingPointNV = ::std::os::raw::c_int;
 pub const VkOpticalFlowGridSizeFlagBitsNV_VK_OPTICAL_FLOW_GRID_SIZE_UNKNOWN_NV:
     VkOpticalFlowGridSizeFlagBitsNV = 0;
 pub const VkOpticalFlowGridSizeFlagBitsNV_VK_OPTICAL_FLOW_GRID_SIZE_1X1_BIT_NV:
@@ -44753,7 +44600,7 @@ pub const VkOpticalFlowGridSizeFlagBitsNV_VK_OPTICAL_FLOW_GRID_SIZE_8X8_BIT_NV:
     VkOpticalFlowGridSizeFlagBitsNV = 8;
 pub const VkOpticalFlowGridSizeFlagBitsNV_VK_OPTICAL_FLOW_GRID_SIZE_FLAG_BITS_MAX_ENUM_NV:
     VkOpticalFlowGridSizeFlagBitsNV = 2147483647;
-pub type VkOpticalFlowGridSizeFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowGridSizeFlagBitsNV = ::std::os::raw::c_int;
 pub type VkOpticalFlowGridSizeFlagsNV = VkFlags;
 pub const VkOpticalFlowUsageFlagBitsNV_VK_OPTICAL_FLOW_USAGE_UNKNOWN_NV:
     VkOpticalFlowUsageFlagBitsNV = 0;
@@ -44769,7 +44616,7 @@ pub const VkOpticalFlowUsageFlagBitsNV_VK_OPTICAL_FLOW_USAGE_GLOBAL_FLOW_BIT_NV:
     VkOpticalFlowUsageFlagBitsNV = 16;
 pub const VkOpticalFlowUsageFlagBitsNV_VK_OPTICAL_FLOW_USAGE_FLAG_BITS_MAX_ENUM_NV:
     VkOpticalFlowUsageFlagBitsNV = 2147483647;
-pub type VkOpticalFlowUsageFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowUsageFlagBitsNV = ::std::os::raw::c_int;
 pub type VkOpticalFlowUsageFlagsNV = VkFlags;
 pub const VkOpticalFlowSessionCreateFlagBitsNV_VK_OPTICAL_FLOW_SESSION_CREATE_ENABLE_HINT_BIT_NV:
     VkOpticalFlowSessionCreateFlagBitsNV = 1;
@@ -44779,13 +44626,13 @@ pub const VkOpticalFlowSessionCreateFlagBitsNV_VK_OPTICAL_FLOW_SESSION_CREATE_EN
 pub const VkOpticalFlowSessionCreateFlagBitsNV_VK_OPTICAL_FLOW_SESSION_CREATE_ALLOW_REGIONS_BIT_NV : VkOpticalFlowSessionCreateFlagBitsNV = 8 ;
 pub const VkOpticalFlowSessionCreateFlagBitsNV_VK_OPTICAL_FLOW_SESSION_CREATE_BOTH_DIRECTIONS_BIT_NV : VkOpticalFlowSessionCreateFlagBitsNV = 16 ;
 pub const VkOpticalFlowSessionCreateFlagBitsNV_VK_OPTICAL_FLOW_SESSION_CREATE_FLAG_BITS_MAX_ENUM_NV : VkOpticalFlowSessionCreateFlagBitsNV = 2147483647 ;
-pub type VkOpticalFlowSessionCreateFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowSessionCreateFlagBitsNV = ::std::os::raw::c_int;
 pub type VkOpticalFlowSessionCreateFlagsNV = VkFlags;
 pub const VkOpticalFlowExecuteFlagBitsNV_VK_OPTICAL_FLOW_EXECUTE_DISABLE_TEMPORAL_HINTS_BIT_NV:
     VkOpticalFlowExecuteFlagBitsNV = 1;
 pub const VkOpticalFlowExecuteFlagBitsNV_VK_OPTICAL_FLOW_EXECUTE_FLAG_BITS_MAX_ENUM_NV:
     VkOpticalFlowExecuteFlagBitsNV = 2147483647;
-pub type VkOpticalFlowExecuteFlagBitsNV = ::std::os::raw::c_uint;
+pub type VkOpticalFlowExecuteFlagBitsNV = ::std::os::raw::c_int;
 pub type VkOpticalFlowExecuteFlagsNV = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -45102,7 +44949,7 @@ pub type VkShaderEXT = *mut VkShaderEXT_T;
 pub const VkShaderCodeTypeEXT_VK_SHADER_CODE_TYPE_BINARY_EXT: VkShaderCodeTypeEXT = 0;
 pub const VkShaderCodeTypeEXT_VK_SHADER_CODE_TYPE_SPIRV_EXT: VkShaderCodeTypeEXT = 1;
 pub const VkShaderCodeTypeEXT_VK_SHADER_CODE_TYPE_MAX_ENUM_EXT: VkShaderCodeTypeEXT = 2147483647;
-pub type VkShaderCodeTypeEXT = ::std::os::raw::c_uint;
+pub type VkShaderCodeTypeEXT = ::std::os::raw::c_int;
 pub const VkShaderCreateFlagBitsEXT_VK_SHADER_CREATE_LINK_STAGE_BIT_EXT: VkShaderCreateFlagBitsEXT =
     1;
 pub const VkShaderCreateFlagBitsEXT_VK_SHADER_CREATE_ALLOW_VARYING_SUBGROUP_SIZE_BIT_EXT:
@@ -45119,7 +44966,7 @@ pub const VkShaderCreateFlagBitsEXT_VK_SHADER_CREATE_FRAGMENT_DENSITY_MAP_ATTACH
     VkShaderCreateFlagBitsEXT = 64;
 pub const VkShaderCreateFlagBitsEXT_VK_SHADER_CREATE_FLAG_BITS_MAX_ENUM_EXT:
     VkShaderCreateFlagBitsEXT = 2147483647;
-pub type VkShaderCreateFlagBitsEXT = ::std::os::raw::c_uint;
+pub type VkShaderCreateFlagBitsEXT = ::std::os::raw::c_int;
 pub type VkShaderCreateFlagsEXT = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -45390,7 +45237,7 @@ pub const VkRayTracingInvocationReorderModeNV_VK_RAY_TRACING_INVOCATION_REORDER_
     VkRayTracingInvocationReorderModeNV = 1;
 pub const VkRayTracingInvocationReorderModeNV_VK_RAY_TRACING_INVOCATION_REORDER_MODE_MAX_ENUM_NV:
     VkRayTracingInvocationReorderModeNV = 2147483647;
-pub type VkRayTracingInvocationReorderModeNV = ::std::os::raw::c_uint;
+pub type VkRayTracingInvocationReorderModeNV = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV {
@@ -45541,7 +45388,7 @@ pub const VkLayerSettingTypeEXT_VK_LAYER_SETTING_TYPE_FLOAT64_EXT: VkLayerSettin
 pub const VkLayerSettingTypeEXT_VK_LAYER_SETTING_TYPE_STRING_EXT: VkLayerSettingTypeEXT = 7;
 pub const VkLayerSettingTypeEXT_VK_LAYER_SETTING_TYPE_MAX_ENUM_EXT: VkLayerSettingTypeEXT =
     2147483647;
-pub type VkLayerSettingTypeEXT = ::std::os::raw::c_uint;
+pub type VkLayerSettingTypeEXT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkLayerSettingEXT {
@@ -45712,12 +45559,12 @@ pub const VkLatencyMarkerNV_VK_LATENCY_MARKER_OUT_OF_BAND_RENDERSUBMIT_END_NV: V
 pub const VkLatencyMarkerNV_VK_LATENCY_MARKER_OUT_OF_BAND_PRESENT_START_NV: VkLatencyMarkerNV = 10;
 pub const VkLatencyMarkerNV_VK_LATENCY_MARKER_OUT_OF_BAND_PRESENT_END_NV: VkLatencyMarkerNV = 11;
 pub const VkLatencyMarkerNV_VK_LATENCY_MARKER_MAX_ENUM_NV: VkLatencyMarkerNV = 2147483647;
-pub type VkLatencyMarkerNV = ::std::os::raw::c_uint;
+pub type VkLatencyMarkerNV = ::std::os::raw::c_int;
 pub const VkOutOfBandQueueTypeNV_VK_OUT_OF_BAND_QUEUE_TYPE_RENDER_NV: VkOutOfBandQueueTypeNV = 0;
 pub const VkOutOfBandQueueTypeNV_VK_OUT_OF_BAND_QUEUE_TYPE_PRESENT_NV: VkOutOfBandQueueTypeNV = 1;
 pub const VkOutOfBandQueueTypeNV_VK_OUT_OF_BAND_QUEUE_TYPE_MAX_ENUM_NV: VkOutOfBandQueueTypeNV =
     2147483647;
-pub type VkOutOfBandQueueTypeNV = ::std::os::raw::c_uint;
+pub type VkOutOfBandQueueTypeNV = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkLatencySleepModeInfoNV {
@@ -46069,7 +45916,7 @@ pub const VkBlockMatchWindowCompareModeQCOM_VK_BLOCK_MATCH_WINDOW_COMPARE_MODE_M
     VkBlockMatchWindowCompareModeQCOM = 1;
 pub const VkBlockMatchWindowCompareModeQCOM_VK_BLOCK_MATCH_WINDOW_COMPARE_MODE_MAX_ENUM_QCOM:
     VkBlockMatchWindowCompareModeQCOM = 2147483647;
-pub type VkBlockMatchWindowCompareModeQCOM = ::std::os::raw::c_uint;
+pub type VkBlockMatchWindowCompareModeQCOM = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceImageProcessing2FeaturesQCOM {
@@ -46151,7 +45998,7 @@ pub const VkCubicFilterWeightsQCOM_VK_CUBIC_FILTER_WEIGHTS_MITCHELL_NETRAVALI_QC
     VkCubicFilterWeightsQCOM = 3;
 pub const VkCubicFilterWeightsQCOM_VK_CUBIC_FILTER_WEIGHTS_MAX_ENUM_QCOM: VkCubicFilterWeightsQCOM =
     2147483647;
-pub type VkCubicFilterWeightsQCOM = ::std::os::raw::c_uint;
+pub type VkCubicFilterWeightsQCOM = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceCubicWeightsFeaturesQCOM {
@@ -46324,7 +46171,7 @@ pub const VkLayeredDriverUnderlyingApiMSFT_VK_LAYERED_DRIVER_UNDERLYING_API_D3D1
     VkLayeredDriverUnderlyingApiMSFT = 1;
 pub const VkLayeredDriverUnderlyingApiMSFT_VK_LAYERED_DRIVER_UNDERLYING_API_MAX_ENUM_MSFT:
     VkLayeredDriverUnderlyingApiMSFT = 2147483647;
-pub type VkLayeredDriverUnderlyingApiMSFT = ::std::os::raw::c_uint;
+pub type VkLayeredDriverUnderlyingApiMSFT = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkPhysicalDeviceLayeredDriverPropertiesMSFT {
@@ -46537,12 +46384,12 @@ pub const VkBuildAccelerationStructureModeKHR_VK_BUILD_ACCELERATION_STRUCTURE_MO
     VkBuildAccelerationStructureModeKHR = 1;
 pub const VkBuildAccelerationStructureModeKHR_VK_BUILD_ACCELERATION_STRUCTURE_MODE_MAX_ENUM_KHR:
     VkBuildAccelerationStructureModeKHR = 2147483647;
-pub type VkBuildAccelerationStructureModeKHR = ::std::os::raw::c_uint;
+pub type VkBuildAccelerationStructureModeKHR = ::std::os::raw::c_int;
 pub const VkAccelerationStructureCreateFlagBitsKHR_VK_ACCELERATION_STRUCTURE_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT_KHR : VkAccelerationStructureCreateFlagBitsKHR = 1 ;
 pub const VkAccelerationStructureCreateFlagBitsKHR_VK_ACCELERATION_STRUCTURE_CREATE_DESCRIPTOR_BUFFER_CAPTURE_REPLAY_BIT_EXT : VkAccelerationStructureCreateFlagBitsKHR = 8 ;
 pub const VkAccelerationStructureCreateFlagBitsKHR_VK_ACCELERATION_STRUCTURE_CREATE_MOTION_BIT_NV : VkAccelerationStructureCreateFlagBitsKHR = 4 ;
 pub const VkAccelerationStructureCreateFlagBitsKHR_VK_ACCELERATION_STRUCTURE_CREATE_FLAG_BITS_MAX_ENUM_KHR : VkAccelerationStructureCreateFlagBitsKHR = 2147483647 ;
-pub type VkAccelerationStructureCreateFlagBitsKHR = ::std::os::raw::c_uint;
+pub type VkAccelerationStructureCreateFlagBitsKHR = ::std::os::raw::c_int;
 pub type VkAccelerationStructureCreateFlagsKHR = VkFlags;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -47206,7 +47053,7 @@ pub const VkShaderGroupShaderKHR_VK_SHADER_GROUP_SHADER_INTERSECTION_KHR: VkShad
     3;
 pub const VkShaderGroupShaderKHR_VK_SHADER_GROUP_SHADER_MAX_ENUM_KHR: VkShaderGroupShaderKHR =
     2147483647;
-pub type VkShaderGroupShaderKHR = ::std::os::raw::c_uint;
+pub type VkShaderGroupShaderKHR = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct VkRayTracingShaderGroupCreateInfoKHR {

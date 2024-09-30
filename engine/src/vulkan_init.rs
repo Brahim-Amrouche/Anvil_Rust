@@ -1,6 +1,6 @@
 use paste::paste;
 use std::ffi::CString;
-use crate::vulkan_bindings;
+use crate::vulkan_bindings::{self, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU};
 
 static mut VULKAN_INSTANCE:Option<VulkanInstance>= None;
 
@@ -107,7 +107,7 @@ impl VulkanInstance {
     pub fn new(desired_extensions : &[&'static str]) -> Result<Self, Box<dyn std::error::Error>> {
         unsafe {
             let mut vulkan_instance = VulkanInstance {
-                vulkan_library : libloading::Library::new("libvulkan.so.1")?,
+                vulkan_library : if cfg!(target_os = "linux") { libloading::Library::new("libvulkan.so.1")? } else { libloading::Library::new("vulkan-1.dll")?},
                 available_extensions : Vec::new(),
                 enabled_extensions: desired_extensions.into(),
                 instance : std::ptr::null_mut(),
@@ -346,6 +346,7 @@ impl VulkanInstance {
             {
                 return  Err(VulkanInitError::UNAVAILABLE_VULKAN_PHYSICAL_DEVICES);
             }
+            self.physical_devices.reserve(physical_devices.len());
             for (idx,  ph_device) in physical_devices.into_iter().enumerate()
             {
                 self.physical_devices.push(VulkanPhysicalDevice::new(ph_device));
@@ -515,6 +516,45 @@ impl VulkanPhysicalDevice {
     
 }
 
+enum PhysicalDeviceVendorsId {
+    NVIDIA = 0x10DE,
+    AMD = 0x1002,
+    INTEL = 0x8086,
+    UNDEFINED_VENDOR,
+}
+
+impl PhysicalDeviceVendorsId {
+    pub fn new(id : u32) -> Self{
+        match id{
+            0x10DE => Self::NVIDIA,
+            0x1002 => Self::AMD,
+            0x8086 => Self::INTEL,
+            _ => Self::UNDEFINED_VENDOR
+        }
+    }
+}
+
+impl std::fmt::Display for VulkanPhysicalDevice {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let device_type = match self.properties.deviceType {
+            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU => "Discrete Gpu",
+            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU => "CPU",
+            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU => "Integrated Gpu",
+            _ => "Undefined Device Type"
+        };
+        let vendor = match PhysicalDeviceVendorsId::new(self.properties.vendorID) {
+            PhysicalDeviceVendorsId::NVIDIA  => "Nvidia",
+            PhysicalDeviceVendorsId::AMD => "Amd",
+            PhysicalDeviceVendorsId::INTEL => "Intel",
+            _ => "Undefined Vendor"
+        };
+        unsafe {
+            let device_name = std::mem::transmute::<[i8;256], [u8;256]>(self.properties.deviceName);
+            write!(f, "the physical device {} of type {} from {}", String::from_utf8(device_name.to_vec()).unwrap() , device_type, vendor)
+        }
+    }
+}
+
 pub struct  VulkanLogicalDevice {
     pub device : vulkan_bindings::VkDevice,
     pub demanded_queues : Vec<vulkan_bindings::VkDeviceQueueCreateInfo>,
@@ -533,9 +573,11 @@ impl  VulkanLogicalDevice {
         };
         let ref mut physical_devices = vulkan_instance.physical_devices;
         for ph_device in  physical_devices {
+            println!("{}", ph_device);
             if ph_device.has_desired_extensions(desired_extensions) 
                 && ph_device.has_desired_family_queues(desired_capabilites)
             {
+
                 vulkan_logical_device.physical_device = ph_device;
                 vulkan_logical_device.init_device_queue_info();
                 vulkan_logical_device.create_logical_device()?;
@@ -687,18 +729,6 @@ impl  VulkanLogicalDevice {
 
 }
 
-macro_rules! INIT_OPERATION_UNWRAP_RESULT {
-    ($func_res: expr) => {
-        match $func_res {
-            Ok(_) => (),
-            Err(e) => {
-                eprintln!("{}", e);
-                std::process::exit(1);
-            }
-        }
-    };
-}
-
 pub fn initialize_vulkan()
 {
     let logical_device;
@@ -712,7 +742,7 @@ pub fn initialize_vulkan()
         };
         let vk = (*std::ptr::addr_of_mut!(VULKAN_INSTANCE)).as_mut();
         let vk = vk.unwrap();
-        logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT]);
+        logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
 
     }
     let logical_device = match logical_device {
@@ -722,7 +752,7 @@ pub fn initialize_vulkan()
             std::process::exit(1);
         }
     };
-    let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT, 0);
+    let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT as u32, 0);
     let _queue = match queue {
         Some(q) => q,
         None => {eprintln!("No Valid Queue"); std::process::exit(1)}
