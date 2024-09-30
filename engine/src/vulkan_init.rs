@@ -1,6 +1,6 @@
 use paste::paste;
 use std::ffi::CString;
-use crate::vulkan_bindings::{self, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU};
+use crate::vulkan_bindings;
 
 static mut VULKAN_INSTANCE:Option<VulkanInstance>= None;
 
@@ -97,19 +97,19 @@ pub struct QueueInfo {
 pub struct VulkanInstance {
     vulkan_library: libloading::Library,
     available_extensions : Vec<vulkan_bindings::VkExtensionProperties>,
-    enabled_extensions : Vec<&'static str>,
+    enabled_extensions : Vec<String>,
     instance : vulkan_bindings::VkInstance,
     physical_devices : Vec<VulkanPhysicalDevice>
 }
 
 impl VulkanInstance {
 
-    pub fn new(desired_extensions : &[&'static str]) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn new(desired_extensions : Vec<String>) -> Result<Self, Box<dyn std::error::Error>> {
         unsafe {
             let mut vulkan_instance = VulkanInstance {
                 vulkan_library : if cfg!(target_os = "linux") { libloading::Library::new("libvulkan.so.1")? } else { libloading::Library::new("vulkan-1.dll")?},
                 available_extensions : Vec::new(),
-                enabled_extensions: desired_extensions.into(),
+                enabled_extensions: desired_extensions,
                 instance : std::ptr::null_mut(),
                 physical_devices: Vec::new()
             };
@@ -245,7 +245,7 @@ impl VulkanInstance {
         
         unsafe {
             let desired_extensions_cstr: Vec<CString> = self.enabled_extensions.iter()
-            .map(|&s| CString::new(s).unwrap())
+            .map(|s| CString::new(s.as_bytes()).unwrap())
             .collect();
 
             let desired_extensions_ptrs : Vec<* const i8> = desired_extensions_cstr.iter()
@@ -537,9 +537,9 @@ impl PhysicalDeviceVendorsId {
 impl std::fmt::Display for VulkanPhysicalDevice {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let device_type = match self.properties.deviceType {
-            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU => "Discrete Gpu",
-            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU => "CPU",
-            VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU => "Integrated Gpu",
+            vulkan_bindings::VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU => "Discrete Gpu",
+            vulkan_bindings::VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_CPU => "CPU",
+            vulkan_bindings::VkPhysicalDeviceType_VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU => "Integrated Gpu",
             _ => "Undefined Device Type"
         };
         let vendor = match PhysicalDeviceVendorsId::new(self.properties.vendorID) {
@@ -729,11 +729,10 @@ impl  VulkanLogicalDevice {
 
 }
 
-pub fn initialize_vulkan()
+pub fn initialize_vulkan(desired_global_extensions : Vec<String>) -> &'static mut VulkanInstance
 {
-    let logical_device;
     unsafe {
-        VULKAN_INSTANCE = match VulkanInstance::new(&["VK_KHR_surface", "VK_KHR_display"]) {
+        VULKAN_INSTANCE = match VulkanInstance::new(desired_global_extensions) {
             Ok(i) => Some(i),
             Err(e) =>{
                 eprintln!("{}", e);
@@ -742,20 +741,21 @@ pub fn initialize_vulkan()
         };
         let vk = (*std::ptr::addr_of_mut!(VULKAN_INSTANCE)).as_mut();
         let vk = vk.unwrap();
-        logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
-
+        vk
     }
-    let logical_device = match logical_device {
-        Ok(l) => l,
-        Err(e) => {
-            eprintln!("{}", e);
-            std::process::exit(1);
-        }
-    };
-    let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT as u32, 0);
-    let _queue = match queue {
-        Some(q) => q,
-        None => {eprintln!("No Valid Queue"); std::process::exit(1)}
-    };
-    println!("Done Loading");
+    // let logical_device;
+    // logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
+    // let logical_device = match logical_device {
+    //     Ok(l) => l,
+    //     Err(e) => {
+    //         eprintln!("{}", e);
+    //         std::process::exit(1);
+    //     }
+    // };
+    // let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT as u32, 0);
+    // let _queue = match queue {
+    //     Some(q) => q,
+    //     None => {eprintln!("No Valid Queue"); std::process::exit(1)}
+    // };
+    // println!("Done Loading");
 }

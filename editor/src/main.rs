@@ -1,7 +1,7 @@
 use engine::vulkan_init::initialize_vulkan;
-
+use engine::vulkan_window::vulkan_init_window;
 
 fn main() {
     // headersgen::generate_headers_bindings();
-    initialize_vulkan();
+    vulkan_init_window();
 }
