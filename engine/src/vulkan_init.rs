@@ -8,7 +8,7 @@ macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {
         paste! {
         #[allow(non_upper_case_globals)]
-        static mut $name :  vulkan_bindings::[<PFN_$name>] = None;
+        pub static mut $name :  vulkan_bindings::[<PFN_$name>] = None;
         }
     };
 }
@@ -98,7 +98,7 @@ pub struct VulkanInstance {
     vulkan_library: libloading::Library,
     available_extensions : Vec<vulkan_bindings::VkExtensionProperties>,
     enabled_extensions : Vec<String>,
-    instance : vulkan_bindings::VkInstance,
+    pub instance : vulkan_bindings::VkInstance,
     physical_devices : Vec<VulkanPhysicalDevice>
 }
 

@@ -2,9 +2,9 @@ use crate::vulkan_bindings;
 use windows::Win32::UI::WindowsAndMessaging::*;
 
 pub struct WindowParameters {
-    Hinstance: vulkan_bindings::HINSTANCE,
-    Hwnd : vulkan_bindings::HWND,
-    Title : String
+    pub Hinstance: vulkan_bindings::HINSTANCE,
+    pub Hwnd : vulkan_bindings::HWND,
+    pub Title : String
 }
 
 impl WindowParameters {
@@ -60,8 +60,8 @@ impl WindowParameters {
                 style,
                 rect.left,
                 rect.top,
-                rect.right - rect.left,
-                rect.bottom - rect.top,
+                width,
+                height,
                 std::ptr::null_mut(),
                 std::ptr::null_mut(),
                 h_instance,

@@ -22,6 +22,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceFormatsKHR);
+EXPORTED_VULKAN_FUNCTION!(vkCreateWin32SurfaceKHR);
 
 
 // Device Level Vulkan Function
