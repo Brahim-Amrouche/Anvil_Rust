@@ -17,7 +17,8 @@ pub fn vulkan_init_window()
 {
     let global_exts = load_extension_names(&[vulkan_bindings::VK_KHR_SURFACE_EXTENSION_NAME, vulkan_bindings::VK_KHR_WIN32_SURFACE_EXTENSION_NAME]);
     let vk_instance = vulkan_init::initialize_vulkan(global_exts);
-    system_window::WindowParameters::new();
+    let window = system_window::WindowParameters::new("Anvil".to_string());
+    window.destroy()
     // load_extension_names(extensions);
     // logical_device = vk_instance.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
 
