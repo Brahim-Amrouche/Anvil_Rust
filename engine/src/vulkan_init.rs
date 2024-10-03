@@ -356,10 +356,13 @@ impl VulkanInstance {
         Ok(())
     }
 
-    pub fn create_logical_device(&mut self, desired_extensions : &[&'static str], desired_capabilites: &[vulkan_bindings::VkQueueFlags]) 
+    pub fn create_logical_device(&mut self,
+        desired_extensions : Vec<String>,
+        desired_capabilites: &[vulkan_bindings::VkQueueFlags],
+        surface : &vulkan_bindings::VkSurfaceKHR) 
         -> Result<VulkanLogicalDevice, VulkanInitError >
     {
-        VulkanLogicalDevice::new(self, desired_extensions, desired_capabilites)
+        VulkanLogicalDevice::new(self, desired_extensions, desired_capabilites, surface)
     }
 
     pub fn destroy(mut self)
@@ -379,7 +382,9 @@ pub struct VulkanPhysicalDevice {
     pub features : vulkan_bindings::VkPhysicalDeviceFeatures,
     pub properties : vulkan_bindings::VkPhysicalDeviceProperties,
     pub family_queues: Vec<vulkan_bindings::VkQueueFamilyProperties>,
-    pub desired_queues : Vec<QueueInfo>
+    pub desired_queues : Vec<QueueInfo>,
+    pub supports_presentation : bool,
+    pub presentation_queue_idx : i32
 }
 
 impl VulkanPhysicalDevice {
@@ -391,7 +396,9 @@ impl VulkanPhysicalDevice {
                 features : std::mem::zeroed(),
                 properties: std::mem::zeroed(),
                 family_queues : Vec::new(),
-                desired_queues: Vec::new()
+                desired_queues: Vec::new(),
+                supports_presentation: false,
+                presentation_queue_idx : -1
             }
         }
     }
@@ -464,6 +471,21 @@ impl VulkanPhysicalDevice {
         Ok(())   
     }
 
+    pub fn supports_presentation(& self , queue_idx: u32, surface : &vulkan_bindings::VkSurfaceKHR) -> bool
+    {
+        unsafe 
+        {
+            let mut supports: u32 = 0;
+            let fn_vkGetPhysicalDeviceSurfaceSupportKHR = vkGetPhysicalDeviceSurfaceSupportKHR.unwrap();
+            let result = fn_vkGetPhysicalDeviceSurfaceSupportKHR(self.ph_device, queue_idx, *surface, &mut supports);
+            if result == vulkan_bindings::VkResult_VK_SUCCESS && supports == vulkan_bindings::VK_TRUE
+            {
+                return true;
+            }
+            false
+        }
+    }
+
     pub fn load_infos(&mut self) -> Result<(), VulkanInitError>
     {
         self.load_extensions()?;
@@ -473,23 +495,32 @@ impl VulkanPhysicalDevice {
         Ok(())
     }
 
-    pub fn has_desired_family_queues(&mut self, desired_capabilities: &[vulkan_bindings::VkQueueFlags]) -> bool
+    pub fn has_desired_family_queues(&mut self, desired_capabilities: &[vulkan_bindings::VkQueueFlags], surface : &vulkan_bindings::VkSurfaceKHR) -> bool
     {
-        'outer: for desire_capability in desired_capabilities {
-            for (idx,  queue )in self.family_queues.iter().enumerate() {
-                if queue.queueCount > 0 && (queue.queueFlags & *desire_capability != 0)
+        let mut found_capabilites = 0;
+        let mut found_presentation_queue = false;
+        let mut family_queues = self.family_queues.clone();
+        'outer: for capability_idx in 0..desired_capabilities.len() {
+            for (queue_idx,  queue )in family_queues.iter_mut().enumerate() {
+                if queue.queueCount > 0 && (queue.queueFlags & desired_capabilities[capability_idx] != 0)
                 {
-                    self.desired_queues.push(QueueInfo { familyIndex: idx, capability: *desire_capability  ,priorities: vec![0.5f32; queue.queueCount as usize]});
-                    self.family_queues.remove(idx);
+                    if !found_presentation_queue && self.supports_presentation(queue_idx as u32, surface)
+                    {
+                        self.supports_presentation = true;
+                        self.presentation_queue_idx = queue_idx as i32;
+                        found_presentation_queue = true
+                    }
+                    self.desired_queues.push(QueueInfo { familyIndex: queue_idx, capability: desired_capabilities[capability_idx] ,priorities: vec![0.5f32; queue.queueCount as usize]});
+                    queue.queueCount = 0;
+                    found_capabilites += 1;
                     continue 'outer;
                 }
             }
-            return false;
         }
-        true
+        found_capabilites == desired_capabilities.len() && found_presentation_queue
     }
 
-    pub fn has_desired_extensions(& self, desired_extensions: &[&str]) -> bool
+    pub fn has_desired_extensions(& self, desired_extensions: &Vec<String>) -> bool
     {
         unsafe {
             let mut found;
@@ -558,24 +589,26 @@ impl std::fmt::Display for VulkanPhysicalDevice {
 pub struct  VulkanLogicalDevice {
     pub device : vulkan_bindings::VkDevice,
     pub demanded_queues : Vec<vulkan_bindings::VkDeviceQueueCreateInfo>,
-    pub enabled_extensions : Vec<&'static str>,
+    pub enabled_extensions : Vec<String>,
     pub physical_device : *const VulkanPhysicalDevice
 }
 
 impl  VulkanLogicalDevice {
 
-    pub fn new(vulkan_instance: &mut VulkanInstance, desired_extensions: &[&'static str], desired_capabilites: &[vulkan_bindings::VkQueueFlags]) -> Result<Self, VulkanInitError> {
+    pub fn new(vulkan_instance: &mut VulkanInstance, desired_extensions: Vec<String>, 
+        desired_capabilites: &[vulkan_bindings::VkQueueFlags],
+        surface : &vulkan_bindings::VkSurfaceKHR) -> Result<Self, VulkanInitError> {
         let mut vulkan_logical_device = VulkanLogicalDevice {
             device : std::ptr::null_mut(),
             demanded_queues : Vec::new(),
-            enabled_extensions : desired_extensions.to_vec(),
+            enabled_extensions : desired_extensions,
             physical_device : std::ptr::null()
         };
         let ref mut physical_devices = vulkan_instance.physical_devices;
         for ph_device in  physical_devices {
-            println!("{}", ph_device);
-            if ph_device.has_desired_extensions(desired_extensions) 
-                && ph_device.has_desired_family_queues(desired_capabilites)
+            if ph_device.has_desired_extensions(&vulkan_logical_device.enabled_extensions) 
+                && ph_device.has_desired_family_queues(desired_capabilites, surface)
+                && ph_device.supports_presentation
             {
 
                 vulkan_logical_device.physical_device = ph_device;
@@ -610,7 +643,7 @@ impl  VulkanLogicalDevice {
         unsafe {
             let ref physical_device = *self.physical_device;
             let enabled_ph_device_exts_cstr: Vec<CString> = self.enabled_extensions.iter()
-            .map(|s| CString::new(*s).unwrap())
+            .map(|s| CString::new(s.as_bytes()).unwrap())
             .collect();
             let enabled_ph_device_exts_ptrs: Vec<* const i8> = enabled_ph_device_exts_cstr.iter()
             .map(|cs| cs.as_ptr())

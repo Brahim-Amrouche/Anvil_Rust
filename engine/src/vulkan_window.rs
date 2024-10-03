@@ -75,6 +75,20 @@ pub fn vulkan_init_window()
             std::process::exit(1);
         }
     };
+    let device_exts = load_extension_names(&[vulkan_bindings::VK_KHR_SWAPCHAIN_EXTENSION_NAME]);
+    let logical_device;
+    logical_device = match vk_instance.create_logical_device(
+        device_exts, 
+        &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32],
+        &vk_surface.surface
+    ) {
+        Ok(l) => l,
+        Err(e) =>
+        {
+            eprintln!("{}",e);
+            std::process::exit(1);
+        }
+    };
     // load_extension_names(extensions);
     // logical_device = vk_instance.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
 
