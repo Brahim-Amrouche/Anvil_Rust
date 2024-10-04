@@ -1,8 +1,8 @@
 use crate::vulkan_bindings;
 use windows::Win32::UI::WindowsAndMessaging::*;
 
-pub const DISPLAY_WIDTH: i32 = 720;
-pub const DISPLAY_HEIGHT: i32 = 720;
+pub const DISPLAY_WIDTH: i32 = 1920;
+pub const DISPLAY_HEIGHT: i32 = 1080;
 
 pub struct WindowParameters {
     pub Hinstance: vulkan_bindings::HINSTANCE,

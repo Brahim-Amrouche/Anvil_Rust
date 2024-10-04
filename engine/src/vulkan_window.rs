@@ -35,7 +35,9 @@ pub fn load_extension_names(extensions: &[&[u8]]) -> Vec<String>
 pub struct VulkanSurface {
     pub window : system_window::WindowParameters,
     pub surface : vulkan_bindings::VkSurfaceKHR,
-    pub capabilites : vulkan_bindings::VkSurfaceCapabilitiesKHR
+    pub capabilites : vulkan_bindings::VkSurfaceCapabilitiesKHR,
+    pub swapchain_images_count : u32,
+    pub swapchain_image_size: vulkan_bindings::VkExtent2D
 }
 
 impl VulkanSurface {
@@ -45,7 +47,9 @@ impl VulkanSurface {
             let mut vk_surface = VulkanSurface {
                 window : system_window::WindowParameters::new("Anvil".to_string()),
                 surface: std::ptr::null_mut(),
-                capabilites: std::mem::zeroed()
+                capabilites: std::mem::zeroed(),
+                swapchain_images_count : 0,
+                swapchain_image_size: std::mem::zeroed()
             };
             let vk_surface_create_info = vulkan_bindings::VkWin32SurfaceCreateInfoKHR {
                 sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
@@ -80,6 +84,42 @@ impl VulkanSurface {
         Ok(())
     }
 
+    pub fn set_swapchain_image_count(&mut self, desired_count: u32)
+    {
+        if self.capabilites.maxImageCount > 0
+        && desired_count > self.capabilites.maxImageCount
+        {
+            self.swapchain_images_count = self.capabilites.maxImageCount;
+        }
+    }
+
+    pub fn set_swapchain_image_size(&mut self)
+    {
+        let ref capabilities = self.capabilites;
+        println!("what are capabilities {:?}", capabilities.currentExtent);
+        if capabilities.currentExtent.width == (0xFFFFFFFF as u32)
+        {
+            let (width, height) = (system_window::DISPLAY_WIDTH as u32, system_window::DISPLAY_HEIGHT as u32);
+            self.swapchain_image_size.width = match width
+            {
+                w if w < capabilities.minImageExtent.width => capabilities.minImageExtent.width,
+                w if w > capabilities.maxImageExtent.width => capabilities.maxImageExtent.width,
+                _ => width
+            };
+            self.swapchain_image_size.height = match height 
+            {
+                h if h < capabilities.minImageExtent.height => capabilities.minImageExtent.height,
+                h if h > capabilities.maxImageExtent.height => capabilities.maxImageExtent.height,
+                _ => height
+            };
+        }
+        else
+        {
+            self.swapchain_image_size = capabilities.currentExtent;
+        }
+        println!("{:?}", self.swapchain_image_size);
+    }
+
     pub fn destroy(self)
     {
         self.window.destroy();
@@ -110,6 +150,9 @@ pub fn vulkan_init_window()
         eprintln!("{}",e);
         std::process::exit(1);
     });
+    vk_surface.set_swapchain_image_count(1);
+    vk_surface.set_swapchain_image_size();
     vk_surface.destroy();
-
+    logical_device.destroy();
+    vk_instance.destroy();
 }

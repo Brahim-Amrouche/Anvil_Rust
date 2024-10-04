@@ -358,7 +358,7 @@ impl VulkanInstance {
         Ok(())
     }
 
-    pub fn destroy(mut self)
+    pub fn destroy(&mut self)
     {
         unsafe {
             let fn_vkDestroyInstance = vkDestroyInstance.unwrap();
