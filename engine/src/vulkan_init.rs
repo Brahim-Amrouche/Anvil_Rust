@@ -358,15 +358,6 @@ impl VulkanInstance {
         Ok(())
     }
 
-    pub fn create_logical_device(&mut self,
-        desired_extensions : Vec<String>,
-        desired_capabilites: &[vulkan_bindings::VkQueueFlags],
-        surface : &vulkan_bindings::VkSurfaceKHR) 
-        -> Result<VulkanLogicalDevice, VulkanInitError >
-    {
-        VulkanLogicalDevice::new(self, desired_extensions, desired_capabilites, surface)
-    }
-
     pub fn destroy(mut self)
     {
         unsafe {
@@ -548,7 +539,7 @@ impl VulkanPhysicalDevice {
         true
     }
 
-    pub fn load_presentation_modes(&mut self, presentation_surface: &vulkan_bindings::VkSurfaceKHR) -> Result<(), VulkanInitError>
+    pub fn load_presentation_mode(&mut self, presentation_surface: &vulkan_bindings::VkSurfaceKHR) -> Result<(), VulkanInitError>
     {
         let mut presentation_modes_count :u32 = 0;
         unsafe {
@@ -575,7 +566,18 @@ impl VulkanPhysicalDevice {
         }
         Ok(())
     }
-    
+
+    pub fn supports_presentation_mode(& self,  mode: &vulkan_bindings::VkPresentModeKHR) -> bool
+    {
+        for supported_mode in &self.supported_presentation_modes
+        {
+            if supported_mode == mode
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 enum PhysicalDeviceVendorsId {
@@ -626,9 +628,13 @@ pub struct  VulkanLogicalDevice {
 
 impl  VulkanLogicalDevice {
 
-    pub fn new(vulkan_instance: &mut VulkanInstance, desired_extensions: Vec<String>, 
+    pub fn new(vulkan_instance: &mut VulkanInstance, 
+        desired_extensions: Vec<String>, 
         desired_capabilites: &[vulkan_bindings::VkQueueFlags],
-        surface : &vulkan_bindings::VkSurfaceKHR) -> Result<Self, VulkanInitError> {
+        surface : &vulkan_bindings::VkSurfaceKHR,
+        presentation_mode : vulkan_bindings::VkPresentModeKHR ) 
+        -> Result<Self, VulkanInitError> 
+    {
         let mut vulkan_logical_device = VulkanLogicalDevice {
             device : std::ptr::null_mut(),
             demanded_queues : Vec::new(),
@@ -637,9 +643,11 @@ impl  VulkanLogicalDevice {
         };
         let ref mut physical_devices = vulkan_instance.physical_devices;
         for ph_device in  physical_devices {
+            ph_device.load_presentation_mode(surface)?;
             if ph_device.has_desired_extensions(&vulkan_logical_device.enabled_extensions) 
                 && ph_device.has_desired_family_queues(desired_capabilites, surface)
                 && ph_device.supports_presentation
+                && ph_device.supports_presentation_mode(&presentation_mode)
             {
 
                 vulkan_logical_device.physical_device = ph_device;

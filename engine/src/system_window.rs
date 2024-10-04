@@ -1,6 +1,9 @@
 use crate::vulkan_bindings;
 use windows::Win32::UI::WindowsAndMessaging::*;
 
+pub const DISPLAY_WIDTH: i32 = 720;
+pub const DISPLAY_HEIGHT: i32 = 720;
+
 pub struct WindowParameters {
     pub Hinstance: vulkan_bindings::HINSTANCE,
     pub Hwnd : vulkan_bindings::HWND,
@@ -40,14 +43,11 @@ impl WindowParameters {
             vulkan_bindings::RegisterClassW(& wndClass);
             let style : vulkan_bindings::DWORD = vulkan_bindings::WS_CAPTION | vulkan_bindings::WS_MINIMIZEBOX | vulkan_bindings::WS_SYSMENU;
             
-            let width = 720;
-            let height = 1366;
-
             let mut rect :vulkan_bindings::RECT = std::mem::zeroed();
             rect.left = 100;
             rect.top = 100;
-            rect.right = rect.left + width;
-            rect.bottom = rect.top + height;
+            rect.right = rect.left +  DISPLAY_WIDTH;
+            rect.bottom = rect.top + DISPLAY_HEIGHT;
 
             vulkan_bindings::AdjustWindowRect(&mut rect, style, 0);
 
@@ -60,8 +60,8 @@ impl WindowParameters {
                 style,
                 rect.left,
                 rect.top,
-                width,
-                height,
+                rect.right - rect.left,
+                rect.bottom - rect.top,
                 std::ptr::null_mut(),
                 std::ptr::null_mut(),
                 h_instance,
