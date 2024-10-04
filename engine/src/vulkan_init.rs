@@ -60,6 +60,7 @@ pub enum VulkanInitError {
     DEVICE_LEVEL_FUNCTION_ERROR(String),
     WRONG_DEVICE_QUEUE_INDEX,
     NO_CAPABLE_PHYSICAL_DEVICE,
+    UNAVAILABLE_PRESENTATION_MODE
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -77,6 +78,7 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::FAILED_INSTANTIATING_LOGICAL_DEVICE => write!(f, "Couldn't initiate Logical Device"),
             VulkanInitError::WRONG_DEVICE_QUEUE_INDEX => write!(f, "Wrong Device queue index given"),
             VulkanInitError::NO_CAPABLE_PHYSICAL_DEVICE => write!(f, "No Capable Physical Device in this machine"),
+            VulkanInitError::UNAVAILABLE_PRESENTATION_MODE => write!(f, "Couldn't load any Presentation Mode"),
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
@@ -384,7 +386,8 @@ pub struct VulkanPhysicalDevice {
     pub family_queues: Vec<vulkan_bindings::VkQueueFamilyProperties>,
     pub desired_queues : Vec<QueueInfo>,
     pub supports_presentation : bool,
-    pub presentation_queue_idx : i32
+    pub presentation_queue_idx : i32,
+    pub supported_presentation_modes : Vec<vulkan_bindings::VkPresentModeKHR>
 }
 
 impl VulkanPhysicalDevice {
@@ -398,7 +401,8 @@ impl VulkanPhysicalDevice {
                 family_queues : Vec::new(),
                 desired_queues: Vec::new(),
                 supports_presentation: false,
-                presentation_queue_idx : -1
+                presentation_queue_idx : -1,
+                supported_presentation_modes: Vec::new()
             }
         }
     }
@@ -544,6 +548,33 @@ impl VulkanPhysicalDevice {
         true
     }
 
+    pub fn load_presentation_modes(&mut self, presentation_surface: &vulkan_bindings::VkSurfaceKHR) -> Result<(), VulkanInitError>
+    {
+        let mut presentation_modes_count :u32 = 0;
+        unsafe {
+            let fn_vkGetPhysicalDeviceSurfacePresentModesKHR = vkGetPhysicalDeviceSurfacePresentModesKHR.unwrap();
+            let result = fn_vkGetPhysicalDeviceSurfacePresentModesKHR(self.ph_device, 
+                *presentation_surface, 
+                &mut presentation_modes_count, 
+                std::ptr::null_mut()
+            );
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || presentation_modes_count == 0
+            {
+                return Err(VulkanInitError::UNAVAILABLE_PRESENTATION_MODE);
+            }
+            self.supported_presentation_modes.resize(presentation_modes_count as usize, 0);
+            let result = fn_vkGetPhysicalDeviceSurfacePresentModesKHR(self.ph_device,
+                *presentation_surface,
+                &mut  presentation_modes_count,
+                self.supported_presentation_modes.as_mut_ptr()
+            );
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || presentation_modes_count == 0
+            {
+                return Err(VulkanInitError::UNAVAILABLE_PRESENTATION_MODE)   
+            }
+        }
+        Ok(())
+    }
     
 }
 
@@ -776,19 +807,4 @@ pub fn initialize_vulkan(desired_global_extensions : Vec<String>) -> &'static mu
         let vk = vk.unwrap();
         vk
     }
-    // let logical_device;
-    // logical_device = vk.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
-    // let logical_device = match logical_device {
-    //     Ok(l) => l,
-    //     Err(e) => {
-    //         eprintln!("{}", e);
-    //         std::process::exit(1);
-    //     }
-    // };
-    // let queue = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT as u32, 0);
-    // let _queue = match queue {
-    //     Some(q) => q,
-    //     None => {eprintln!("No Valid Queue"); std::process::exit(1)}
-    // };
-    // println!("Done Loading");
 }

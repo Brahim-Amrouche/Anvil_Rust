@@ -89,7 +89,5 @@ pub fn vulkan_init_window()
             std::process::exit(1);
         }
     };
-    // load_extension_names(extensions);
-    // logical_device = vk_instance.create_logical_device(&["VK_KHR_swapchain"], &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32]);
 
 }
