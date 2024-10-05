@@ -6,7 +6,8 @@ use crate::system_window;
 pub enum VulkanWindowError
 {
     CANT_LOAD_VULKAN_SURFACE,
-    CANT_LOAD_SURFACE_CAPABILITIES
+    CANT_LOAD_SURFACE_CAPABILITIES,
+    UNSUPPORTED_IMAGE_USAGE
 }
 
 impl std::fmt::Display for VulkanWindowError {
@@ -14,7 +15,8 @@ impl std::fmt::Display for VulkanWindowError {
         match self
         {
             VulkanWindowError::CANT_LOAD_VULKAN_SURFACE => write!(f, "Couldn't a vulkan surface"),
-            VulkanWindowError::CANT_LOAD_SURFACE_CAPABILITIES => write!(f, "Couldn't load surface Capabilities")
+            VulkanWindowError::CANT_LOAD_SURFACE_CAPABILITIES => write!(f, "Couldn't load surface Capabilities"),
+            VulkanWindowError::UNSUPPORTED_IMAGE_USAGE => write!(f, "Unsupported swapchain image usage")
         }
     }
 }
@@ -37,7 +39,8 @@ pub struct VulkanSurface {
     pub surface : vulkan_bindings::VkSurfaceKHR,
     pub capabilites : vulkan_bindings::VkSurfaceCapabilitiesKHR,
     pub swapchain_images_count : u32,
-    pub swapchain_image_size: vulkan_bindings::VkExtent2D
+    pub swapchain_image_size: vulkan_bindings::VkExtent2D,
+    pub swapchain_image_usage: vulkan_bindings::VkImageUsageFlags
 }
 
 impl VulkanSurface {
@@ -49,7 +52,8 @@ impl VulkanSurface {
                 surface: std::ptr::null_mut(),
                 capabilites: std::mem::zeroed(),
                 swapchain_images_count : 0,
-                swapchain_image_size: std::mem::zeroed()
+                swapchain_image_size: std::mem::zeroed(),
+                swapchain_image_usage: 0
             };
             let vk_surface_create_info = vulkan_bindings::VkWin32SurfaceCreateInfoKHR {
                 sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
@@ -96,7 +100,6 @@ impl VulkanSurface {
     pub fn set_swapchain_image_size(&mut self)
     {
         let ref capabilities = self.capabilites;
-        println!("what are capabilities {:?}", capabilities.currentExtent);
         if capabilities.currentExtent.width == (0xFFFFFFFF as u32)
         {
             let (width, height) = (system_window::DISPLAY_WIDTH as u32, system_window::DISPLAY_HEIGHT as u32);
@@ -117,7 +120,20 @@ impl VulkanSurface {
         {
             self.swapchain_image_size = capabilities.currentExtent;
         }
-        println!("{:?}", self.swapchain_image_size);
+    }
+
+
+    pub fn set_swapchain_image_usage(&mut self, desired_usage: vulkan_bindings::VkImageUsageFlags) -> Result<(), VulkanWindowError>
+    {
+        match desired_usage & self.capabilites.supportedUsageFlags
+        {
+            usage if usage == desired_usage => 
+            {
+                self.swapchain_image_usage = usage;
+                Ok(())
+            },
+            _ => Err(VulkanWindowError::UNSUPPORTED_IMAGE_USAGE)
+        }
     }
 
     pub fn destroy(self)
@@ -152,6 +168,11 @@ pub fn vulkan_init_window()
     });
     vk_surface.set_swapchain_image_count(1);
     vk_surface.set_swapchain_image_size();
+    vk_surface.set_swapchain_image_usage( (vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_STORAGE_BIT 
+        | vulkan_bindings:: VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32).unwrap_or_else(|e| {
+            eprintln!("{}",e);
+            std::process::exit(1);
+    });
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();
