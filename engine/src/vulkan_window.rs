@@ -7,7 +7,8 @@ pub enum VulkanWindowError
 {
     CANT_LOAD_VULKAN_SURFACE,
     CANT_LOAD_SURFACE_CAPABILITIES,
-    UNSUPPORTED_IMAGE_USAGE
+    UNSUPPORTED_IMAGE_USAGE,
+    CANT_LOAD_SURFACE_FORMATS,
 }
 
 impl std::fmt::Display for VulkanWindowError {
@@ -16,7 +17,8 @@ impl std::fmt::Display for VulkanWindowError {
         {
             VulkanWindowError::CANT_LOAD_VULKAN_SURFACE => write!(f, "Couldn't a vulkan surface"),
             VulkanWindowError::CANT_LOAD_SURFACE_CAPABILITIES => write!(f, "Couldn't load surface Capabilities"),
-            VulkanWindowError::UNSUPPORTED_IMAGE_USAGE => write!(f, "Unsupported swapchain image usage")
+            VulkanWindowError::UNSUPPORTED_IMAGE_USAGE => write!(f, "Unsupported swapchain image usage"),
+            VulkanWindowError::CANT_LOAD_SURFACE_FORMATS => write!(f, "Couldn't load surface formats")
         }
     }
 }
@@ -40,7 +42,10 @@ pub struct VulkanSurface {
     pub capabilites : vulkan_bindings::VkSurfaceCapabilitiesKHR,
     pub swapchain_images_count : u32,
     pub swapchain_image_size: vulkan_bindings::VkExtent2D,
-    pub swapchain_image_usage: vulkan_bindings::VkImageUsageFlags
+    pub swapchain_image_usage: vulkan_bindings::VkImageUsageFlags,
+    pub swapchain_image_transform: vulkan_bindings::VkSurfaceTransformFlagsKHR,
+    pub surface_format: vulkan_bindings::VkSurfaceFormatKHR
+
 }
 
 impl VulkanSurface {
@@ -53,7 +58,9 @@ impl VulkanSurface {
                 capabilites: std::mem::zeroed(),
                 swapchain_images_count : 0,
                 swapchain_image_size: std::mem::zeroed(),
-                swapchain_image_usage: 0
+                swapchain_image_usage: 0,
+                swapchain_image_transform : 0,
+                surface_format: std::mem::zeroed()
             };
             let vk_surface_create_info = vulkan_bindings::VkWin32SurfaceCreateInfoKHR {
                 sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR,
@@ -136,6 +143,73 @@ impl VulkanSurface {
         }
     }
 
+    pub fn set_swapchain_image_transform(&mut self, transform : vulkan_bindings::VkSurfaceTransformFlagsKHR)
+    {
+        if (transform & self.capabilites.supportedTransforms) == transform 
+        {
+            self.swapchain_image_transform = transform;
+        }
+        else
+        {
+            self.swapchain_image_transform = self.capabilites.currentTransform as  u32;
+        }
+    }
+
+    pub fn load_surface_formats(& self, physical_device: *const vulkan_init::VulkanPhysicalDevice) -> Result<Vec<vulkan_bindings::VkSurfaceFormatKHR>, VulkanWindowError>
+    {
+        unsafe
+        {
+            let mut formats_count:u32 = 0;
+            let fn_vkGetPhysicalDeviceSurfaceFormatsKHR = vulkan_init::vkGetPhysicalDeviceSurfaceFormatsKHR.unwrap();
+            let physical_device = (*physical_device).ph_device;
+            let result = fn_vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, self.surface, &mut formats_count, std::ptr::null_mut());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || formats_count == 0
+            {
+                return Err(VulkanWindowError::CANT_LOAD_SURFACE_FORMATS);
+            }
+            let mut available_surface_format: Vec<vulkan_bindings::VkSurfaceFormatKHR> = vec![std::mem::zeroed(); formats_count as usize]; 
+            let result = fn_vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, self.surface, &mut formats_count , available_surface_format.as_mut_ptr());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS || formats_count == 0
+            {
+                return Err(VulkanWindowError::CANT_LOAD_SURFACE_FORMATS);
+            }
+            Ok(available_surface_format)
+        }
+    }
+
+    pub fn set_surface_format(&mut self,  physical_device: *const vulkan_init::VulkanPhysicalDevice, desired_format: &vulkan_bindings::VkSurfaceFormatKHR) -> Result<() ,VulkanWindowError>
+    {
+        let available_surface_formats = self.load_surface_formats(physical_device)?;
+        if available_surface_formats.len() == 1 
+            && available_surface_formats[0].format == vulkan_bindings::VkFormat_VK_FORMAT_UNDEFINED
+        {
+            self.surface_format = *desired_format;
+            return Ok(());
+        }
+        for surface_format in available_surface_formats.iter()
+        {
+            if surface_format.format == desired_format.format
+            && surface_format.colorSpace == desired_format.colorSpace
+            {
+                self.surface_format = *desired_format;
+                println!("{:?}", self.surface_format);
+                return Ok(())
+            }
+        }
+        for surface_format in available_surface_formats.iter()
+        {
+            if surface_format.format == desired_format.format
+            {
+                self.surface_format = *surface_format;
+                println!("Couldnt choose the desired color space ...");
+                return Ok(());
+            }
+        }
+        self.surface_format = available_surface_formats[0];
+        println!("Couldnt choose the desired format and color space; defaulting ...");
+        Ok(())
+    }
+
     pub fn destroy(self)
     {
         self.window.destroy();
@@ -172,6 +246,15 @@ pub fn vulkan_init_window()
         | vulkan_bindings:: VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32).unwrap_or_else(|e| {
             eprintln!("{}",e);
             std::process::exit(1);
+    });
+    vk_surface.set_swapchain_image_transform(vulkan_bindings::VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR as u32);
+    let desired_surface_format = vulkan_bindings::VkSurfaceFormatKHR {
+        format : vulkan_bindings::VkFormat_VK_FORMAT_B8G8R8A8_UNORM,
+        colorSpace: vulkan_bindings::VkColorSpaceKHR_VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+    };
+    vk_surface.set_surface_format(logical_device.physical_device, &desired_surface_format).unwrap_or_else(|e| {
+        eprintln!("{}",e);
+        std::process::exit(1);
     });
     vk_surface.destroy();
     logical_device.destroy();
