@@ -623,7 +623,8 @@ pub struct  VulkanLogicalDevice {
     pub device : vulkan_bindings::VkDevice,
     pub demanded_queues : Vec<vulkan_bindings::VkDeviceQueueCreateInfo>,
     pub enabled_extensions : Vec<String>,
-    pub physical_device : *const VulkanPhysicalDevice
+    pub physical_device : *const VulkanPhysicalDevice,
+    pub presentation_mode: vulkan_bindings::VkPresentModeKHR
 }
 
 impl  VulkanLogicalDevice {
@@ -639,7 +640,8 @@ impl  VulkanLogicalDevice {
             device : std::ptr::null_mut(),
             demanded_queues : Vec::new(),
             enabled_extensions : desired_extensions,
-            physical_device : std::ptr::null()
+            physical_device : std::ptr::null(),
+            presentation_mode: 0
         };
         let ref mut physical_devices = vulkan_instance.physical_devices;
         for ph_device in  physical_devices {
@@ -649,7 +651,7 @@ impl  VulkanLogicalDevice {
                 && ph_device.supports_presentation
                 && ph_device.supports_presentation_mode(&presentation_mode)
             {
-
+                vulkan_logical_device.presentation_mode = presentation_mode;
                 vulkan_logical_device.physical_device = ph_device;
                 vulkan_logical_device.init_device_queue_info();
                 vulkan_logical_device.create_logical_device()?;
