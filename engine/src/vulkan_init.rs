@@ -60,7 +60,8 @@ pub enum VulkanInitError {
     DEVICE_LEVEL_FUNCTION_ERROR(String),
     WRONG_DEVICE_QUEUE_INDEX,
     NO_CAPABLE_PHYSICAL_DEVICE,
-    UNAVAILABLE_PRESENTATION_MODE
+    UNAVAILABLE_PRESENTATION_MODE,
+    FAILED_CREATING_VK_SEMAPHORE
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -79,6 +80,7 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::WRONG_DEVICE_QUEUE_INDEX => write!(f, "Wrong Device queue index given"),
             VulkanInitError::NO_CAPABLE_PHYSICAL_DEVICE => write!(f, "No Capable Physical Device in this machine"),
             VulkanInitError::UNAVAILABLE_PRESENTATION_MODE => write!(f, "Couldn't load any Presentation Mode"),
+            VulkanInitError::FAILED_CREATING_VK_SEMAPHORE => write!(f, "Couldn't create vkSemaphore"),
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
@@ -802,6 +804,41 @@ impl  VulkanLogicalDevice {
     }
 
 }
+
+pub fn init_semaphore(logical_device: &VulkanLogicalDevice) -> Result<vulkan_bindings::VkSemaphore, VulkanInitError>
+{
+    let sem_create_info = vulkan_bindings::VkSemaphoreCreateInfo {
+        sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+        pNext : std::ptr::null(),
+        flags: 0
+    };
+    unsafe{
+        let fn_vkCreateSemaphore = vkCreateSemaphore.unwrap();
+        let logical_device = logical_device.device;
+        let mut sem : vulkan_bindings::VkSemaphore = std::ptr::null_mut();
+        let result = fn_vkCreateSemaphore(logical_device, &sem_create_info, std::ptr::null(), &mut sem);
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanInitError::FAILED_CREATING_VK_SEMAPHORE);
+        }
+        Ok(sem)
+    }
+}
+
+pub fn init_fence(logical_device: &VulkanLogicalDevice) -> Result<vulkan_bindings::VkFence, VulkanInitError>
+{
+    let fence_create_info = vulkan_bindings::VkFenceCreateInfo{
+        sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+        pNext: std::ptr::null(),
+        flags:0
+    };
+    unsafe {
+        let fn_vkCreateFence = vkCreateFence.unwrap();
+        let logical_device = logical_device.device;
+        let mut fence: vulkan_bindings::VkFence = std::ptr::null_mut();
+    }
+}
+
 
 pub fn initialize_vulkan(desired_global_extensions : Vec<String>) -> &'static mut VulkanInstance
 {

@@ -31,6 +31,9 @@ EXPORTED_VULKAN_FUNCTION!(vkDeviceWaitIdle);
 EXPORTED_VULKAN_FUNCTION!(vkDestroyDevice);
 EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
+EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
+EXPORTED_VULKAN_FUNCTION!(vkCreateFence);
+
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);

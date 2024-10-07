@@ -5,6 +5,7 @@ use crate::system_window;
 #[derive(Debug)]
 pub enum VulkanWindowError
 {
+    DEFAULT_ERROR(String),
     CANT_LOAD_VULKAN_SURFACE,
     CANT_LOAD_SURFACE_CAPABILITIES,
     UNSUPPORTED_IMAGE_USAGE,
@@ -17,6 +18,7 @@ impl std::fmt::Display for VulkanWindowError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self
         {
+            VulkanWindowError::DEFAULT_ERROR(s) => write!(f, "{}", s),
             VulkanWindowError::CANT_LOAD_VULKAN_SURFACE => write!(f, "Couldn't a vulkan surface"),
             VulkanWindowError::CANT_LOAD_SURFACE_CAPABILITIES => write!(f, "Couldn't load surface Capabilities"),
             VulkanWindowError::UNSUPPORTED_IMAGE_USAGE => write!(f, "Unsupported swapchain image usage"),
@@ -24,6 +26,13 @@ impl std::fmt::Display for VulkanWindowError {
             VulkanWindowError::FAILED_CREATING_SWAPCHAIN => write!(f, "Couldn't create swapchain"),
             VulkanWindowError::CANT_LOAD_SWAPCHAIN_IMAGE => write!(f, "Couldn't load swapchain image"),
         }
+    }
+}
+
+impl From<vulkan_init::VulkanInitError> for VulkanWindowError
+{
+    fn from(value: vulkan_init::VulkanInitError) -> Self {
+        VulkanWindowError::DEFAULT_ERROR(value.to_string())
     }
 }
 
@@ -43,6 +52,7 @@ pub fn load_extension_names(extensions: &[&[u8]]) -> Vec<String>
 pub struct VulkanSurface {
     pub window : system_window::WindowParameters,
     pub surface : vulkan_bindings::VkSurfaceKHR,
+    pub logical_device: *const vulkan_init::VulkanLogicalDevice,
     pub capabilites : vulkan_bindings::VkSurfaceCapabilitiesKHR,
     pub swapchain_images_count : u32,
     pub swapchain_image_size: vulkan_bindings::VkExtent2D,
@@ -59,6 +69,7 @@ impl VulkanSurface {
             let mut vk_surface = VulkanSurface {
                 window : system_window::WindowParameters::new("Anvil".to_string()),
                 surface: std::ptr::null_mut(),
+                logical_device: std::ptr::null(),
                 capabilites: std::mem::zeroed(),
                 swapchain_images_count : 0,
                 swapchain_image_size: std::mem::zeroed(),
@@ -84,12 +95,12 @@ impl VulkanSurface {
         }
     }
 
-    pub fn load_surface_capabilities(&mut self, logical_device: &vulkan_init::VulkanLogicalDevice) -> Result<(), VulkanWindowError>
+    pub fn load_surface_capabilities(&mut self) -> Result<(), VulkanWindowError>
     {
         unsafe
         {
             let fn_vkGetPhysicalDeviceSurfaceCapabilitiesKHR = vulkan_init::vkGetPhysicalDeviceSurfaceCapabilitiesKHR.unwrap();
-            let ref physical_device =  *logical_device.physical_device;
+            let ref physical_device =  *(*self.logical_device).physical_device;
             let physical_device = physical_device.ph_device;
             let result = fn_vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, self.surface, &mut self.capabilites);
             if result != vulkan_bindings::VkResult_VK_SUCCESS
@@ -164,13 +175,13 @@ impl VulkanSurface {
         }
     }
 
-    pub fn load_surface_formats(& self, physical_device: *const vulkan_init::VulkanPhysicalDevice) -> Result<Vec<vulkan_bindings::VkSurfaceFormatKHR>, VulkanWindowError>
+    pub fn load_surface_formats(& self) -> Result<Vec<vulkan_bindings::VkSurfaceFormatKHR>, VulkanWindowError>
     {
         unsafe
         {
             let mut formats_count:u32 = 0;
             let fn_vkGetPhysicalDeviceSurfaceFormatsKHR = vulkan_init::vkGetPhysicalDeviceSurfaceFormatsKHR.unwrap();
-            let physical_device = (*physical_device).ph_device;
+            let physical_device = (*(*self.logical_device).physical_device).ph_device;
             let result = fn_vkGetPhysicalDeviceSurfaceFormatsKHR(physical_device, self.surface, &mut formats_count, std::ptr::null_mut());
             if result != vulkan_bindings::VkResult_VK_SUCCESS || formats_count == 0
             {
@@ -186,9 +197,9 @@ impl VulkanSurface {
         }
     }
 
-    pub fn set_surface_format(&mut self,  physical_device: *const vulkan_init::VulkanPhysicalDevice, desired_format: &vulkan_bindings::VkSurfaceFormatKHR) -> Result<() ,VulkanWindowError>
+    pub fn set_surface_format(&mut self, desired_format: &vulkan_bindings::VkSurfaceFormatKHR) -> Result<() ,VulkanWindowError>
     {
-        let available_surface_formats = self.load_surface_formats(physical_device)?;
+        let available_surface_formats = self.load_surface_formats()?;
         if available_surface_formats.len() == 1 
             && available_surface_formats[0].format == vulkan_bindings::VkFormat_VK_FORMAT_UNDEFINED
         {
@@ -219,7 +230,6 @@ impl VulkanSurface {
         Ok(())
     }
 
-
     pub fn configure_swapchain(&mut self,
         logical_device: &vulkan_init::VulkanLogicalDevice,
         image_count : u32,
@@ -228,25 +238,32 @@ impl VulkanSurface {
         image_format: &vulkan_bindings::VkSurfaceFormatKHR,
     ) -> Result<(), VulkanWindowError>
     {
-
-        self.load_surface_capabilities(logical_device)?;
+        self.logical_device = logical_device;
+        self.load_surface_capabilities()?;
         self.set_swapchain_image_count(image_count);
         self.set_swapchain_image_size();
         self.set_swapchain_image_usage(image_usage)?;
         self.set_swapchain_image_transform(image_transform);
-        self.set_surface_format(logical_device.physical_device, image_format)?;
+        self.set_surface_format( image_format)?;
+        self.create_swapchain()?;
+        Ok(())
+    }
+
+    pub fn create_swapchain(&mut self) -> Result<(), VulkanWindowError>
+    {
         match self.swapchain.take() {
             Some(s) => 
             {
                 s.destroy();
-                self.swapchain = Some(VulkanSwapchain::new(self, logical_device)?);
+                self.swapchain = Some(VulkanSwapchain::new(self)?);
             },
             None =>{
-                self.swapchain = Some(VulkanSwapchain::new(self, logical_device)?);
+                self.swapchain = Some(VulkanSwapchain::new(self)?);
             }
         };
         Ok(())
     }
+
 
     pub fn destroy(mut self)
     {
@@ -259,24 +276,35 @@ impl VulkanSurface {
     }
 }
 
+pub struct VulkanSemaphore
+{
+    pub sem : vulkan_bindings::VkSemaphore,
+
+}
+
+
 //swapchain instance
 pub struct VulkanSwapchain
 {
     pub surface: *const VulkanSurface,
-    pub logical_device: *const vulkan_init::VulkanLogicalDevice,
     pub swapchain_handle : vulkan_bindings::VkSwapchainKHR,
-    pub swapchain_images : Vec<vulkan_bindings::VkImage>
+    pub swapchain_images : Vec<vulkan_bindings::VkImage>,
+    pub images_sem: vulkan_bindings::VkSemaphore,
+    pub images_fence: vulkan_bindings::VkFence,
+    pub presentable_img_idx: i32,
 }
 
 impl VulkanSwapchain
 {
-    pub fn new(vk_surface:& VulkanSurface, vk_logical_device : &vulkan_init::VulkanLogicalDevice) -> Result<Self, VulkanWindowError>
+    pub fn new(vk_surface:& VulkanSurface) -> Result<Self, VulkanWindowError>
     {
         let mut swapchain = VulkanSwapchain {
             surface : vk_surface,
-            logical_device: vk_logical_device,
             swapchain_handle: std::ptr::null_mut(),
-            swapchain_images: Vec::new()
+            swapchain_images: Vec::new(),
+            images_sem: std::ptr::null_mut(),
+            images_fence: std::ptr::null_mut(),
+            presentable_img_idx: -1
         };
         unsafe
         {
@@ -296,18 +324,19 @@ impl VulkanSwapchain
                 pQueueFamilyIndices: std::ptr::null(),
                 preTransform: vk_surface.swapchain_image_transform as i32,
                 compositeAlpha: vulkan_bindings::VkCompositeAlphaFlagBitsKHR_VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-                presentMode: vk_logical_device.presentation_mode,
+                presentMode: (*vk_surface.logical_device).presentation_mode,
                 clipped: vulkan_bindings::VK_TRUE,
                 oldSwapchain: match &vk_surface.swapchain { Some(s) => s.swapchain_handle , None => std::ptr::null_mut()}
             };
             let fn_vkCreateSwapchainKHR =  vulkan_init::vkCreateSwapchainKHR.unwrap();
-            let result = fn_vkCreateSwapchainKHR(vk_logical_device.device,
+            let result = fn_vkCreateSwapchainKHR((*vk_surface.logical_device).device,
                 &swapchain_create_info, std::ptr::null(), &mut swapchain.swapchain_handle);
             if result != vulkan_bindings::VkResult_VK_SUCCESS
             {
                 return Err(VulkanWindowError::FAILED_CREATING_SWAPCHAIN);
             }
             swapchain.load_swap_chain_images()?;
+            swapchain.images_sem = vulkan_init::init_semaphore(&*vk_surface.logical_device)?;
         }
         Ok(swapchain)
     }
@@ -318,13 +347,14 @@ impl VulkanSwapchain
         {
             let fn_vkGetSwapchainImagesKHR =  vulkan_init::vkGetSwapchainImagesKHR.unwrap();
             let mut image_count = 0;
-            let result = fn_vkGetSwapchainImagesKHR((*self.logical_device).device, self.swapchain_handle,&mut image_count, std::ptr::null_mut());
+            let ref logical_device = *(*self.surface).logical_device;
+            let result = fn_vkGetSwapchainImagesKHR(logical_device.device, self.swapchain_handle,&mut image_count, std::ptr::null_mut());
             if result != vulkan_bindings::VkResult_VK_SUCCESS || image_count == 0
             {
                 return Err(VulkanWindowError::CANT_LOAD_SWAPCHAIN_IMAGE);
             }
             self.swapchain_images.resize(image_count as usize, std::mem::zeroed());
-            let result = fn_vkGetSwapchainImagesKHR((*self.logical_device).device,
+            let result = fn_vkGetSwapchainImagesKHR(logical_device.device,
                 self.swapchain_handle, &mut image_count, self.swapchain_images.as_mut_ptr());
             if result != vulkan_bindings::VkResult_VK_SUCCESS || image_count == 0
             {
@@ -339,7 +369,8 @@ impl VulkanSwapchain
         unsafe
         {
             let fn_vkDestroySwapchainKHR = vulkan_init::vkDestroySwapchainKHR.unwrap();
-            fn_vkDestroySwapchainKHR((*self.logical_device).device, self.swapchain_handle, std::ptr::null());
+            let ref logical_device = *(*self.surface).logical_device;
+            fn_vkDestroySwapchainKHR(logical_device.device, self.swapchain_handle, std::ptr::null());
         }
     }
 }
@@ -359,18 +390,18 @@ pub fn vulkan_init_window()
         device_exts, 
         &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32],
         &vk_surface.surface,
-        vulkan_bindings::VkPresentModeKHR_VK_PRESENT_MODE_FIFO_KHR
+        vulkan_bindings::VkPresentModeKHR_VK_PRESENT_MODE_MAILBOX_KHR
     ).unwrap_or_else(|e| {
         eprintln!("{}",e);
         std::process::exit(1);
     });
     let desired_surface_format = vulkan_bindings::VkSurfaceFormatKHR {
-        format : vulkan_bindings::VkFormat_VK_FORMAT_B8G8R8A8_UNORM,
+        format : vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
         colorSpace: vulkan_bindings::VkColorSpaceKHR_VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
     };
     vk_surface.configure_swapchain(&logical_device, 
         3,
-        (vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_STORAGE_BIT | vulkan_bindings:: VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32,
+        (vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32,
         vulkan_bindings::VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR as u32,
         &desired_surface_format
     ).unwrap_or_else(|e| {
