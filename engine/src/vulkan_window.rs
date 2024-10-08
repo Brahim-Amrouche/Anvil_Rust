@@ -11,7 +11,8 @@ pub enum VulkanWindowError
     UNSUPPORTED_IMAGE_USAGE,
     CANT_LOAD_SURFACE_FORMATS,
     FAILED_CREATING_SWAPCHAIN,
-    CANT_LOAD_SWAPCHAIN_IMAGE
+    CANT_LOAD_SWAPCHAIN_IMAGE,
+    UNUSABLE_SWAPCHAIN
 }
 
 impl std::fmt::Display for VulkanWindowError {
@@ -25,6 +26,7 @@ impl std::fmt::Display for VulkanWindowError {
             VulkanWindowError::CANT_LOAD_SURFACE_FORMATS => write!(f, "Couldn't load surface formats"),
             VulkanWindowError::FAILED_CREATING_SWAPCHAIN => write!(f, "Couldn't create swapchain"),
             VulkanWindowError::CANT_LOAD_SWAPCHAIN_IMAGE => write!(f, "Couldn't load swapchain image"),
+            VulkanWindowError::UNUSABLE_SWAPCHAIN => write!(f, "")
         }
     }
 }
@@ -264,6 +266,19 @@ impl VulkanSurface {
         Ok(())
     }
 
+    pub fn acquire_next_image(&mut self) -> Result<*mut vulkan_bindings::VkImage, VulkanWindowError>
+    {
+        if let Some(swapchain_ref) = self.swapchain.as_mut()
+        {
+            match swapchain_ref.get_next_image()
+            {
+                Ok(img) => return Ok(img),
+                Err(_) => ()
+            };
+        }
+        self.create_swapchain()?;
+        self.acquire_next_image()
+    }
 
     pub fn destroy(mut self)
     {
@@ -337,6 +352,7 @@ impl VulkanSwapchain
             }
             swapchain.load_swap_chain_images()?;
             swapchain.images_sem = vulkan_init::init_semaphore(&*vk_surface.logical_device)?;
+            swapchain.images_fence = vulkan_init::init_fence(&*vk_surface.logical_device)?;
         }
         Ok(swapchain)
     }
@@ -362,6 +378,22 @@ impl VulkanSwapchain
             }
         }
         Ok(())
+    }
+
+    pub fn get_next_image(&mut self) -> Result<*mut vulkan_bindings::VkImage, VulkanWindowError>
+    {
+        let mut image_index = 0;
+        unsafe {
+            let fn_vkAcquireNextImageKHR = vulkan_init::vkAcquireNextImageKHR.unwrap();
+            let logical_device = (*(*self.surface).logical_device).device;
+            let result = fn_vkAcquireNextImageKHR(logical_device, self.swapchain_handle, 2000000000, self.images_sem, self.images_fence, &mut image_index);
+            match result
+            {
+                vulkan_bindings::VkResult_VK_SUCCESS | vulkan_bindings::VkResult_VK_SUBOPTIMAL_KHR => (),
+                _ => return Err(VulkanWindowError::UNUSABLE_SWAPCHAIN)
+            };
+        }
+        Ok(&mut self.swapchain_images[image_index as usize])
     }
 
     pub fn destroy(self)
@@ -407,6 +439,10 @@ pub fn vulkan_init_window()
     ).unwrap_or_else(|e| {
             eprintln!("{}",e);
             std::process::exit(1);
+    });
+    let next_image = vk_surface.acquire_next_image().unwrap_or_else(|e| {
+        eprintln!("{}",e);
+        std::process::exit(1);
     });
     vk_surface.destroy();
     logical_device.destroy();

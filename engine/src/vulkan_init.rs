@@ -61,7 +61,8 @@ pub enum VulkanInitError {
     WRONG_DEVICE_QUEUE_INDEX,
     NO_CAPABLE_PHYSICAL_DEVICE,
     UNAVAILABLE_PRESENTATION_MODE,
-    FAILED_CREATING_VK_SEMAPHORE
+    FAILED_CREATING_VK_SEMAPHORE,
+    FAILED_CREATING_VK_FENCE,
 }
 
 impl std::fmt::Display for VulkanInitError {
@@ -81,6 +82,7 @@ impl std::fmt::Display for VulkanInitError {
             VulkanInitError::NO_CAPABLE_PHYSICAL_DEVICE => write!(f, "No Capable Physical Device in this machine"),
             VulkanInitError::UNAVAILABLE_PRESENTATION_MODE => write!(f, "Couldn't load any Presentation Mode"),
             VulkanInitError::FAILED_CREATING_VK_SEMAPHORE => write!(f, "Couldn't create vkSemaphore"),
+            VulkanInitError::FAILED_CREATING_VK_FENCE => write!(f, "Couldn't create vkFence"),
             VulkanInitError::EXPORTED_VK_FUNCTION_ERROR(msg) 
             | VulkanInitError::GLOBAL_VK_FUNCTION_ERROR(msg)
             | VulkanInitError::INSTANCE_VK_FUNCTION_ERROR(msg)
@@ -836,6 +838,12 @@ pub fn init_fence(logical_device: &VulkanLogicalDevice) -> Result<vulkan_binding
         let fn_vkCreateFence = vkCreateFence.unwrap();
         let logical_device = logical_device.device;
         let mut fence: vulkan_bindings::VkFence = std::ptr::null_mut();
+        let result = fn_vkCreateFence(logical_device, &fence_create_info, std::ptr::null(), &mut fence);
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanInitError::FAILED_CREATING_VK_FENCE);
+        }
+        Ok(fence)
     }
 }
 
