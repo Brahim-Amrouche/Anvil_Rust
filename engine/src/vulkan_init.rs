@@ -94,6 +94,17 @@ impl std::fmt::Display for VulkanInitError {
 
 impl std::error::Error for VulkanInitError {}
 
+pub fn load_extension_names(extensions: &[&[u8]]) -> Vec<String>
+{
+    let mut desired_extensions :Vec<String> = Vec::with_capacity(extensions.len());
+    for ext in extensions
+    {
+        desired_extensions.push(String::from_utf8(ext.to_vec()).unwrap().trim_end_matches('\0').to_string());
+    }
+    desired_extensions
+}
+
+
 pub struct QueueInfo {
     familyIndex : usize,
     capability : vulkan_bindings::VkQueueFlags,

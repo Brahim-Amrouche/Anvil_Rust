@@ -40,17 +40,6 @@ impl From<vulkan_init::VulkanInitError> for VulkanWindowError
 
 impl std::error::Error for VulkanWindowError {}
 
-
-pub fn load_extension_names(extensions: &[&[u8]]) -> Vec<String>
-{
-    let mut desired_extensions :Vec<String> = Vec::with_capacity(extensions.len());
-    for ext in extensions
-    {
-        desired_extensions.push(String::from_utf8(ext.to_vec()).unwrap().trim_end_matches('\0').to_string());
-    }
-    desired_extensions
-}
-
 pub struct VulkanSurface {
     pub window : system_window::WindowParameters,
     pub surface : vulkan_bindings::VkSurfaceKHR,
@@ -414,42 +403,40 @@ impl VulkanSwapchain
 
 pub fn vulkan_init_window()
 {
-    let global_exts = load_extension_names(&[vulkan_bindings::VK_KHR_SURFACE_EXTENSION_NAME, vulkan_bindings::VK_KHR_WIN32_SURFACE_EXTENSION_NAME]);
-    let mut vk_instance = vulkan_init::initialize_vulkan(global_exts);
-    let mut vk_surface = VulkanSurface::new(vk_instance).unwrap_or_else(|e| {
-        eprintln!("{}",e);
-        std::process::exit(1);
-    });
-    let device_exts = load_extension_names(&[vulkan_bindings::VK_KHR_SWAPCHAIN_EXTENSION_NAME]);
-    let logical_device;
-    logical_device = vulkan_init::VulkanLogicalDevice::new(
-        &mut vk_instance,
-        device_exts, 
-        &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32],
-        &vk_surface.surface,
-        vulkan_bindings::VkPresentModeKHR_VK_PRESENT_MODE_MAILBOX_KHR
-    ).unwrap_or_else(|e| {
-        eprintln!("{}",e);
-        std::process::exit(1);
-    });
-    let desired_surface_format = vulkan_bindings::VkSurfaceFormatKHR {
-        format : vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
-        colorSpace: vulkan_bindings::VkColorSpaceKHR_VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
-    };
-    vk_surface.configure_swapchain(&logical_device, 
-        3,
-        (vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32,
-        vulkan_bindings::VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR as u32,
-        &desired_surface_format
-    ).unwrap_or_else(|e| {
-            eprintln!("{}",e);
-            std::process::exit(1);
-    });
-    vk_surface.acquire_next_image().unwrap_or_else(|e| {
-        eprintln!("{}",e);
-        std::process::exit(1);
-    });
-    vk_surface.destroy();
-    logical_device.destroy();
-    vk_instance.destroy();
+    // let mut vk_surface = VulkanSurface::new(vk_instance).unwrap_or_else(|e| {
+    //     eprintln!("{}",e);
+    //     std::process::exit(1);
+    // });
+    // let device_exts = vulkan_init::load_extension_names(&[vulkan_bindings::VK_KHR_SWAPCHAIN_EXTENSION_NAME]);
+    // let logical_device;
+    // logical_device = vulkan_init::VulkanLogicalDevice::new(
+    //     &mut vk_instance,
+    //     device_exts, 
+    //     &[(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT | vulkan_bindings::VkQueueFlagBits_VK_QUEUE_COMPUTE_BIT) as u32],
+    //     &vk_surface.surface,
+    //     vulkan_bindings::VkPresentModeKHR_VK_PRESENT_MODE_MAILBOX_KHR
+    // ).unwrap_or_else(|e| {
+    //     eprintln!("{}",e);
+    //     std::process::exit(1);
+    // });
+    // let desired_surface_format = vulkan_bindings::VkSurfaceFormatKHR {
+    //     format : vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
+    //     colorSpace: vulkan_bindings::VkColorSpaceKHR_VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+    // };
+    // vk_surface.configure_swapchain(&logical_device, 
+    //     3,
+    //     (vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT) as u32,
+    //     vulkan_bindings::VkSurfaceTransformFlagBitsKHR_VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR as u32,
+    //     &desired_surface_format
+    // ).unwrap_or_else(|e| {
+    //         eprintln!("{}",e);
+    //         std::process::exit(1);
+    // });
+    // vk_surface.acquire_next_image().unwrap_or_else(|e| {
+    //     eprintln!("{}",e);
+    //     std::process::exit(1);
+    // });
+    // vk_surface.destroy();
+    // logical_device.destroy();
+    // vk_instance.destroy();
 }

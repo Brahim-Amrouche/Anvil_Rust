@@ -17,6 +17,7 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateDevice);
 EXPORTED_VULKAN_FUNCTION!(vkGetDeviceProcAddr);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfacePresentModesKHR);
+EXPORTED_VULKAN_FUNCTION!(vkCreateCommandPool);
 
 // Instance Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
