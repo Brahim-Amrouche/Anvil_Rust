@@ -2,7 +2,7 @@ use paste::paste;
 use std::ffi::CString;
 use crate::vulkan_bindings;
 
-static mut VULKAN_INSTANCE:Option<VulkanInstance>= None;
+pub static mut VULKAN_INSTANCE:Option<VulkanInstance>= None;
 
 macro_rules! EXPORTED_VULKAN_FUNCTION {
     ($name: ident) => {

@@ -22,6 +22,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfacePresentModesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceFormatsKHR);
+EXPORTED_VULKAN_FUNCTION!(vkDestroySurfaceKHR);
 EXPORTED_VULKAN_FUNCTION!(vkCreateWin32SurfaceKHR);
 
 
@@ -40,5 +41,4 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetSwapchainImagesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkDestroySwapchainKHR);
 EXPORTED_VULKAN_FUNCTION!(vkAcquireNextImageKHR);
-
 

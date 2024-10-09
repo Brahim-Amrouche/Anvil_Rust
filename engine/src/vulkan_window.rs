@@ -253,6 +253,7 @@ impl VulkanSurface {
 
     pub fn create_swapchain(&mut self) -> Result<(), VulkanWindowError>
     {
+        println!("creating a swapchain");
         match self.swapchain.take() {
             Some(s) => 
             {
@@ -266,13 +267,13 @@ impl VulkanSurface {
         Ok(())
     }
 
-    pub fn acquire_next_image(&mut self) -> Result<*mut vulkan_bindings::VkImage, VulkanWindowError>
+    pub fn acquire_next_image(&mut self) -> Result<(), VulkanWindowError>
     {
         if let Some(swapchain_ref) = self.swapchain.as_mut()
         {
             match swapchain_ref.get_next_image()
             {
-                Ok(img) => return Ok(img),
+                Ok(_) => return Ok(()),
                 Err(_) => ()
             };
         }
@@ -288,6 +289,11 @@ impl VulkanSurface {
             Some(s) => s.destroy(),
             None => {}
         }
+        unsafe{
+            let fn_vkDestroySurfaceKHR = vulkan_init::vkDestroySurfaceKHR.unwrap();
+            let vk_instance = vulkan_init::VULKAN_INSTANCE.as_ref().unwrap();
+            fn_vkDestroySurfaceKHR( vk_instance.instance, self.surface, std::ptr::null());
+        }
     }
 }
 
@@ -296,8 +302,6 @@ pub struct VulkanSemaphore
     pub sem : vulkan_bindings::VkSemaphore,
 
 }
-
-
 //swapchain instance
 pub struct VulkanSwapchain
 {
@@ -306,7 +310,7 @@ pub struct VulkanSwapchain
     pub swapchain_images : Vec<vulkan_bindings::VkImage>,
     pub images_sem: vulkan_bindings::VkSemaphore,
     pub images_fence: vulkan_bindings::VkFence,
-    pub presentable_img_idx: i32,
+    pub presentable_img_idx: u32,
 }
 
 impl VulkanSwapchain
@@ -319,7 +323,7 @@ impl VulkanSwapchain
             swapchain_images: Vec::new(),
             images_sem: std::ptr::null_mut(),
             images_fence: std::ptr::null_mut(),
-            presentable_img_idx: -1
+            presentable_img_idx: 0
         };
         unsafe
         {
@@ -351,8 +355,6 @@ impl VulkanSwapchain
                 return Err(VulkanWindowError::FAILED_CREATING_SWAPCHAIN);
             }
             swapchain.load_swap_chain_images()?;
-            swapchain.images_sem = vulkan_init::init_semaphore(&*vk_surface.logical_device)?;
-            swapchain.images_fence = vulkan_init::init_fence(&*vk_surface.logical_device)?;
         }
         Ok(swapchain)
     }
@@ -380,20 +382,23 @@ impl VulkanSwapchain
         Ok(())
     }
 
-    pub fn get_next_image(&mut self) -> Result<*mut vulkan_bindings::VkImage, VulkanWindowError>
+    pub fn get_next_image(&mut self) -> Result<(), VulkanWindowError>
     {
-        let mut image_index = 0;
         unsafe {
+            let ref logical_device = *(*self.surface).logical_device;
+            self.images_sem = vulkan_init::init_semaphore(logical_device)?;
+            self.images_fence = vulkan_init::init_fence(logical_device)?;
             let fn_vkAcquireNextImageKHR = vulkan_init::vkAcquireNextImageKHR.unwrap();
             let logical_device = (*(*self.surface).logical_device).device;
-            let result = fn_vkAcquireNextImageKHR(logical_device, self.swapchain_handle, 2000000000, self.images_sem, self.images_fence, &mut image_index);
+            let result = fn_vkAcquireNextImageKHR(logical_device, self.swapchain_handle, 2000000000, self.images_sem, self.images_fence, &mut self.presentable_img_idx);
             match result
             {
                 vulkan_bindings::VkResult_VK_SUCCESS | vulkan_bindings::VkResult_VK_SUBOPTIMAL_KHR => (),
                 _ => return Err(VulkanWindowError::UNUSABLE_SWAPCHAIN)
             };
+            // println!("the idx is {}", self.presentable_img_idx);
         }
-        Ok(&mut self.swapchain_images[image_index as usize])
+        Ok(())
     }
 
     pub fn destroy(self)
@@ -440,7 +445,7 @@ pub fn vulkan_init_window()
             eprintln!("{}",e);
             std::process::exit(1);
     });
-    let next_image = vk_surface.acquire_next_image().unwrap_or_else(|e| {
+    vk_surface.acquire_next_image().unwrap_or_else(|e| {
         eprintln!("{}",e);
         std::process::exit(1);
     });
