@@ -8,7 +8,6 @@ pub mod vulkan_window;
 pub mod vulkan_synchro;
 mod system_window;
 
-
 pub fn render()
 {
     let global_exts = vulkan_init::load_extension_names(&[vulkan_bindings::VK_KHR_SURFACE_EXTENSION_NAME, vulkan_bindings::VK_KHR_WIN32_SURFACE_EXTENSION_NAME]);
@@ -28,7 +27,11 @@ pub fn render()
         eprintln!("{}",e);
         std::process::exit(1);
     });
-    vulkan_synchro::VulkanCmdPool::new(&logical_device).unwrap_or_else(|e| {
+    let mut cmd_pool= vulkan_synchro::VulkanCmdPool::new(&logical_device).unwrap_or_else(|e| {
+        eprintln!("{}",e);
+        std::process::exit(1);
+    });
+    let buffer = cmd_pool.create_buffers(3).unwrap_or_else(|e| {
         eprintln!("{}",e);
         std::process::exit(1);
     });
