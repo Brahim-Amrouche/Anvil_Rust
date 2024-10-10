@@ -7,7 +7,8 @@ pub enum VulkanSynchroError
     COULDNT_CREATE_CMD_POOL,
     COULDNT_CREATE_CMD_BUFFER,
     FAILED_STARTING_PRIMARY_BUFFER_RECORDING,
-    FAILED_STARTING_SECONDARY_BUFFER_RECORDING
+    FAILED_STARTING_SECONDARY_BUFFER_RECORDING,
+    FAILED_ENDING_PRIMARY_BUFFER_RECORDING,
 }
 
 impl std::fmt::Display for  VulkanSynchroError
@@ -18,7 +19,8 @@ impl std::fmt::Display for  VulkanSynchroError
             VulkanSynchroError::COULDNT_CREATE_CMD_POOL => write!(f, "Couldnt create a Command pool"),
             VulkanSynchroError::COULDNT_CREATE_CMD_BUFFER => write!(f, "Couldn't create a Command Buffer"),
             VulkanSynchroError::FAILED_STARTING_PRIMARY_BUFFER_RECORDING => write!(f, "Failed Starting primary buffer recording"),
-            VulkanSynchroError::FAILED_STARTING_SECONDARY_BUFFER_RECORDING => write!(f, "Failed Starting secondary buffer recording")
+            VulkanSynchroError::FAILED_STARTING_SECONDARY_BUFFER_RECORDING => write!(f, "Failed Starting secondary buffer recording"),
+            VulkanSynchroError::FAILED_ENDING_PRIMARY_BUFFER_RECORDING => write!(f, "Failed Closing primary buffer recording"),
         }
     }
 }
@@ -69,11 +71,18 @@ impl VulkanCmdPool
 
 }
 
+pub enum VulkanBufferType
+{
+    PRIMARY,
+    SECONDARY
+}
+
 pub struct VulkanCmdBuffer
 {
     cmd_pool : *const VulkanCmdPool,
     primary_buffers : Vec<vulkan_bindings::VkCommandBuffer>,
-    secondary_buffers: Vec<vulkan_bindings::VkCommandBuffer>
+    secondary_buffers: Vec<vulkan_bindings::VkCommandBuffer>,
+    started_buffers : Vec<(VulkanBufferType, usize)>
 }
 
 impl VulkanCmdBuffer
@@ -84,6 +93,7 @@ impl VulkanCmdBuffer
             cmd_pool,
             primary_buffers: Vec::new(),
             secondary_buffers : Vec::new(),
+            started_buffers: Vec::new()
         };
         cmd_buffer.primary_buffers = cmd_buffer.create_buffer(primary_count, vulkan_bindings::VkCommandBufferLevel_VK_COMMAND_BUFFER_LEVEL_PRIMARY)?;
         if secondary_count > 0
@@ -135,6 +145,35 @@ impl VulkanCmdBuffer
             {
                 return Err(VulkanSynchroError::FAILED_STARTING_PRIMARY_BUFFER_RECORDING);
             }
+        }
+        self.started_buffers.push((VulkanBufferType::PRIMARY, buffer_idx));
+        Ok(())
+    }
+
+    pub fn end_primary_buffer(&mut self, buffer_idx: usize) -> Result<(), VulkanSynchroError>
+    {  
+        let mut i = 0;
+        while i < self.started_buffers.len()
+        {
+            let ref started =  self.started_buffers[i];
+            if let VulkanBufferType::PRIMARY = started.0 
+            {
+                if started.1 == buffer_idx
+                {
+                    unsafe{
+                        let fn_vkEndCommandBuffer = vulkan_init::vkEndCommandBuffer.unwrap();
+                        let result = fn_vkEndCommandBuffer(self.primary_buffers[buffer_idx]);
+                        if result != vulkan_bindings::VkResult_VK_SUCCESS
+                        {
+                            return Err(VulkanSynchroError::COULDNT_CREATE_CMD_BUFFER);
+                        }
+                        println!("Removed");
+                    }
+                    self.started_buffers.remove(i);
+                    break;
+                }
+            }
+            i += 1;
         }
         Ok(())
     }

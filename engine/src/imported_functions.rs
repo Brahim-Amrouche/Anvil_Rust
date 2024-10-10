@@ -20,6 +20,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfacePresentModesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkCreateCommandPool);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkBeginCommandBuffer);
+EXPORTED_VULKAN_FUNCTION!(vkEndCommandBuffer);
 
 // Instance Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
