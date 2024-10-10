@@ -31,10 +31,11 @@ pub fn render()
         eprintln!("{}",e);
         std::process::exit(1);
     });
-    let buffer = cmd_pool.create_buffers(3).unwrap_or_else(|e| {
+    let buffer = cmd_pool.create_buffers(3, 3).unwrap_or_else(|e| {
         eprintln!("{}",e);
         std::process::exit(1);
     });
+    buffer.begin_primary_buffer(0, vulkan_bindings::VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT).unwrap();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();
