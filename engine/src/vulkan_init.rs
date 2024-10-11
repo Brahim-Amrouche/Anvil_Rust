@@ -818,47 +818,6 @@ impl  VulkanLogicalDevice {
 
 }
 
-pub fn init_semaphore(logical_device: &VulkanLogicalDevice) -> Result<vulkan_bindings::VkSemaphore, VulkanInitError>
-{
-    let sem_create_info = vulkan_bindings::VkSemaphoreCreateInfo {
-        sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
-        pNext : std::ptr::null(),
-        flags: 0
-    };
-    unsafe{
-        let fn_vkCreateSemaphore = vkCreateSemaphore.unwrap();
-        let logical_device = logical_device.device;
-        let mut sem : vulkan_bindings::VkSemaphore = std::ptr::null_mut();
-        let result = fn_vkCreateSemaphore(logical_device, &sem_create_info, std::ptr::null(), &mut sem);
-        if result != vulkan_bindings::VkResult_VK_SUCCESS
-        {
-            return Err(VulkanInitError::FAILED_CREATING_VK_SEMAPHORE);
-        }
-        Ok(sem)
-    }
-}
-
-pub fn init_fence(logical_device: &VulkanLogicalDevice) -> Result<vulkan_bindings::VkFence, VulkanInitError>
-{
-    let fence_create_info = vulkan_bindings::VkFenceCreateInfo{
-        sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
-        pNext: std::ptr::null(),
-        flags:0
-    };
-    unsafe {
-        let fn_vkCreateFence = vkCreateFence.unwrap();
-        let logical_device = logical_device.device;
-        let mut fence: vulkan_bindings::VkFence = std::ptr::null_mut();
-        let result = fn_vkCreateFence(logical_device, &fence_create_info, std::ptr::null(), &mut fence);
-        if result != vulkan_bindings::VkResult_VK_SUCCESS
-        {
-            return Err(VulkanInitError::FAILED_CREATING_VK_FENCE);
-        }
-        Ok(fence)
-    }
-}
-
-
 pub fn initialize_vulkan(desired_global_extensions : Vec<String>) -> &'static mut VulkanInstance
 {
     unsafe {

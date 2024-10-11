@@ -9,6 +9,12 @@ pub enum VulkanSynchroError
     FAILED_STARTING_PRIMARY_BUFFER_RECORDING,
     FAILED_STARTING_SECONDARY_BUFFER_RECORDING,
     FAILED_ENDING_PRIMARY_BUFFER_RECORDING,
+    FAILED_RESETING_PRIMARY_BUFFER,
+    FAILED_RESETING_POOL,
+    FAILED_CREATING_SEMAPHORE,
+    FAILED_CREATING_FENCE,
+    COULDNT_WAIT_FOR_FENCES,
+    COULDNT_RESET_FENCES
 }
 
 impl std::fmt::Display for  VulkanSynchroError
@@ -21,6 +27,12 @@ impl std::fmt::Display for  VulkanSynchroError
             VulkanSynchroError::FAILED_STARTING_PRIMARY_BUFFER_RECORDING => write!(f, "Failed Starting primary buffer recording"),
             VulkanSynchroError::FAILED_STARTING_SECONDARY_BUFFER_RECORDING => write!(f, "Failed Starting secondary buffer recording"),
             VulkanSynchroError::FAILED_ENDING_PRIMARY_BUFFER_RECORDING => write!(f, "Failed Closing primary buffer recording"),
+            VulkanSynchroError::FAILED_RESETING_PRIMARY_BUFFER => write!(f, "Failed resetting primary buffer"),
+            VulkanSynchroError::FAILED_RESETING_POOL => write!(f, "Failed resetting pool"),
+            VulkanSynchroError::FAILED_CREATING_SEMAPHORE => write!(f, "Failed creating semaphore"),
+            VulkanSynchroError::FAILED_CREATING_FENCE => write!(f, "Failed creating fence"),
+            VulkanSynchroError::COULDNT_WAIT_FOR_FENCES => write!(f, "Couldnt wait for fences"),
+            VulkanSynchroError::COULDNT_RESET_FENCES => write!(f, "Couldn't reset fences")
         }
     }
 }
@@ -69,6 +81,25 @@ impl VulkanCmdPool
         Ok(self.cmd_buffers.as_mut().unwrap())
     }
 
+    pub fn reset_pool(&mut self, release_mem: bool) -> Result<(), VulkanSynchroError>
+    {
+        unsafe
+        {
+            let fn_vkResetCommandPool = vulkan_init::vkResetCommandPool.unwrap();
+            let logical_device = (*self.logical_device).device;
+            let result = fn_vkResetCommandPool(
+                logical_device, 
+                self.cmd_pool_handle,
+                if release_mem { vulkan_bindings::VkCommandPoolResetFlagBits_VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT as u32 } else { 0 } 
+            );
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanSynchroError::FAILED_RESETING_POOL);
+            }
+        }
+        Ok(())
+    }
+
 }
 
 pub enum VulkanBufferType
@@ -80,8 +111,8 @@ pub enum VulkanBufferType
 pub struct VulkanCmdBuffer
 {
     cmd_pool : *const VulkanCmdPool,
-    primary_buffers : Vec<vulkan_bindings::VkCommandBuffer>,
-    secondary_buffers: Vec<vulkan_bindings::VkCommandBuffer>,
+    pub primary_buffers : Vec<vulkan_bindings::VkCommandBuffer>,
+    pub secondary_buffers: Vec<vulkan_bindings::VkCommandBuffer>,
     started_buffers : Vec<(VulkanBufferType, usize)>
 }
 
@@ -165,9 +196,8 @@ impl VulkanCmdBuffer
                         let result = fn_vkEndCommandBuffer(self.primary_buffers[buffer_idx]);
                         if result != vulkan_bindings::VkResult_VK_SUCCESS
                         {
-                            return Err(VulkanSynchroError::COULDNT_CREATE_CMD_BUFFER);
+                            return Err(VulkanSynchroError::FAILED_ENDING_PRIMARY_BUFFER_RECORDING);
                         }
-                        println!("Removed");
                     }
                     self.started_buffers.remove(i);
                     break;
@@ -177,4 +207,100 @@ impl VulkanCmdBuffer
         }
         Ok(())
     }
+
+    pub fn reset_primary_buffer(&mut self, idx: usize, release_mem: bool) -> Result<(), VulkanSynchroError>
+    {
+        if idx >= self.primary_buffers.len()
+        {
+            return Err(VulkanSynchroError::FAILED_RESETING_PRIMARY_BUFFER);
+        }
+        unsafe
+        {
+            let fn_vkResetCommandBuffer = vulkan_init::vkResetCommandBuffer.unwrap();
+            let result = fn_vkResetCommandBuffer(self.primary_buffers[idx],
+                if release_mem { vulkan_bindings::VkCommandBufferResetFlagBits_VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT as u32 } else { 0 }
+            );
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return  Err(VulkanSynchroError::FAILED_RESETING_PRIMARY_BUFFER);
+            }
+        }
+        Ok(())
+    }
+}
+
+pub fn init_semaphore(logical_device: &vulkan_init::VulkanLogicalDevice) -> Result<vulkan_bindings::VkSemaphore, VulkanSynchroError>
+{
+    let sem_create_info = vulkan_bindings::VkSemaphoreCreateInfo {
+        sType : vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO,
+        pNext : std::ptr::null(),
+        flags: 0
+    };
+    unsafe{
+        let fn_vkCreateSemaphore = vulkan_init::vkCreateSemaphore.unwrap();
+        let logical_device = logical_device.device;
+        let mut sem : vulkan_bindings::VkSemaphore = std::ptr::null_mut();
+        let result = fn_vkCreateSemaphore(logical_device, &sem_create_info, std::ptr::null(), &mut sem);
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanSynchroError::FAILED_CREATING_SEMAPHORE);
+        }
+        Ok(sem)
+    }
+}
+
+pub fn init_fence(logical_device: &vulkan_init::VulkanLogicalDevice) -> Result<vulkan_bindings::VkFence, VulkanSynchroError>
+{
+    let fence_create_info = vulkan_bindings::VkFenceCreateInfo{
+        sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_FENCE_CREATE_INFO,
+        pNext: std::ptr::null(),
+        flags:0
+    };
+    unsafe {
+        let fn_vkCreateFence = vulkan_init::vkCreateFence.unwrap();
+        let logical_device = logical_device.device;
+        let mut fence: vulkan_bindings::VkFence = std::ptr::null_mut();
+        let result = fn_vkCreateFence(logical_device, &fence_create_info, std::ptr::null(), &mut fence);
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanSynchroError::FAILED_CREATING_FENCE);
+        }
+        Ok(fence)
+    }
+}
+
+pub fn wait_fences(logical_device: &vulkan_init::VulkanLogicalDevice, fences: &Vec<vulkan_bindings::VkFence>, wait_all: vulkan_bindings::VkBool32, timeout: u64) -> Result<(), VulkanSynchroError>
+{
+    unsafe
+    {
+        let logical_device = logical_device.device;
+        let fn_vkWaitForFences = vulkan_init::vkWaitForFences.unwrap();
+        let result = fn_vkWaitForFences(
+            logical_device,
+            fences.len() as u32,
+            fences.as_ptr(),
+            wait_all,
+            timeout
+        );
+        if result !=  vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanSynchroError::COULDNT_WAIT_FOR_FENCES);
+        }
+    }
+    Ok(())
+}
+
+pub fn reset_fences(logical_device: &vulkan_init::VulkanLogicalDevice, fences: &Vec<vulkan_bindings::VkFence>) -> Result<(), VulkanSynchroError>
+{
+    unsafe
+    {
+        let logical_device = logical_device.device;
+        let fn_vkResetFences = vulkan_init::vkResetFences.unwrap();
+        let result = fn_vkResetFences(logical_device, fences.len() as u32, fences.as_ptr());
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return Err(VulkanSynchroError::COULDNT_RESET_FENCES);
+        }
+    }
+    Ok(())
 }

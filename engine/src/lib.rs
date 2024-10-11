@@ -37,6 +37,11 @@ pub fn render()
     });
     buffer.begin_primary_buffer(0, vulkan_bindings::VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT).unwrap();
     buffer.end_primary_buffer(0).unwrap();
+    buffer.reset_primary_buffer(0, true).unwrap();
+    cmd_pool.reset_pool(true).unwrap();
+    // let fence = vulkan_synchro::init_fence(&logical_device).unwrap();
+    // vulkan_synchro::wait_fences(&logical_device, &vec![fence], vulkan_bindings::VK_TRUE, 20000000).unwrap();
+    // vulkan_synchro::reset_fences(&logical_device, &vec![fence]).unwrap();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();

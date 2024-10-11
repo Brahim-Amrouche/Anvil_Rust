@@ -1,6 +1,7 @@
 use crate::vulkan_init;
 use crate::vulkan_bindings;
 use crate::system_window;
+use crate::vulkan_synchro;
 
 #[derive(Debug)]
 pub enum VulkanWindowError
@@ -34,6 +35,13 @@ impl std::fmt::Display for VulkanWindowError {
 impl From<vulkan_init::VulkanInitError> for VulkanWindowError
 {
     fn from(value: vulkan_init::VulkanInitError) -> Self {
+        VulkanWindowError::DEFAULT_ERROR(value.to_string())
+    }
+}
+
+impl From<vulkan_synchro::VulkanSynchroError> for VulkanWindowError
+{
+    fn from(value: vulkan_synchro::VulkanSynchroError) -> Self {
         VulkanWindowError::DEFAULT_ERROR(value.to_string())
     }
 }
@@ -375,8 +383,8 @@ impl VulkanSwapchain
     {
         unsafe {
             let ref logical_device = *(*self.surface).logical_device;
-            self.images_sem = vulkan_init::init_semaphore(logical_device)?;
-            self.images_fence = vulkan_init::init_fence(logical_device)?;
+            self.images_sem = vulkan_synchro::init_semaphore(logical_device)?;
+            self.images_fence = vulkan_synchro::init_fence(logical_device)?;
             let fn_vkAcquireNextImageKHR = vulkan_init::vkAcquireNextImageKHR.unwrap();
             let logical_device = (*(*self.surface).logical_device).device;
             let result = fn_vkAcquireNextImageKHR(logical_device, self.swapchain_handle, 2000000000, self.images_sem, self.images_fence, &mut self.presentable_img_idx);

@@ -18,9 +18,11 @@ EXPORTED_VULKAN_FUNCTION!(vkGetDeviceProcAddr);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfacePresentModesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkCreateCommandPool);
+EXPORTED_VULKAN_FUNCTION!(vkResetCommandPool);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkBeginCommandBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkEndCommandBuffer);
+EXPORTED_VULKAN_FUNCTION!(vkResetCommandBuffer);
 
 // Instance Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfaceSupportKHR);
@@ -38,6 +40,8 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
 EXPORTED_VULKAN_FUNCTION!(vkCreateFence);
+EXPORTED_VULKAN_FUNCTION!(vkWaitForFences);
+EXPORTED_VULKAN_FUNCTION!(vkResetFences);
 
 
 // Device Level Vulkan Extensions Functions
