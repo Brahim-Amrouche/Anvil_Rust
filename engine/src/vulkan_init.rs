@@ -807,6 +807,20 @@ impl  VulkanLogicalDevice {
         }
     }
 
+    pub fn is_idle(&self) -> bool
+    {
+        unsafe
+        {
+            let fn_vkDeviceWaitIdle = vkDeviceWaitIdle.unwrap();
+            let result = fn_vkDeviceWaitIdle(self.device);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
     pub fn destroy(mut self)
     {
         unsafe {

@@ -19,6 +19,7 @@ EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
 EXPORTED_VULKAN_FUNCTION!(vkGetPhysicalDeviceSurfacePresentModesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkCreateCommandPool);
 EXPORTED_VULKAN_FUNCTION!(vkResetCommandPool);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyCommandPool);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkBeginCommandBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkEndCommandBuffer);
@@ -37,12 +38,16 @@ EXPORTED_VULKAN_FUNCTION!(vkGetDeviceQueue);
 EXPORTED_VULKAN_FUNCTION!(vkDeviceWaitIdle);
 EXPORTED_VULKAN_FUNCTION!(vkDestroyDevice);
 EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
+EXPORTED_VULKAN_FUNCTION!(vkFreeCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
+EXPORTED_VULKAN_FUNCTION!(vkDestroySemaphore);
 EXPORTED_VULKAN_FUNCTION!(vkCreateFence);
 EXPORTED_VULKAN_FUNCTION!(vkWaitForFences);
 EXPORTED_VULKAN_FUNCTION!(vkResetFences);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyFence);
 EXPORTED_VULKAN_FUNCTION!(vkQueueSubmit);
+EXPORTED_VULKAN_FUNCTION!(vkQueueWaitIdle);
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);

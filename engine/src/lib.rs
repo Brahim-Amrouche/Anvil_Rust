@@ -12,7 +12,7 @@ pub fn render()
 {
     let global_exts = vulkan_init::load_extension_names(&[vulkan_bindings::VK_KHR_SURFACE_EXTENSION_NAME, vulkan_bindings::VK_KHR_WIN32_SURFACE_EXTENSION_NAME]);
     let mut vk_instance = vulkan_init::initialize_vulkan(global_exts);
-    let mut vk_surface = vulkan_window::VulkanSurface::new(vk_instance).unwrap_or_else(|e| {
+    let vk_surface = vulkan_window::VulkanSurface::new(vk_instance).unwrap_or_else(|e| {
         eprintln!("{}",e);
         std::process::exit(1);
     });
@@ -53,19 +53,25 @@ pub fn render()
         eprintln!("{}",e);
         std::process::exit(1);
     });
-    buffer.begin_primary_buffer(0, vulkan_bindings::VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT).unwrap();
+    // buffer.begin_primary_buffer(0, vulkan_bindings::VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT).unwrap();
     // buffer.end_primary_buffer(0).unwrap();
     // buffer.reset_primary_buffer(0, true).unwrap();
-    cmd_pool.reset_pool(true).unwrap();
+    // cmd_pool.reset_pool(true).unwrap();
+    let sem = vulkan_synchro::init_semaphore(&logical_device).unwrap();
+    vulkan_synchro::destroy_semaphore(&logical_device, sem);
     // let fence = vulkan_synchro::init_fence(&logical_device).unwrap();
     // vulkan_synchro::wait_fences(&logical_device, &vec![fence], vulkan_bindings::VK_TRUE, 20000000).unwrap();
     // vulkan_synchro::reset_fences(&logical_device, &vec![fence]).unwrap();
-    let waiting_sems = vulkan_synchro::VulkanWaitSemaphoresInfo {
-        semaphores:Vec::new(),
-        waiting_stage: Vec::new()
-    };
-    let queue  = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT as u32, 0).unwrap();
-    cmd_pool.submit_buffers(queue, &waiting_sems).unwrap();
+    // vulkan_synchro::destroy_fence(&logical_device, fence);
+    // let waiting_sems = vulkan_synchro::VulkanWaitSemaphoresInfo {
+        //     semaphores:Vec::new(),
+        //     waiting_stage: Vec::new()
+        // };
+        // let queue  = logical_device.get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT as u32, 0).unwrap();
+        // cmd_pool.submit_buffers(queue, &waiting_sems).unwrap();
+        // println!("{}", vulkan_synchro::check_queue_idle(queue));
+        // println!("{}", logical_device.is_idle());
+    cmd_pool.destroy();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();

@@ -34,7 +34,7 @@ impl std::fmt::Display for  VulkanSynchroError
             VulkanSynchroError::FAILED_CREATING_FENCE => write!(f, "Failed creating fence"),
             VulkanSynchroError::COULDNT_WAIT_FOR_FENCES => write!(f, "Couldnt wait for fences"),
             VulkanSynchroError::COULDNT_RESET_FENCES => write!(f, "Couldn't reset fences"),
-            VulkanSynchroError::FAILED_SUBMITING_BUFFERS => write!(f, "Failed Submiting buffers")
+            VulkanSynchroError::FAILED_SUBMITING_BUFFERS => write!(f, "Failed Submiting buffers"),
         }
     }
 }
@@ -129,6 +129,21 @@ impl VulkanCmdPool
             }
         }
         Ok(())
+    }
+
+    pub fn destroy(mut self)
+    {
+        match self.cmd_buffers.take()
+        {
+            Some(b) => b.destroy(),
+            None => ()
+        };
+        unsafe
+        {
+            let logical_device =  (*self.logical_device).device;
+            let fn_vkDestroyCommandPool = vulkan_init::vkDestroyCommandPool.unwrap();
+            fn_vkDestroyCommandPool(logical_device, self.cmd_pool_handle, std::ptr::null());
+        }
     }
 
 }
@@ -259,6 +274,28 @@ impl VulkanCmdBuffer
         Ok(())
     }
     
+
+    pub fn destroy(self)
+    {
+        unsafe
+        {
+            let ref cmd_pool = *self.cmd_pool;
+            let ref logical_device = *cmd_pool.logical_device;
+            let fn_vkFreeCommandBuffers = vulkan_init::vkFreeCommandBuffers.unwrap();
+            let primary_buffer_len  = self.primary_buffers.len() as u32;
+            let secondary_buffer_len = self.secondary_buffers.len() as u32;
+            fn_vkFreeCommandBuffers(logical_device.device,
+                cmd_pool.cmd_pool_handle,
+                primary_buffer_len,
+                if primary_buffer_len > 0 { self.primary_buffers.as_ptr() } else { std::ptr::null() }
+            );
+            fn_vkFreeCommandBuffers(logical_device.device,
+                cmd_pool.cmd_pool_handle,
+                secondary_buffer_len,
+                if secondary_buffer_len > 0 { self.secondary_buffers.as_ptr() } else { std::ptr::null() }
+            );
+        }
+    }
 }
 
 pub struct VulkanWaitSemaphoresInfo
@@ -284,6 +321,15 @@ pub fn init_semaphore(logical_device: &vulkan_init::VulkanLogicalDevice) -> Resu
             return Err(VulkanSynchroError::FAILED_CREATING_SEMAPHORE);
         }
         Ok(sem)
+    }
+}
+
+pub fn destroy_semaphore(logical_device: &vulkan_init::VulkanLogicalDevice, semaphore: vulkan_bindings::VkSemaphore)
+{
+    unsafe
+    {
+        let fn_vkDestroySemaphore = vulkan_init::vkDestroySemaphore.unwrap();
+        fn_vkDestroySemaphore(logical_device.device, semaphore, std::ptr::null());   
     }
 }
 
@@ -341,4 +387,28 @@ pub fn reset_fences(logical_device: &vulkan_init::VulkanLogicalDevice, fences: &
         }
     }
     Ok(())
+}
+
+pub fn destroy_fence(logical_device: &vulkan_init::VulkanLogicalDevice, fence: vulkan_bindings::VkFence)
+{
+    unsafe
+    {
+        let logical_device = logical_device.device;
+        let fn_vkDestroyFence = vulkan_init::vkDestroyFence.unwrap();
+        fn_vkDestroyFence(logical_device, fence, std::ptr::null());
+    }
+}
+
+pub fn check_queue_idle(queue: vulkan_bindings::VkQueue) -> bool
+{
+    unsafe
+    {
+        let fn_vkQueueWaitIdle = vulkan_init::vkQueueWaitIdle.unwrap();
+        let result = fn_vkQueueWaitIdle(queue);
+        if result != vulkan_bindings::VkResult_VK_SUCCESS
+        {
+            return false;
+        }
+        return true
+    }
 }
