@@ -14,7 +14,8 @@ pub enum VulkanSynchroError
     FAILED_CREATING_SEMAPHORE,
     FAILED_CREATING_FENCE,
     COULDNT_WAIT_FOR_FENCES,
-    COULDNT_RESET_FENCES
+    COULDNT_RESET_FENCES,
+    FAILED_SUBMITING_BUFFERS
 }
 
 impl std::fmt::Display for  VulkanSynchroError
@@ -32,7 +33,8 @@ impl std::fmt::Display for  VulkanSynchroError
             VulkanSynchroError::FAILED_CREATING_SEMAPHORE => write!(f, "Failed creating semaphore"),
             VulkanSynchroError::FAILED_CREATING_FENCE => write!(f, "Failed creating fence"),
             VulkanSynchroError::COULDNT_WAIT_FOR_FENCES => write!(f, "Couldnt wait for fences"),
-            VulkanSynchroError::COULDNT_RESET_FENCES => write!(f, "Couldn't reset fences")
+            VulkanSynchroError::COULDNT_RESET_FENCES => write!(f, "Couldn't reset fences"),
+            VulkanSynchroError::FAILED_SUBMITING_BUFFERS => write!(f, "Failed Submiting buffers")
         }
     }
 }
@@ -95,6 +97,35 @@ impl VulkanCmdPool
             if result != vulkan_bindings::VkResult_VK_SUCCESS
             {
                 return Err(VulkanSynchroError::FAILED_RESETING_POOL);
+            }
+        }
+        Ok(())
+    }
+
+    pub fn submit_buffers(&mut self,queue: vulkan_bindings::VkQueue,  wait_sems: &VulkanWaitSemaphoresInfo)-> Result<(), VulkanSynchroError>
+    {
+        let buffer = self.cmd_buffers.as_ref().unwrap();
+        unsafe
+        {
+            let ref logical_device = *self.logical_device;
+            let sig_sem = init_semaphore(logical_device)?;
+            let buffer_submit_info =  vulkan_bindings::VkSubmitInfo
+            {
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_SUBMIT_INFO,
+                pNext: std::ptr::null(),
+                waitSemaphoreCount: wait_sems.semaphores.len() as u32,
+                pWaitSemaphores: wait_sems.semaphores.as_ptr(),
+                pWaitDstStageMask: wait_sems.waiting_stage.as_ptr(),
+                commandBufferCount: buffer.primary_buffers.len() as u32,
+                pCommandBuffers: buffer.primary_buffers.as_ptr(),
+                signalSemaphoreCount: 1,
+                pSignalSemaphores: &sig_sem,
+            };
+            let fn_vkQueueSubmit = vulkan_init::vkQueueSubmit.unwrap();
+            let result = fn_vkQueueSubmit(queue, 1, &buffer_submit_info, std::ptr::null_mut());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanSynchroError::FAILED_SUBMITING_BUFFERS);
             }
         }
         Ok(())
@@ -227,6 +258,13 @@ impl VulkanCmdBuffer
         }
         Ok(())
     }
+    
+}
+
+pub struct VulkanWaitSemaphoresInfo
+{
+    pub semaphores : Vec<vulkan_bindings::VkSemaphore>,
+    pub waiting_stage: Vec<vulkan_bindings::VkPipelineStageFlags>
 }
 
 pub fn init_semaphore(logical_device: &vulkan_init::VulkanLogicalDevice) -> Result<vulkan_bindings::VkSemaphore, VulkanSynchroError>

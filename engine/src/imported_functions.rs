@@ -42,11 +42,12 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
 EXPORTED_VULKAN_FUNCTION!(vkCreateFence);
 EXPORTED_VULKAN_FUNCTION!(vkWaitForFences);
 EXPORTED_VULKAN_FUNCTION!(vkResetFences);
-
+EXPORTED_VULKAN_FUNCTION!(vkQueueSubmit);
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);
 EXPORTED_VULKAN_FUNCTION!(vkGetSwapchainImagesKHR);
 EXPORTED_VULKAN_FUNCTION!(vkDestroySwapchainKHR);
 EXPORTED_VULKAN_FUNCTION!(vkAcquireNextImageKHR);
+EXPORTED_VULKAN_FUNCTION!(vkQueuePresentKHR);
 

@@ -13,7 +13,8 @@ pub enum VulkanWindowError
     CANT_LOAD_SURFACE_FORMATS,
     FAILED_CREATING_SWAPCHAIN,
     CANT_LOAD_SWAPCHAIN_IMAGE,
-    UNUSABLE_SWAPCHAIN
+    UNUSABLE_SWAPCHAIN,
+    COULDNT_PRESENT_IMAGE
 }
 
 impl std::fmt::Display for VulkanWindowError {
@@ -27,6 +28,7 @@ impl std::fmt::Display for VulkanWindowError {
             VulkanWindowError::CANT_LOAD_SURFACE_FORMATS => write!(f, "Couldn't load surface formats"),
             VulkanWindowError::FAILED_CREATING_SWAPCHAIN => write!(f, "Couldn't create swapchain"),
             VulkanWindowError::CANT_LOAD_SWAPCHAIN_IMAGE => write!(f, "Couldn't load swapchain image"),
+            VulkanWindowError::COULDNT_PRESENT_IMAGE => write!(f, "Couldn't present image"),
             VulkanWindowError::UNUSABLE_SWAPCHAIN => write!(f, "")
         }
     }
@@ -278,6 +280,37 @@ impl VulkanSurface {
         self.acquire_next_image()
     }
 
+    pub fn present_image(&mut self) -> Result<(), VulkanWindowError>
+    {
+        self.acquire_next_image()?;
+        let swapchain = self.swapchain.as_ref().unwrap();
+        let present_info = vulkan_bindings::VkPresentInfoKHR
+        {
+            sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
+            pNext: std::ptr::null(),
+            waitSemaphoreCount: 1,
+            pWaitSemaphores: &swapchain.images_sem,
+            swapchainCount: 1,
+            pSwapchains: &swapchain.swapchain_handle,
+            pImageIndices: &swapchain.presentable_img_idx,
+            pResults: std::ptr::null_mut()
+        };
+        unsafe {
+            let queue = match (*self.logical_device).get_device_queue(vulkan_bindings::VkQueueFlagBits_VK_QUEUE_GRAPHICS_BIT as u32 , 0)
+            {
+                Some(q) => q,
+                None => return Err(VulkanWindowError::COULDNT_PRESENT_IMAGE)
+            };
+            let fn_vkQueuePresentKHR = vulkan_init::vkQueuePresentKHR.unwrap();
+            let result = fn_vkQueuePresentKHR(queue, &present_info);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanWindowError::COULDNT_PRESENT_IMAGE);
+            }
+        }
+        Ok(())
+    }
+
     pub fn destroy(mut self)
     {
         self.window.destroy();
@@ -393,7 +426,6 @@ impl VulkanSwapchain
                 vulkan_bindings::VkResult_VK_SUCCESS | vulkan_bindings::VkResult_VK_SUBOPTIMAL_KHR => (),
                 _ => return Err(VulkanWindowError::UNUSABLE_SWAPCHAIN)
             };
-            // println!("the idx is {}", self.presentable_img_idx);
         }
         Ok(())
     }
