@@ -9,6 +9,7 @@
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkEnumeratePhysicalDevices);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkEnumerateDeviceExtensionProperties);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceProperties);
+    LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceMemoryProperties);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceFeatures);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkGetPhysicalDeviceQueueFamilyProperties);
     LOAD_INSTANCE_LEVEL_VULKAN_FUNCTION!(vkCreateDevice);
@@ -35,6 +36,8 @@
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkCreateBuffer);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkFreeCommandBuffers);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
+    LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkAllocateMemory);
+    LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkBindBufferMemory);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkCreateSemaphore);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkDestroySemaphore);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkCreateFence);

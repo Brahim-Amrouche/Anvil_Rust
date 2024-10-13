@@ -104,7 +104,6 @@ pub fn load_extension_names(extensions: &[&[u8]]) -> Vec<String>
     desired_extensions
 }
 
-
 pub struct QueueInfo {
     familyIndex : usize,
     capability : vulkan_bindings::VkQueueFlags,
@@ -389,6 +388,7 @@ pub struct VulkanPhysicalDevice {
     pub extensions : Vec<vulkan_bindings::VkExtensionProperties>,
     pub features : vulkan_bindings::VkPhysicalDeviceFeatures,
     pub properties : vulkan_bindings::VkPhysicalDeviceProperties,
+    pub mem_properties : vulkan_bindings::VkPhysicalDeviceMemoryProperties,
     pub family_queues: Vec<vulkan_bindings::VkQueueFamilyProperties>,
     pub desired_queues : Vec<QueueInfo>,
     pub supports_presentation : bool,
@@ -404,6 +404,7 @@ impl VulkanPhysicalDevice {
                 extensions : Vec::new(),
                 features : std::mem::zeroed(),
                 properties: std::mem::zeroed(),
+                mem_properties: std::mem::zeroed(),
                 family_queues : Vec::new(),
                 desired_queues: Vec::new(),
                 supports_presentation: false,
@@ -481,6 +482,15 @@ impl VulkanPhysicalDevice {
         Ok(())   
     }
 
+    pub fn load_memory_properties(&mut self)
+    {
+        unsafe
+        {
+            let fn_vkGetPhysicalDeviceMemoryProperties = vkGetPhysicalDeviceMemoryProperties.unwrap();
+            fn_vkGetPhysicalDeviceMemoryProperties(self.ph_device, &mut self.mem_properties);
+        }
+    }
+
     pub fn supports_presentation(& self , queue_idx: u32, surface : &vulkan_bindings::VkSurfaceKHR) -> bool
     {
         unsafe 
@@ -501,6 +511,7 @@ impl VulkanPhysicalDevice {
         self.load_extensions()?;
         self.load_features();
         self.load_properties();
+        self.load_memory_properties();
         self.load_family_queues()?;
         Ok(())
     }

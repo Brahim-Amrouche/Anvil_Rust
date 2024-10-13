@@ -6,6 +6,7 @@ pub mod vulkan_bindings;
 pub mod vulkan_init;
 pub mod vulkan_window;
 pub mod vulkan_synchro;
+pub mod vulkan_mem;
 mod system_window;
 
 pub fn render()
@@ -45,20 +46,20 @@ pub fn render()
     // vk_surface.present_image().unwrap();
 
     //Vulkan Synchro Test
-    let mut cmd_pool= vulkan_synchro::VulkanCmdPool::new(&logical_device).unwrap_or_else(|e| {
-        eprintln!("{}",e);
-        std::process::exit(1);
-    });
-    let buffer = cmd_pool.create_buffers(3, 3).unwrap_or_else(|e| {
-        eprintln!("{}",e);
-        std::process::exit(1);
-    });
+    // let mut cmd_pool= vulkan_synchro::VulkanCmdPool::new(&logical_device).unwrap_or_else(|e| {
+    //     eprintln!("{}",e);
+    //     std::process::exit(1);
+    // });
+    // let buffer = cmd_pool.create_buffers(3, 3).unwrap_or_else(|e| {
+    //     eprintln!("{}",e);
+    //     std::process::exit(1);
+    // });
     // buffer.begin_primary_buffer(0, vulkan_bindings::VkCommandBufferUsageFlagBits_VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT).unwrap();
     // buffer.end_primary_buffer(0).unwrap();
     // buffer.reset_primary_buffer(0, true).unwrap();
     // cmd_pool.reset_pool(true).unwrap();
-    let sem = vulkan_synchro::init_semaphore(&logical_device).unwrap();
-    vulkan_synchro::destroy_semaphore(&logical_device, sem);
+    // let sem = vulkan_synchro::init_semaphore(&logical_device).unwrap();
+    // vulkan_synchro::destroy_semaphore(&logical_device, sem);
     // let fence = vulkan_synchro::init_fence(&logical_device).unwrap();
     // vulkan_synchro::wait_fences(&logical_device, &vec![fence], vulkan_bindings::VK_TRUE, 20000000).unwrap();
     // vulkan_synchro::reset_fences(&logical_device, &vec![fence]).unwrap();
@@ -71,7 +72,14 @@ pub fn render()
         // cmd_pool.submit_buffers(queue, &waiting_sems).unwrap();
         // println!("{}", vulkan_synchro::check_queue_idle(queue));
         // println!("{}", logical_device.is_idle());
-    cmd_pool.destroy();
+    // cmd_pool.destroy();
+
+    //Vulkan Mem Tests
+    let buffer = vulkan_mem::VulkanBufferMem::new(
+        &logical_device, 
+        100,
+        vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32
+    ).unwrap();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();
