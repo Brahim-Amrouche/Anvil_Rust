@@ -43,6 +43,7 @@ EXPORTED_VULKAN_FUNCTION!(vkFreeCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateMemory);
 EXPORTED_VULKAN_FUNCTION!(vkBindBufferMemory);
+EXPORTED_VULKAN_FUNCTION!(vkCreateBufferView);
 EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
 EXPORTED_VULKAN_FUNCTION!(vkDestroySemaphore);
 EXPORTED_VULKAN_FUNCTION!(vkCreateFence);
@@ -51,6 +52,7 @@ EXPORTED_VULKAN_FUNCTION!(vkResetFences);
 EXPORTED_VULKAN_FUNCTION!(vkDestroyFence);
 EXPORTED_VULKAN_FUNCTION!(vkQueueSubmit);
 EXPORTED_VULKAN_FUNCTION!(vkQueueWaitIdle);
+EXPORTED_VULKAN_FUNCTION!(vkCmdPipelineBarrier);
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);

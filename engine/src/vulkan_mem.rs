@@ -5,7 +5,8 @@ use crate::vulkan_init;
 pub enum VulkanMemError
 {
     COULDNT_ALLOCATE_BUFFER,
-    COULDNT_ALLOCATE_DEVICE_MEMORY
+    COULDNT_ALLOCATE_DEVICE_MEMORY,
+    FAILED_CREATING_BUFFER_VIEW
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -14,20 +15,90 @@ impl std::fmt::Display for VulkanMemError
         match self
         {
             VulkanMemError::COULDNT_ALLOCATE_BUFFER => write!(f,"Couldn't allocate a buffer memory"),
-            VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY => write!(f, "Couldn't allocate device memory for buffer")
+            VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY => write!(f, "Couldn't allocate device memory for buffer"),
+            VulkanMemError::FAILED_CREATING_BUFFER_VIEW => write!(f, "Failed creating buffer view")
         }
     }
 }
 
 impl std::error::Error for VulkanMemError {}
 
+pub struct VulkanBufferTransition
+{
+    pub buffer: vulkan_bindings::VkBuffer,
+    pub current_access: vulkan_bindings::VkAccessFlags,
+    pub new_access: vulkan_bindings::VkAccessFlags,
+    pub current_fam_queue: u32,
+    pub new_fam_queue : u32
+}
+
+pub struct VulkanDeviceMemory
+{
+    pub handle: vulkan_bindings::VkDeviceMemory,
+    pub size: u64,
+    pub properties:vulkan_bindings::VkMemoryPropertyFlagBits
+}
+
+impl VulkanDeviceMemory
+{
+    pub fn new(
+        logical_device: &vulkan_init::VulkanLogicalDevice,
+        mem_req: &vulkan_bindings::VkMemoryRequirements,
+        mem_props: vulkan_bindings::VkMemoryPropertyFlagBits
+    ) -> Result< Self, VulkanMemError>
+    {
+        unsafe
+        {
+            let mut new_memory = VulkanDeviceMemory {
+                handle : std::ptr::null_mut(),
+                size: mem_req.size,
+                properties: mem_props,
+            };
+            let ref ph_device = *logical_device.physical_device;
+            let ref memory_properties = ph_device.mem_properties;
+            let mut mem_type = 0;
+            while mem_type < memory_properties.memoryTypeCount
+            {
+                if mem_req.memoryTypeBits & (1 << mem_type) != 0 &&
+                memory_properties.memoryTypes[mem_type as usize].propertyFlags & (new_memory.properties as u32) != 1
+                {
+                    let fn_vkAllocateMemory = vulkan_init::vkAllocateMemory.unwrap();
+                    let allocation_info = vulkan_bindings::VkMemoryAllocateInfo {
+                        sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
+                        pNext: std::ptr::null(),
+                        allocationSize: new_memory.size,
+                        memoryTypeIndex: mem_type
+                    };
+                    let result = fn_vkAllocateMemory(
+                        logical_device.device,
+                        &allocation_info,
+                        std::ptr::null(),
+                        &mut new_memory.handle
+                    );
+                    if result != vulkan_bindings::VkResult_VK_SUCCESS
+                    {
+                        return Err(VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY);
+                    }
+                    break;
+                }
+                mem_type += 1;
+            }
+            if new_memory.handle == std::ptr::null_mut()
+            {
+                return Err(VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY);
+            }
+            Ok(new_memory)
+        }   
+    }
+}
+
 pub struct VulkanBufferMem
 {
     logical_device: *const vulkan_init::VulkanLogicalDevice,
-    buffer_handle : vulkan_bindings::VkBuffer,
+    handle : vulkan_bindings::VkBuffer,
     size: u64,
-    usage: vulkan_bindings::VkBufferUsageFlags,
-    device_memory: vulkan_bindings::VkDeviceMemory
+    device_memory: Option<VulkanDeviceMemory>,
+    buffer_view: vulkan_bindings::VkBufferView
 }
 
 impl VulkanBufferMem
@@ -47,13 +118,13 @@ impl VulkanBufferMem
         unsafe {
             let mut new_buffer = VulkanBufferMem {
                 logical_device,
-                buffer_handle: std::ptr::null_mut(),
+                handle: std::ptr::null_mut(),
                 size,
-                usage,
-                device_memory: std::ptr::null_mut()
+                device_memory: None,
+                buffer_view: std::ptr::null_mut()
             };
             let fn_vkCreateBuffer = vulkan_init::vkCreateBuffer.unwrap();
-            let result = fn_vkCreateBuffer(logical_device.device, &buffer_create_info, std::ptr::null(), &mut new_buffer.buffer_handle);
+            let result = fn_vkCreateBuffer(logical_device.device, &buffer_create_info, std::ptr::null(), &mut new_buffer.handle);
             if result != vulkan_bindings::VkResult_VK_SUCCESS
             {
                 return Err(VulkanMemError::COULDNT_ALLOCATE_BUFFER);
@@ -71,7 +142,7 @@ impl VulkanBufferMem
             let mut mem_req = std::mem::zeroed();
             let fn_vkGetBufferMemoryRequirements = vulkan_init::vkGetBufferMemoryRequirements.unwrap();
             let logical_device = (*self.logical_device).device;
-            fn_vkGetBufferMemoryRequirements(logical_device, self.buffer_handle, &mut mem_req);
+            fn_vkGetBufferMemoryRequirements(logical_device, self.handle, &mut mem_req);
             mem_req
         }
     }
@@ -84,44 +155,83 @@ impl VulkanBufferMem
         unsafe
         {
             let ref logical_device = *self.logical_device;
-            let ref ph_device = *logical_device.physical_device;
-            let ref memory_properties = ph_device.mem_properties;
-            let mut mem_type = 0;
-            while mem_type < memory_properties.memoryTypeCount
-            {
-                if mem_req.memoryTypeBits & (1 << mem_type) != 0 &&
-                memory_properties.memoryTypes[mem_type as usize].propertyFlags & (mem_props as u32) != 1
-                {
-                    let fn_vkAllocateMemory = vulkan_init::vkAllocateMemory.unwrap();
-                    let allocation_info = vulkan_bindings::VkMemoryAllocateInfo {
-                        sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO,
-                        pNext: std::ptr::null(),
-                        allocationSize: mem_req.size,
-                        memoryTypeIndex: mem_type
-                    };
-                    let result = fn_vkAllocateMemory(
-                        logical_device.device,
-                        &allocation_info,
-                        std::ptr::null(),
-                        &mut self.device_memory
-                    );
-                    if result != vulkan_bindings::VkResult_VK_SUCCESS || self.device_memory == std::ptr::null_mut()
-                    {
-                        return Err(VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY);
-                    }
-                    break;
-                }
-                mem_type += 1;
-            }
-            if self.device_memory == std::ptr::null_mut()
-            {
-                return Err(VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY);
-            }
+            let device_memory = VulkanDeviceMemory::new(logical_device, mem_req, mem_props)?;
             let fn_vkBindBufferMemory = vulkan_init::vkBindBufferMemory.unwrap();
-            let result = fn_vkBindBufferMemory(logical_device.device, self.buffer_handle, self.device_memory, 0);
+            let result = fn_vkBindBufferMemory(logical_device.device, self.handle, device_memory.handle, 0);
             if result != vulkan_bindings::VkResult_VK_SUCCESS
             {
                 return Err(VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY);
+            }
+            self.device_memory = Some(device_memory);
+            Ok(())
+        }
+    }
+
+    pub fn create_buffers_barriers(
+        transitions: Vec<VulkanBufferTransition>,
+        cmd_buffer: vulkan_bindings::VkCommandBuffer,
+        generating_stages: vulkan_bindings::VkPipelineStageFlags,
+        consuming_stages: vulkan_bindings::VkPipelineStageFlags
+    ) -> Result<(), VulkanMemError>
+    {
+        let mut buffers_mem_barriers :Vec<vulkan_bindings::VkBufferMemoryBarrier>  = Vec::with_capacity(transitions.len());
+        for transition in transitions.into_iter()
+        {
+            buffers_mem_barriers.push(vulkan_bindings::VkBufferMemoryBarrier{
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER,
+                pNext: std::ptr::null(),
+                buffer: transition.buffer,
+                srcAccessMask: transition.current_access,
+                dstAccessMask: transition.new_access,
+                srcQueueFamilyIndex: transition.current_fam_queue,
+                dstQueueFamilyIndex: transition.new_fam_queue,
+                offset: 0,
+                size: vulkan_bindings::VK_WHOLE_SIZE as u64
+            });
+        }
+        if buffers_mem_barriers.len() > 0
+        {
+            unsafe
+            {
+                let fn_vkCmdPipelineBarrier = vulkan_init::vkCmdPipelineBarrier.unwrap();
+                fn_vkCmdPipelineBarrier(
+                    cmd_buffer,
+                    generating_stages,
+                    consuming_stages, 
+                    0, 
+                    0, 
+                    std::ptr::null(),
+                    buffers_mem_barriers.len() as u32,
+                    buffers_mem_barriers.as_ptr(),
+                    0,
+                    std::ptr::null()
+                );
+            }
+        }
+        Ok(())
+    }
+
+    pub fn create_buffer_view(&mut self, format: vulkan_bindings::VkFormat) -> Result<(), VulkanMemError>
+    {
+        unsafe
+        {
+            let fn_vkCreateBufferView = vulkan_init::vkCreateBufferView.unwrap();
+            let ref logical_device = *self.logical_device;
+            let view_create_info = vulkan_bindings::VkBufferViewCreateInfo
+            {
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_BUFFER_VIEW_CREATE_INFO,
+                pNext: std::ptr::null(),
+                flags: 0,
+                buffer: self.handle,
+                format,
+                offset: 0,
+                range: self.size
+            };
+            let result = fn_vkCreateBufferView(logical_device.device, &view_create_info, std::ptr::null(), &mut self.buffer_view);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            || self.buffer_view == std::ptr::null_mut()
+            {
+                return Err(VulkanMemError::FAILED_CREATING_BUFFER_VIEW);
             }
             Ok(())
         }
