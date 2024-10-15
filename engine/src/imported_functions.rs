@@ -53,6 +53,7 @@ EXPORTED_VULKAN_FUNCTION!(vkDestroyFence);
 EXPORTED_VULKAN_FUNCTION!(vkQueueSubmit);
 EXPORTED_VULKAN_FUNCTION!(vkQueueWaitIdle);
 EXPORTED_VULKAN_FUNCTION!(vkCmdPipelineBarrier);
+EXPORTED_VULKAN_FUNCTION!(vkCreateImage);
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);

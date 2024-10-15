@@ -6,7 +6,8 @@ pub enum VulkanMemError
 {
     COULDNT_ALLOCATE_BUFFER,
     COULDNT_ALLOCATE_DEVICE_MEMORY,
-    FAILED_CREATING_BUFFER_VIEW
+    FAILED_CREATING_BUFFER_VIEW,
+    COULDNT_ALLOCATE_IMAGE
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -16,7 +17,8 @@ impl std::fmt::Display for VulkanMemError
         {
             VulkanMemError::COULDNT_ALLOCATE_BUFFER => write!(f,"Couldn't allocate a buffer memory"),
             VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY => write!(f, "Couldn't allocate device memory for buffer"),
-            VulkanMemError::FAILED_CREATING_BUFFER_VIEW => write!(f, "Failed creating buffer view")
+            VulkanMemError::FAILED_CREATING_BUFFER_VIEW => write!(f, "Failed creating buffer view"),
+            VulkanMemError::COULDNT_ALLOCATE_IMAGE => write!(f, "Couldn't allocat an image")
         }
     }
 }
@@ -237,3 +239,73 @@ impl VulkanBufferMem
         }
     }
 }
+
+
+pub struct VulkanImageMem
+{
+    logical_device: *const vulkan_init::VulkanLogicalDevice,
+    handle : vulkan_bindings::VkImage,
+    img_type : vulkan_bindings::VkImageType,
+    format : vulkan_bindings::VkFormat,
+    dimensions: vulkan_bindings::VkExtent3D,
+    mipmap_lvl : u32,
+    layer_num : u32,
+    sample_count: vulkan_bindings::VkSampleCountFlagBits,
+    usage: vulkan_bindings::VkImageUsageFlags,
+}
+
+
+impl VulkanImageMem
+{
+    pub fn new(
+        logical_device: &vulkan_init::VulkanLogicalDevice,
+        img_type : vulkan_bindings::VkImageType,
+        format : vulkan_bindings::VkFormat,
+        dimensions: vulkan_bindings::VkExtent3D,
+        mipmap_lvl : u32,
+        layer_num : u32,
+        sample_count: vulkan_bindings::VkSampleCountFlagBits,
+        usage: vulkan_bindings::VkImageUsageFlags,
+    ) -> Result<Self, VulkanMemError>
+    {
+        unsafe
+        {
+            let fn_vkCreateImage = vulkan_init::vkCreateImage.unwrap();
+            let mut new_image = VulkanImageMem {
+                logical_device,
+                handle: std::ptr::null_mut(),
+                img_type,
+                format,
+                dimensions,
+                mipmap_lvl,
+                layer_num,
+                sample_count,
+                usage
+            };
+            let image_creation_info = vulkan_bindings::VkImageCreateInfo {
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
+                pNext: std::ptr::null(),
+                flags: 0,
+                imageType: new_image.img_type,
+                format: new_image.format,
+                extent: new_image.dimensions,
+                mipLevels: new_image.mipmap_lvl,
+                arrayLayers: new_image.layer_num,
+                samples: new_image.sample_count,
+                tiling: vulkan_bindings::VkImageTiling_VK_IMAGE_TILING_OPTIMAL,
+                usage: new_image.usage,
+                sharingMode: vulkan_bindings::VkSharingMode_VK_SHARING_MODE_EXCLUSIVE,
+                queueFamilyIndexCount: 0,
+                pQueueFamilyIndices: std::ptr::null(),
+                initialLayout: vulkan_bindings::VkImageLayout_VK_IMAGE_LAYOUT_UNDEFINED
+            };
+            let result = fn_vkCreateImage(logical_device.device, &image_creation_info, std::ptr::null(), &mut new_image.handle);
+            if result !=  vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanMemError::COULDNT_ALLOCATE_IMAGE);
+            }
+            Ok(new_image)
+        }
+    }
+}
+
