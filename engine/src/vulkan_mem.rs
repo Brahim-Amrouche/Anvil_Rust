@@ -9,6 +9,8 @@ pub enum VulkanMemError
     FAILED_CREATING_BUFFER_VIEW,
     COULDNT_ALLOCATE_IMAGE,
     COULDNT_BIND_IMAGE_MEMORY,
+    FAILED_CREATING_IMAGE_VIEW,
+    FAILED_GETTING_MEMORY_POINTER,
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -20,7 +22,9 @@ impl std::fmt::Display for VulkanMemError
             VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY => write!(f, "Couldn't allocate device memory for buffer"),
             VulkanMemError::FAILED_CREATING_BUFFER_VIEW => write!(f, "Failed creating buffer view"),
             VulkanMemError::COULDNT_ALLOCATE_IMAGE => write!(f, "Couldn't allocate an image"),
-            VulkanMemError::COULDNT_BIND_IMAGE_MEMORY => write!(f, "Couldn't bind image memory")
+            VulkanMemError::COULDNT_BIND_IMAGE_MEMORY => write!(f, "Couldn't bind image memory"),
+            VulkanMemError::FAILED_CREATING_IMAGE_VIEW => write!(f, "Failed creating image view"),
+            VulkanMemError::FAILED_GETTING_MEMORY_POINTER => write!(f, "Failed getting memory pointer")
         }
     }
 }
@@ -50,9 +54,11 @@ pub struct VulkanImageTransition
 
 pub struct VulkanDeviceMemory
 {
+    pub logical_device : *const vulkan_init::VulkanLogicalDevice,
     pub handle: vulkan_bindings::VkDeviceMemory,
     pub size: u64,
-    pub properties:vulkan_bindings::VkMemoryPropertyFlagBits
+    pub properties:vulkan_bindings::VkMemoryPropertyFlagBits,
+    pub data_region: *mut std::ffi::c_void
 }
 
 impl VulkanDeviceMemory
@@ -66,17 +72,23 @@ impl VulkanDeviceMemory
         unsafe
         {
             let mut new_memory = VulkanDeviceMemory {
+                logical_device,
                 handle : std::ptr::null_mut(),
                 size: mem_req.size,
                 properties: mem_props,
+                data_region: std::ptr::null_mut()
             };
             let ref ph_device = *logical_device.physical_device;
             let ref memory_properties = ph_device.mem_properties;
             let mut mem_type = 0;
             while mem_type < memory_properties.memoryTypeCount
             {
-                if mem_req.memoryTypeBits & (1 << mem_type) != 0 &&
-                memory_properties.memoryTypes[mem_type as usize].propertyFlags & (new_memory.properties as u32) != 1
+                let has_property = memory_properties.memoryTypes[mem_type as usize].propertyFlags & (new_memory.properties as u32);
+                // println!("values of first condition {} & {} ", mem_req.memoryTypeBits , 1 << mem_type);
+                // println!("first conditions {}", mem_req.memoryTypeBits & (1 << mem_type) != 0);
+                // println!("values of second condition {} & {}", memory_properties.memoryTypes[mem_type as usize].propertyFlags, new_memory.properties as u32);
+                // println!("second condition {}", (memory_properties.memoryTypes[mem_type as usize].propertyFlags & (new_memory.properties as u32)) == (new_memory.properties as u32));
+                if mem_req.memoryTypeBits & (1 << mem_type) != 0 && has_property == (new_memory.properties as u32)
                 {
                     let fn_vkAllocateMemory = vulkan_init::vkAllocateMemory.unwrap();
                     let allocation_info = vulkan_bindings::VkMemoryAllocateInfo {
@@ -106,15 +118,44 @@ impl VulkanDeviceMemory
             Ok(new_memory)
         }   
     }
+
+    pub fn load_data_region(&mut self) -> Result<(), VulkanMemError>
+    {
+        unsafe
+        {
+            let fn_vkMapMemory = vulkan_init::vkMapMemory.unwrap();
+            let logical_device = (*self.logical_device).device;
+            let result = fn_vkMapMemory(logical_device, self.handle, 0, self.size, 0, &mut self.data_region);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanMemError::FAILED_GETTING_MEMORY_POINTER);
+            }
+            Ok(())
+        }
+    }
+
+    // pub fn map_data(&self, data: *mut std::ffi::c_void, size: usize)
+    // {
+    // }
+
+    pub fn destroy(self)
+    {
+        unsafe
+        {
+            let fn_vkUnmapMemory = vulkan_init::vkUnmapMemory.unwrap();
+            let logical_device = (*self.logical_device).device;
+            fn_vkUnmapMemory(logical_device, self.handle);
+        }
+    }
 }
 
 pub struct VulkanBufferMem
 {
-    logical_device: *const vulkan_init::VulkanLogicalDevice,
-    handle : vulkan_bindings::VkBuffer,
-    size: u64,
-    device_memory: Option<VulkanDeviceMemory>,
-    buffer_view: vulkan_bindings::VkBufferView
+    pub logical_device: *const vulkan_init::VulkanLogicalDevice,
+    pub handle : vulkan_bindings::VkBuffer,
+    pub size: u64,
+    pub device_memory: Option<VulkanDeviceMemory>,
+    pub buffer_view: vulkan_bindings::VkBufferView
 }
 
 impl VulkanBufferMem
@@ -146,7 +187,7 @@ impl VulkanBufferMem
                 return Err(VulkanMemError::COULDNT_ALLOCATE_BUFFER);
             }
             let mem_req = new_buffer.load_memory_requirements();
-            new_buffer.allocate_memory(&mem_req, 0)?;
+            new_buffer.allocate_memory(&mem_req, vulkan_bindings::VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)?;
             Ok(new_buffer)
         }
     }
@@ -252,6 +293,15 @@ impl VulkanBufferMem
             Ok(())
         }
     }
+
+    pub fn destroy(mut self)
+    {
+        match self.device_memory.take()
+        {
+            Some(d) => d.destroy(),
+            None => ()
+        }
+    }
 }
 
 
@@ -267,6 +317,7 @@ pub struct VulkanImageMem
     sample_count: vulkan_bindings::VkSampleCountFlagBits,
     usage: vulkan_bindings::VkImageUsageFlags,
     device_memory: Option<VulkanDeviceMemory>,
+    view: vulkan_bindings::VkImageView
 }
 
 
@@ -296,7 +347,8 @@ impl VulkanImageMem
                 layer_num,
                 sample_count,
                 usage,
-                device_memory:None
+                device_memory:None,
+                view: std::ptr::null_mut()
             };
             let image_creation_info = vulkan_bindings::VkImageCreateInfo {
                 sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
@@ -321,7 +373,7 @@ impl VulkanImageMem
                 return Err(VulkanMemError::COULDNT_ALLOCATE_IMAGE);
             }
             let mem_req = new_image.load_memory_requirements();
-            new_image.allocate_memory(mem_req, 0)?;
+            new_image.allocate_memory(mem_req, vulkan_bindings::VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)?;
             Ok(new_image)
         }
     }
@@ -404,6 +456,46 @@ impl VulkanImageMem
                     image_barriers.as_ptr()
                 );
             }
+        }
+    }
+
+    pub fn create_image_view(&mut self, view_type:  vulkan_bindings::VkImageViewType, aspect: vulkan_bindings::VkImageAspectFlags) -> Result<(), VulkanMemError>
+    {
+        unsafe
+        {
+            let fn_vkCreateImageView = vulkan_init::vkCreateImageView.unwrap();
+            let image_view_create_info = vulkan_bindings::VkImageViewCreateInfo{
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+                pNext: std::ptr::null(),
+                flags: 0,
+                image: self.handle,
+                viewType: view_type,
+                format: self.format,
+                components: std::mem::zeroed(),
+                subresourceRange : vulkan_bindings::VkImageSubresourceRange { 
+                    aspectMask: aspect,
+                    baseMipLevel: 0,
+                    levelCount: vulkan_bindings::VK_REMAINING_MIP_LEVELS as u32,
+                    baseArrayLayer: 0,
+                    layerCount: vulkan_bindings::VK_REMAINING_ARRAY_LAYERS as u32
+                }
+            };
+            let logical_device = (*self.logical_device).device;
+            let result = fn_vkCreateImageView(logical_device, &image_view_create_info, std::ptr::null(), &mut self.view);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanMemError::FAILED_CREATING_IMAGE_VIEW);
+            }
+            Ok(())
+        }
+    }
+
+    pub fn destroy(mut self)
+    {
+        match self.device_memory.take()
+        {
+            Some(d) => d.destroy(),
+            None => ()
         }
     }
 }

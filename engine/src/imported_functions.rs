@@ -42,6 +42,8 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkFreeCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateMemory);
+EXPORTED_VULKAN_FUNCTION!(vkMapMemory);
+EXPORTED_VULKAN_FUNCTION!(vkUnmapMemory);
 EXPORTED_VULKAN_FUNCTION!(vkBindBufferMemory);
 EXPORTED_VULKAN_FUNCTION!(vkCreateBufferView);
 EXPORTED_VULKAN_FUNCTION!(vkCreateSemaphore);
@@ -56,6 +58,8 @@ EXPORTED_VULKAN_FUNCTION!(vkCmdPipelineBarrier);
 EXPORTED_VULKAN_FUNCTION!(vkCreateImage);
 EXPORTED_VULKAN_FUNCTION!(vkGetImageMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkBindImageMemory);
+EXPORTED_VULKAN_FUNCTION!(vkCreateImageView);
+
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);
