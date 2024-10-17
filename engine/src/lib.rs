@@ -75,24 +75,24 @@ pub fn render()
     // cmd_pool.destroy();
 
     //Vulkan Mem Tests
-    let mut buffer = vulkan_mem::VulkanBufferMem::new(
-        &logical_device, 
-        100,
-        vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32
-    ).unwrap();
-    // buffer.create_buffer_view(vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM).unwrap();
-    // let mut image = vulkan_mem::VulkanImageMem::new(
-    //     &logical_device,
-    //     vulkan_bindings::VkImageType_VK_IMAGE_TYPE_2D,
-    //     vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
-    //     vulkan_bindings::VkExtent3D {width: 100, height: 100, depth: 1},
-    //     1,
-    //     6,
-    //     1,
-    //     vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT as u32,
+    // let mut buffer = vulkan_mem::VulkanBufferMem::new(
+    //     &logical_device, 
+    //     100,
+    //     vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32
     // ).unwrap();
-    // image.create_image_view(vulkan_bindings::VkImageViewType_VK_IMAGE_VIEW_TYPE_CUBE, 0).unwrap();
-    buffer.destroy();
+    // buffer.create_buffer_view(vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM).unwrap();
+    let mut image = vulkan_mem::VulkanImageMem::new(
+        &logical_device,
+        vulkan_bindings::VkImageType_VK_IMAGE_TYPE_2D,
+        vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
+        vulkan_bindings::VkExtent3D {width: 100, height: 100, depth: 1},
+        1,
+        6,
+        1,
+        vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT as u32,
+    ).unwrap();
+    image.create_image_view(vulkan_bindings::VkImageViewType_VK_IMAGE_VIEW_TYPE_CUBE, 0).unwrap();
+    // buffer.destroy();
     // image.destroy();
     vk_surface.destroy();
     logical_device.destroy();

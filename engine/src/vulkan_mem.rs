@@ -373,7 +373,7 @@ impl VulkanImageMem
                 return Err(VulkanMemError::COULDNT_ALLOCATE_IMAGE);
             }
             let mem_req = new_image.load_memory_requirements();
-            new_image.allocate_memory(mem_req, vulkan_bindings::VkMemoryPropertyFlagBits_VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT)?;
+            new_image.allocate_memory(mem_req, 0)?;
             Ok(new_image)
         }
     }
