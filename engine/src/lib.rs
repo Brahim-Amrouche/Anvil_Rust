@@ -81,6 +81,16 @@ pub fn render()
         vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32
     ).unwrap();
     buffer.create_buffer_view(vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM).unwrap();
+    let mut image = vulkan_mem::VulkanImageMem::new(
+        &logical_device,
+        vulkan_bindings::VkImageType_VK_IMAGE_TYPE_2D,
+        vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
+        vulkan_bindings::VkExtent3D {width: 100, height: 100, depth: 1},
+        1,
+        1,
+        1,
+        vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT as u32,
+    ).unwrap();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();

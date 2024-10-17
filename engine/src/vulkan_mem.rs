@@ -7,7 +7,8 @@ pub enum VulkanMemError
     COULDNT_ALLOCATE_BUFFER,
     COULDNT_ALLOCATE_DEVICE_MEMORY,
     FAILED_CREATING_BUFFER_VIEW,
-    COULDNT_ALLOCATE_IMAGE
+    COULDNT_ALLOCATE_IMAGE,
+    COULDNT_BIND_IMAGE_MEMORY,
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -18,7 +19,8 @@ impl std::fmt::Display for VulkanMemError
             VulkanMemError::COULDNT_ALLOCATE_BUFFER => write!(f,"Couldn't allocate a buffer memory"),
             VulkanMemError::COULDNT_ALLOCATE_DEVICE_MEMORY => write!(f, "Couldn't allocate device memory for buffer"),
             VulkanMemError::FAILED_CREATING_BUFFER_VIEW => write!(f, "Failed creating buffer view"),
-            VulkanMemError::COULDNT_ALLOCATE_IMAGE => write!(f, "Couldn't allocat an image")
+            VulkanMemError::COULDNT_ALLOCATE_IMAGE => write!(f, "Couldn't allocate an image"),
+            VulkanMemError::COULDNT_BIND_IMAGE_MEMORY => write!(f, "Couldn't bind image memory")
         }
     }
 }
@@ -32,6 +34,18 @@ pub struct VulkanBufferTransition
     pub new_access: vulkan_bindings::VkAccessFlags,
     pub current_fam_queue: u32,
     pub new_fam_queue : u32
+}
+
+pub struct VulkanImageTransition
+{
+    pub image: vulkan_bindings::VkImage,
+    pub current_access : vulkan_bindings::VkAccessFlags,
+    pub new_access: vulkan_bindings::VkAccessFlags,
+    pub current_layout: vulkan_bindings::VkImageLayout,
+    pub new_layout : vulkan_bindings::VkImageLayout,
+    pub current_fam_queue : u32,
+    pub new_fam_queue: u32,
+    pub aspect : vulkan_bindings::VkImageAspectFlags
 }
 
 pub struct VulkanDeviceMemory
@@ -252,6 +266,7 @@ pub struct VulkanImageMem
     layer_num : u32,
     sample_count: vulkan_bindings::VkSampleCountFlagBits,
     usage: vulkan_bindings::VkImageUsageFlags,
+    device_memory: Option<VulkanDeviceMemory>,
 }
 
 
@@ -280,7 +295,8 @@ impl VulkanImageMem
                 mipmap_lvl,
                 layer_num,
                 sample_count,
-                usage
+                usage,
+                device_memory:None
             };
             let image_creation_info = vulkan_bindings::VkImageCreateInfo {
                 sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
@@ -304,7 +320,90 @@ impl VulkanImageMem
             {
                 return Err(VulkanMemError::COULDNT_ALLOCATE_IMAGE);
             }
+            let mem_req = new_image.load_memory_requirements();
+            new_image.allocate_memory(mem_req, 0)?;
             Ok(new_image)
+        }
+    }
+
+    pub fn load_memory_requirements(&self) -> vulkan_bindings::VkMemoryRequirements
+    {
+        unsafe{
+            let fn_vkGetImageMemoryRequirements = vulkan_init::vkGetImageMemoryRequirements.unwrap();
+            let mut mem_reqs : vulkan_bindings::VkMemoryRequirements= std::mem::zeroed();
+            let logical_device = (*self.logical_device).device;
+            fn_vkGetImageMemoryRequirements(logical_device, self.handle, &mut mem_reqs);
+            mem_reqs
+        }
+    }
+
+    pub fn allocate_memory(&mut self,
+        mem_req : vulkan_bindings::VkMemoryRequirements,
+        mem_props: vulkan_bindings::VkMemoryPropertyFlagBits
+    ) -> Result<(), VulkanMemError>
+    {
+        unsafe
+        {
+            let ref logical_device = *self.logical_device;
+            let device_memory = VulkanDeviceMemory::new(logical_device, &mem_req, mem_props)?;
+            let fn_vkBindImageMemory = vulkan_init::vkBindImageMemory.unwrap();
+            let result = fn_vkBindImageMemory(logical_device.device, self.handle, device_memory.handle, 0);
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanMemError::COULDNT_BIND_IMAGE_MEMORY);
+            }
+            self.device_memory = Some(device_memory);
+            Ok(())
+        }
+    }
+
+    pub fn create_image_barrier(&mut self,
+        transitions : Vec<VulkanImageTransition>,
+        cmd_buffer: vulkan_bindings::VkCommandBuffer,
+        generating_stages: vulkan_bindings::VkPipelineStageFlags,
+        consuming_stages: vulkan_bindings::VkPipelineStageFlags
+    )
+    {
+        let mut image_barriers : Vec<vulkan_bindings::VkImageMemoryBarrier> = Vec::with_capacity(transitions.len());
+        for transition in transitions
+        {
+            image_barriers.push(vulkan_bindings::VkImageMemoryBarrier {
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER,
+                pNext: std::ptr::null(),
+                srcAccessMask: transition.current_access,
+                dstAccessMask: transition.new_access,
+                oldLayout: transition.current_layout,
+                newLayout: transition.new_layout,
+                srcQueueFamilyIndex: transition.current_fam_queue,
+                dstQueueFamilyIndex: transition.new_fam_queue,
+                image: transition.image,
+                subresourceRange: vulkan_bindings::VkImageSubresourceRange{
+                    aspectMask: transition.aspect,
+                    baseMipLevel: 0,
+                    levelCount: vulkan_bindings::VK_REMAINING_MIP_LEVELS as u32,
+                    baseArrayLayer: 0,
+                    layerCount: vulkan_bindings::VK_REMAINING_ARRAY_LAYERS as u32,
+                }
+            });
+        }
+        if image_barriers.len() > 0
+        {
+            unsafe
+            {
+                let fn_vkCmdPipelineBarrier = vulkan_init::vkCmdPipelineBarrier.unwrap();
+                fn_vkCmdPipelineBarrier(
+                    cmd_buffer, 
+                    generating_stages,
+                    consuming_stages,
+                    0,
+                    0,
+                    std::ptr::null(),
+                    0,
+                    std::ptr::null(),
+                    image_barriers.len() as u32,
+                    image_barriers.as_ptr()
+                );
+            }
         }
     }
 }
