@@ -11,6 +11,7 @@ pub enum VulkanMemError
     COULDNT_BIND_IMAGE_MEMORY,
     FAILED_CREATING_IMAGE_VIEW,
     FAILED_GETTING_MEMORY_POINTER,
+    COULDNT_FLUSH_MEMORY
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -24,7 +25,8 @@ impl std::fmt::Display for VulkanMemError
             VulkanMemError::COULDNT_ALLOCATE_IMAGE => write!(f, "Couldn't allocate an image"),
             VulkanMemError::COULDNT_BIND_IMAGE_MEMORY => write!(f, "Couldn't bind image memory"),
             VulkanMemError::FAILED_CREATING_IMAGE_VIEW => write!(f, "Failed creating image view"),
-            VulkanMemError::FAILED_GETTING_MEMORY_POINTER => write!(f, "Failed getting memory pointer")
+            VulkanMemError::FAILED_GETTING_MEMORY_POINTER => write!(f, "Failed getting memory pointer"),
+            VulkanMemError::COULDNT_FLUSH_MEMORY => write!(f,"Couldn't flush memory")
         }
     }
 }
@@ -58,7 +60,8 @@ pub struct VulkanDeviceMemory
     pub handle: vulkan_bindings::VkDeviceMemory,
     pub size: u64,
     pub properties:vulkan_bindings::VkMemoryPropertyFlagBits,
-    pub data_region: *mut std::ffi::c_void
+    pub data_region: *mut std::ffi::c_void,
+    pub flushable_memory: Vec<vulkan_bindings::VkMappedMemoryRange>
 }
 
 impl VulkanDeviceMemory
@@ -76,7 +79,8 @@ impl VulkanDeviceMemory
                 handle : std::ptr::null_mut(),
                 size: mem_req.size,
                 properties: mem_props,
-                data_region: std::ptr::null_mut()
+                data_region: std::ptr::null_mut(),
+                flushable_memory: Vec::new()
             };
             let ref ph_device = *logical_device.physical_device;
             let ref memory_properties = ph_device.mem_properties;
@@ -134,9 +138,47 @@ impl VulkanDeviceMemory
         }
     }
 
-    // pub fn map_data(&self, data: *mut std::ffi::c_void, size: usize)
-    // {
-    // }
+    pub fn map_data(&mut self, data: *mut std::ffi::c_void, size: usize) -> bool
+    {
+        unsafe
+        {
+            if self.data_region == std::ptr::null_mut()
+            {
+               match self.load_data_region() 
+               {
+                    Ok(_) => {},
+                    Err(_) => {
+                        println!("memory isn't mapable, it should be host visible");
+                        return false;
+                    }
+               }
+            }
+            std::ptr::copy_nonoverlapping(data, self.data_region, size);
+            self.flushable_memory.push(vulkan_bindings::VkMappedMemoryRange { 
+                sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE, 
+                pNext: std::ptr::null(), 
+                memory: self.handle, 
+                offset: 0, 
+                size: size as u64
+            });
+            true
+        }
+    }
+
+    pub fn flush_maped_memory(&mut self) -> Result<(), VulkanMemError>
+    {
+        unsafe 
+        {
+            let fn_vkFlushMappedMemoryRanges = vulkan_init::vkFlushMappedMemoryRanges.unwrap();
+            let logical_device = (*self.logical_device).device;
+            let result = fn_vkFlushMappedMemoryRanges(logical_device, self.flushable_memory.len() as u32, self.flushable_memory.as_ptr());
+            if result != vulkan_bindings::VkResult_VK_SUCCESS
+            {
+                return Err(VulkanMemError::COULDNT_FLUSH_MEMORY);
+            }
+            return Ok(())
+        }
+    }
 
     pub fn destroy(self)
     {
