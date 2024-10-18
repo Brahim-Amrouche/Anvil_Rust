@@ -1,7 +1,6 @@
 {
     LOAD_EXPORTED_VULKAN_FUNCTION!(vkGetInstanceProcAddr);
     
-    
     LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION!(vkEnumerateInstanceExtensionProperties);
     LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION!(vkEnumerateInstanceLayerProperties);
     LOAD_GLOBAL_LEVEL_VULKAN_FUNCTION!(vkCreateInstance);
@@ -34,6 +33,7 @@
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkDeviceWaitIdle);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkDestroyDevice);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkCreateBuffer);
+    LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkCmdCopyBuffer);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkFreeCommandBuffers);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
     LOAD_DEVICE_LEVEL_VULKAN_FUNCTION!(vkAllocateMemory);

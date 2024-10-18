@@ -11,7 +11,9 @@ pub enum VulkanMemError
     COULDNT_BIND_IMAGE_MEMORY,
     FAILED_CREATING_IMAGE_VIEW,
     FAILED_GETTING_MEMORY_POINTER,
-    COULDNT_FLUSH_MEMORY
+    COULDNT_FLUSH_MEMORY,
+    CANT_COPY_FROM_SRC,
+    CANT_WRITE_TO_DST
 }
 
 impl std::fmt::Display for VulkanMemError
@@ -26,7 +28,9 @@ impl std::fmt::Display for VulkanMemError
             VulkanMemError::COULDNT_BIND_IMAGE_MEMORY => write!(f, "Couldn't bind image memory"),
             VulkanMemError::FAILED_CREATING_IMAGE_VIEW => write!(f, "Failed creating image view"),
             VulkanMemError::FAILED_GETTING_MEMORY_POINTER => write!(f, "Failed getting memory pointer"),
-            VulkanMemError::COULDNT_FLUSH_MEMORY => write!(f,"Couldn't flush memory")
+            VulkanMemError::COULDNT_FLUSH_MEMORY => write!(f,"Couldn't flush memory"),
+            VulkanMemError::CANT_COPY_FROM_SRC => write!(f, "Cant copy from source buffer"),
+            VulkanMemError::CANT_WRITE_TO_DST => write!(f, "Can't write to destination buffer")
         }
     }
 }
@@ -169,6 +173,11 @@ impl VulkanDeviceMemory
     {
         unsafe 
         {
+            if self.flushable_memory.len() <= 0
+            {
+                println!("No maped memory");
+                return Ok(());
+            }
             let fn_vkFlushMappedMemoryRanges = vulkan_init::vkFlushMappedMemoryRanges.unwrap();
             let logical_device = (*self.logical_device).device;
             let result = fn_vkFlushMappedMemoryRanges(logical_device, self.flushable_memory.len() as u32, self.flushable_memory.as_ptr());
@@ -176,6 +185,7 @@ impl VulkanDeviceMemory
             {
                 return Err(VulkanMemError::COULDNT_FLUSH_MEMORY);
             }
+            self.flushable_memory.clear();
             return Ok(())
         }
     }
@@ -196,8 +206,10 @@ pub struct VulkanBufferMem
     pub logical_device: *const vulkan_init::VulkanLogicalDevice,
     pub handle : vulkan_bindings::VkBuffer,
     pub size: u64,
+    pub usage: vulkan_bindings::VkBufferUsageFlags,
     pub device_memory: Option<VulkanDeviceMemory>,
-    pub buffer_view: vulkan_bindings::VkBufferView
+    pub buffer_view: vulkan_bindings::VkBufferView,
+    pub copied_regions: Vec<vulkan_bindings::VkBufferCopy>
 }
 
 impl VulkanBufferMem
@@ -219,8 +231,10 @@ impl VulkanBufferMem
                 logical_device,
                 handle: std::ptr::null_mut(),
                 size,
+                usage,
                 device_memory: None,
-                buffer_view: std::ptr::null_mut()
+                buffer_view: std::ptr::null_mut(),
+                copied_regions: Vec::new()
             };
             let fn_vkCreateBuffer = vulkan_init::vkCreateBuffer.unwrap();
             let result = fn_vkCreateBuffer(logical_device.device, &buffer_create_info, std::ptr::null(), &mut new_buffer.handle);
@@ -336,6 +350,36 @@ impl VulkanBufferMem
         }
     }
 
+    pub fn copy_buffer(&mut self, src: &VulkanBufferMem) -> Result<(), VulkanMemError>
+    {
+        let dst_bit = vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_DST_BIT as u32;
+        if self.usage & dst_bit != dst_bit
+        {
+            return Err(VulkanMemError::CANT_WRITE_TO_DST);
+        }
+        let src_bit = vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32;
+        if src.usage & src_bit != src_bit
+        {
+            return Err(VulkanMemError::CANT_COPY_FROM_SRC);
+        }
+        self.copied_regions.push(vulkan_bindings::VkBufferCopy { srcOffset: 0, dstOffset: 0, size: src.size as u64});
+        Ok(())
+    }
+
+    pub fn flush_copied_buffer(&mut self, cmd_buffer:vulkan_bindings::VkCommandBuffer, src: &VulkanBufferMem)
+    {
+        unsafe
+        {
+            if self.copied_regions.len() <= 0
+            {
+                return ();
+            }
+            let fn_vkCmdCopyBuffer = vulkan_init::vkCmdCopyBuffer.unwrap();
+            fn_vkCmdCopyBuffer(cmd_buffer, src.handle, self.handle, self.copied_regions.len() as u32, self.copied_regions.as_ptr());
+            self.copied_regions.clear();
+        }
+    }
+
     pub fn destroy(mut self)
     {
         match self.device_memory.take()
@@ -346,22 +390,20 @@ impl VulkanBufferMem
     }
 }
 
-
 pub struct VulkanImageMem
 {
     logical_device: *const vulkan_init::VulkanLogicalDevice,
-    handle : vulkan_bindings::VkImage,
-    img_type : vulkan_bindings::VkImageType,
-    format : vulkan_bindings::VkFormat,
-    dimensions: vulkan_bindings::VkExtent3D,
-    mipmap_lvl : u32,
-    layer_num : u32,
-    sample_count: vulkan_bindings::VkSampleCountFlagBits,
-    usage: vulkan_bindings::VkImageUsageFlags,
-    device_memory: Option<VulkanDeviceMemory>,
-    view: vulkan_bindings::VkImageView
+    pub handle : vulkan_bindings::VkImage,
+    pub img_type : vulkan_bindings::VkImageType,
+    pub format : vulkan_bindings::VkFormat,
+    pub dimensions: vulkan_bindings::VkExtent3D,
+    pub mipmap_lvl : u32,
+    pub layer_num : u32,
+    pub sample_count: vulkan_bindings::VkSampleCountFlagBits,
+    pub usage: vulkan_bindings::VkImageUsageFlags,
+    pub device_memory: Option<VulkanDeviceMemory>,
+    pub view: vulkan_bindings::VkImageView
 }
-
 
 impl VulkanImageMem
 {
