@@ -209,7 +209,8 @@ pub struct VulkanBufferMem
     pub usage: vulkan_bindings::VkBufferUsageFlags,
     pub device_memory: Option<VulkanDeviceMemory>,
     pub buffer_view: vulkan_bindings::VkBufferView,
-    pub copied_regions: Vec<vulkan_bindings::VkBufferCopy>
+    pub copied_regions: Vec<vulkan_bindings::VkBufferCopy>,
+    pub img_copied_regions: Vec<vulkan_bindings::VkBufferImageCopy>
 }
 
 impl VulkanBufferMem
@@ -234,7 +235,8 @@ impl VulkanBufferMem
                 usage,
                 device_memory: None,
                 buffer_view: std::ptr::null_mut(),
-                copied_regions: Vec::new()
+                copied_regions: Vec::new(),
+                img_copied_regions : Vec::new()
             };
             let fn_vkCreateBuffer = vulkan_init::vkCreateBuffer.unwrap();
             let result = fn_vkCreateBuffer(logical_device.device, &buffer_create_info, std::ptr::null(), &mut new_buffer.handle);
@@ -380,6 +382,49 @@ impl VulkanBufferMem
         }
     }
 
+    pub fn copy_image(&mut self, src_image:&VulkanImageMem) -> Result<(), VulkanMemError>
+    {
+        let dst_usage_bit = vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_DST_BIT as u32;
+        if self.usage & dst_usage_bit != dst_usage_bit
+        {
+            return Err(VulkanMemError::CANT_WRITE_TO_DST);
+        }
+        let src_layout_bit = vulkan_bindings::VkImageLayout_VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL;
+        let src_usage_bit = vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT as u32;
+        if src_image.layout & src_layout_bit != src_layout_bit || src_image.usage & src_usage_bit != src_usage_bit
+        {
+            return Err(VulkanMemError::CANT_COPY_FROM_SRC);
+        }
+        self.img_copied_regions.push(vulkan_bindings::VkBufferImageCopy { 
+            bufferOffset: 0,
+            bufferRowLength: 0,
+            bufferImageHeight: 0,
+            imageSubresource: vulkan_bindings::VkImageSubresourceLayers { 
+                aspectMask: 0, 
+                mipLevel: 0, 
+                baseArrayLayer: 0, 
+                layerCount: src_image.layer_num
+            },
+            imageOffset: vulkan_bindings::VkOffset3D { x: 0, y: 0, z: 0 },
+            imageExtent: src_image.dimensions
+        });
+        Ok(())
+    }
+
+    pub fn flush_copied_image(&mut self, cmd_buffer:vulkan_bindings::VkCommandBuffer, src: &VulkanImageMem)
+    {
+        unsafe
+        {
+            if self.img_copied_regions.len() <= 0
+            {
+                return ()
+            }
+            let fn_vkCmdCopyImageToBuffer = vulkan_init::vkCmdCopyImageToBuffer.unwrap();
+            fn_vkCmdCopyImageToBuffer(cmd_buffer, src.handle, src.layout, self.handle, self.img_copied_regions.len() as u32, self.img_copied_regions.as_ptr());
+            self.img_copied_regions.clear();
+        }
+    }
+
     pub fn destroy(mut self)
     {
         match self.device_memory.take()
@@ -401,8 +446,10 @@ pub struct VulkanImageMem
     pub layer_num : u32,
     pub sample_count: vulkan_bindings::VkSampleCountFlagBits,
     pub usage: vulkan_bindings::VkImageUsageFlags,
+    pub layout: vulkan_bindings::VkImageLayout,
     pub device_memory: Option<VulkanDeviceMemory>,
-    pub view: vulkan_bindings::VkImageView
+    pub view: vulkan_bindings::VkImageView,
+    pub copy_regions: Vec<vulkan_bindings::VkBufferImageCopy>
 }
 
 impl VulkanImageMem
@@ -416,6 +463,7 @@ impl VulkanImageMem
         layer_num : u32,
         sample_count: vulkan_bindings::VkSampleCountFlagBits,
         usage: vulkan_bindings::VkImageUsageFlags,
+        layout: vulkan_bindings::VkImageLayout
     ) -> Result<Self, VulkanMemError>
     {
         unsafe
@@ -431,8 +479,10 @@ impl VulkanImageMem
                 layer_num,
                 sample_count,
                 usage,
+                layout,
                 device_memory:None,
-                view: std::ptr::null_mut()
+                view: std::ptr::null_mut(),
+                copy_regions: Vec::new()
             };
             let image_creation_info = vulkan_bindings::VkImageCreateInfo {
                 sType: vulkan_bindings::VkStructureType_VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO,
@@ -449,7 +499,7 @@ impl VulkanImageMem
                 sharingMode: vulkan_bindings::VkSharingMode_VK_SHARING_MODE_EXCLUSIVE,
                 queueFamilyIndexCount: 0,
                 pQueueFamilyIndices: std::ptr::null(),
-                initialLayout: vulkan_bindings::VkImageLayout_VK_IMAGE_LAYOUT_UNDEFINED
+                initialLayout: new_image.layout
             };
             let result = fn_vkCreateImage(logical_device.device, &image_creation_info, std::ptr::null(), &mut new_image.handle);
             if result !=  vulkan_bindings::VkResult_VK_SUCCESS
@@ -574,6 +624,64 @@ impl VulkanImageMem
         }
     }
 
+    pub fn copy_buffer(&mut self, src: &VulkanBufferMem) -> Result<(), VulkanMemError>
+    {
+        let dst_layout_bit = vulkan_bindings::VkImageLayout_VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL;
+        let dst_usage_bit = vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_DST_BIT as u32;
+        if self.layout & dst_layout_bit != dst_layout_bit || self.usage & dst_usage_bit != dst_usage_bit
+        {
+            return Err(VulkanMemError::CANT_WRITE_TO_DST);
+        }
+        let src_usage_bit = vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_SRC_BIT as u32;
+        if src.usage & src_usage_bit != src_usage_bit
+        {
+            return Err(VulkanMemError::CANT_COPY_FROM_SRC);
+        }
+        self.copy_regions.push(vulkan_bindings::VkBufferImageCopy { 
+            bufferOffset:0,
+            bufferRowLength: 0,
+            bufferImageHeight: 0, 
+            imageSubresource: vulkan_bindings::VkImageSubresourceLayers { 
+                aspectMask: 0, 
+                mipLevel: 0, 
+                baseArrayLayer: 0, 
+                layerCount: self.layer_num
+            },
+            imageOffset: vulkan_bindings::VkOffset3D { x: 0, y: 0, z: 0 },
+            imageExtent: self.dimensions 
+        });
+        Ok(())
+    }
+
+    pub fn flush_buffer_copy(&mut self, cmd_buffer:vulkan_bindings::VkCommandBuffer, src: &VulkanBufferMem)
+    {
+        unsafe
+        {
+            if self.copy_regions.len() <= 0
+            {
+                return ();
+            }
+            let fn_vkCmdCopyBufferToImage = vulkan_init::vkCmdCopyBufferToImage.unwrap();
+            fn_vkCmdCopyBufferToImage(cmd_buffer, src.handle, self.handle, self.layout, self.copy_regions.len() as u32, self.copy_regions.as_ptr());
+            self.copy_regions.clear();
+        }
+    }
+
+    pub fn destroy_view(&mut self)
+    {
+        unsafe
+        {
+            if self.view == std::ptr::null_mut()
+            {
+                return;
+            }
+            let fn_vkDestroyImageView = vulkan_init::vkDestroyImageView.unwrap();
+            let logical_device = (*self.logical_device).device;
+            fn_vkDestroyImageView(logical_device, self.view, std::ptr::null());
+        }
+    }
+
+
     pub fn destroy(mut self)
     {
         match self.device_memory.take()
@@ -581,6 +689,11 @@ impl VulkanImageMem
             Some(d) => d.destroy(),
             None => ()
         }
+        unsafe
+        {
+            let fn_vkDestroyImage = vulkan_init::vkDestroyImage.unwrap();
+            let logical_device = (*self.logical_device).device;
+            fn_vkDestroyImage(logical_device, self.handle, std::ptr::null())
+        }
     }
 }
-

@@ -91,27 +91,30 @@ pub fn render()
         },
         None => {}
     }
-    let mut secondary_buffer = vulkan_mem::VulkanBufferMem::new(
-        &logical_device, 
-        100,
-        vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_DST_BIT as u32
-    ).unwrap();
-    secondary_buffer.copy_buffer(&buffer).unwrap();
-    secondary_buffer.flush_copied_buffer(cmd_buffer.primary_buffers[0], &buffer);
-    cmd_buffer.end_primary_buffer(0).unwrap();
-    // let mut image = vulkan_mem::VulkanImageMem::new(
-    //     &logical_device,
-    //     vulkan_bindings::VkImageType_VK_IMAGE_TYPE_2D,
-    //     vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
-    //     vulkan_bindings::VkExtent3D {width: 100, height: 100, depth: 1},
-    //     1,
-    //     6,
-    //     1,
-    //     vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_SRC_BIT as u32,
+    // let mut secondary_buffer = vulkan_mem::VulkanBufferMem::new(
+    //     &logical_device, 
+    //     100,
+    //     vulkan_bindings::VkBufferUsageFlagBits_VK_BUFFER_USAGE_TRANSFER_DST_BIT as u32
     // ).unwrap();
+    // secondary_buffer.copy_buffer(&buffer).unwrap();
+    // secondary_buffer.flush_copied_buffer(cmd_buffer.primary_buffers[0], &buffer);
+    let mut image = vulkan_mem::VulkanImageMem::new(
+        &logical_device,
+        vulkan_bindings::VkImageType_VK_IMAGE_TYPE_2D,
+        vulkan_bindings::VkFormat_VK_FORMAT_R8G8B8A8_UNORM,
+        vulkan_bindings::VkExtent3D {width: 100, height: 100, depth: 1},
+        1,
+        6,
+        1,
+        vulkan_bindings::VkImageUsageFlagBits_VK_IMAGE_USAGE_TRANSFER_DST_BIT as u32,
+        vulkan_bindings::VkImageLayout_VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL
+    ).unwrap();
     // image.create_image_view(vulkan_bindings::VkImageViewType_VK_IMAGE_VIEW_TYPE_CUBE, 0).unwrap();
+    image.copy_buffer(&buffer).unwrap();
+    image.flush_buffer_copy(cmd_buffer.primary_buffers[0], &buffer);
+    cmd_buffer.end_primary_buffer(0).unwrap();
     buffer.destroy();
-    // image.destroy();
+    image.destroy();
     vk_surface.destroy();
     logical_device.destroy();
     vk_instance.destroy();

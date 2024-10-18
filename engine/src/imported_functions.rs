@@ -40,6 +40,7 @@ EXPORTED_VULKAN_FUNCTION!(vkDeviceWaitIdle);
 EXPORTED_VULKAN_FUNCTION!(vkDestroyDevice);
 EXPORTED_VULKAN_FUNCTION!(vkCreateBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkCmdCopyBuffer);
+EXPORTED_VULKAN_FUNCTION!(vkCmdCopyImageToBuffer);
 EXPORTED_VULKAN_FUNCTION!(vkFreeCommandBuffers);
 EXPORTED_VULKAN_FUNCTION!(vkGetBufferMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkAllocateMemory);
@@ -61,7 +62,9 @@ EXPORTED_VULKAN_FUNCTION!(vkCreateImage);
 EXPORTED_VULKAN_FUNCTION!(vkGetImageMemoryRequirements);
 EXPORTED_VULKAN_FUNCTION!(vkBindImageMemory);
 EXPORTED_VULKAN_FUNCTION!(vkCreateImageView);
-
+EXPORTED_VULKAN_FUNCTION!(vkCmdCopyBufferToImage);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyImageView);
+EXPORTED_VULKAN_FUNCTION!(vkDestroyImage);
 
 // Device Level Vulkan Extensions Functions
 EXPORTED_VULKAN_FUNCTION!(vkCreateSwapchainKHR);
